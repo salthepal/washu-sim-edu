@@ -1,0 +1,61 @@
+---
+import Base from '../../layouts/Base.astro';
+import ReadingList from '../../components/ReadingList.astro';
+import { getCollection, getEntry, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const modules = await getCollection('modules');
+  return modules.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { data } = entry;
+const { Content } = await render(entry);
+
+// Resolve referenced cases for the "cases in this module" list.
+const linkedCases = await Promise.all(
+  data.caseRefs.map((ref) => getEntry(ref)),
+);
+---
+
+<Base title={data.title} description={data.summary}>
+  <a href="/modules/" style="font-family:var(--mono); font-size:0.75rem; text-decoration:none;"
+    >← Curriculum</a
+  >
+  <p class="eyebrow" style="margin-top:1rem;">Module {String(data.order).padStart(2, '0')}</p>
+  <h1 style="font-size:var(--step-3);">{data.title}</h1>
+  <p class="lede">{data.summary}</p>
+
+  {
+    data.objectives.length > 0 && (
+      <section style="margin-top:1.5rem;">
+        <p class="eyebrow">By the end of this module you can</p>
+        <ul class="prose">
+          {data.objectives.map((o) => (
+            <li>{o}</li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  <hr />
+  <article class="prose"><Content /></article>
+
+  {
+    linkedCases.length > 0 && (
+      <section style="margin-top:2.5rem;">
+        <p class="eyebrow">Cases for this module</p>
+        <ul class="clean" style="display:flex; flex-direction:column; gap:0.5rem;">
+          {linkedCases.filter(Boolean).map((c) => (
+            <li>
+              <a href={`/cases/${c!.id}/`}>{c!.data.title}</a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  <ReadingList tags={data.zoteroTags} />
+</Base>

@@ -1,0 +1,63 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const modules = (await getCollection('modules', ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const reviewedCount = (await getCollection('simCases', ({ data }) => data.status === 'peer-reviewed'))
+  .length;
+---
+
+<Base title="Home">
+  <section style="margin-bottom:3.5rem;">
+    <p class="eyebrow">Emergency Medicine Residency · Simulation Track</p>
+    <h1 style="font-size:var(--step-4); max-width:16ch;">
+      Learn to teach with simulation.
+    </h1>
+    <p class="lede" style="margin-top:1rem;">
+      A working library of annotated case exemplars, a structured curriculum, and
+      a living reading list — built so every resident leaves the track able to
+      design, run, and debrief a case, not just write one.
+    </p>
+    <div style="display:flex; gap:1rem; margin-top:1.8rem; flex-wrap:wrap;">
+      <a
+        href="/modules/"
+        style="font-family:var(--mono); font-size:0.8rem; letter-spacing:0.05em; text-transform:uppercase; text-decoration:none; background:var(--petrol); color:var(--paper); padding:0.7rem 1.3rem; border-radius:var(--radius);"
+        >Start the curriculum →</a
+      >
+      <a
+        href="/cases/"
+        style="font-family:var(--mono); font-size:0.8rem; letter-spacing:0.05em; text-transform:uppercase; text-decoration:none; color:var(--ink); border:1px solid var(--line-strong); padding:0.7rem 1.3rem; border-radius:var(--radius);"
+        >Browse {reviewedCount} exemplars</a
+      >
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">The pathway</p>
+    <ul class="clean" style="border-top:1px solid var(--line);">
+      {
+        modules.map((m) => (
+          <li style="border-bottom:1px solid var(--line);">
+            <a
+              href={`/modules/${m.id}/`}
+              style="display:flex; gap:1.4rem; align-items:baseline; padding:1.1rem 0; text-decoration:none; color:inherit;"
+            >
+              <span style="font-family:var(--mono); color:var(--coral); font-size:0.9rem;">
+                {String(m.data.order).padStart(2, '0')}
+              </span>
+              <span style="flex:1;">
+                <span style="font-family:var(--display); font-size:var(--step-1); display:block;">
+                  {m.data.title}
+                </span>
+                <span style="color:var(--ink-soft); font-size:var(--step--1);">{m.data.summary}</span>
+              </span>
+              <span style="color:var(--ink-soft);">→</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Base>

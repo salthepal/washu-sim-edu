@@ -1,0 +1,22 @@
+---
+// Interactive annotation used inside a case MDX body and rendered on the
+// /anatomy route. Children = the highlighted case span; `note` = the design
+// explanation. The marker number is assigned client-side in document order.
+interface Props {
+  kind:
+    | 'objective'
+    | 'decision-point'
+    | 'distractor'
+    | 'cue'
+    | 'fidelity'
+    | 'debrief-hook'
+    | 'safety';
+  title?: string;
+  note: string;
+}
+const { kind, title = '', note } = Astro.props;
+---
+<span class="sim-note" data-kind={kind} data-title={title} data-note={note} tabindex="0" role="button">
+  <slot />
+  <sup class="sim-note__marker" aria-hidden="true"></sup>
+</span>

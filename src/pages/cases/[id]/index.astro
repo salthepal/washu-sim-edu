@@ -1,0 +1,82 @@
+---
+import Base from '../../../layouts/Base.astro';
+import StatusBadge from '../../../components/StatusBadge.astro';
+import ReadingList from '../../../components/ReadingList.astro';
+import NotePlain from '../../../components/anatomy/NotePlain.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const cases = await getCollection('simCases');
+  return cases.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { data } = entry;
+const { Content } = await render(entry);
+---
+
+<Base title={data.title} description={data.annotation.slice(0, 150)}>
+  <a href="/cases/" style="font-family:var(--mono); font-size:0.75rem; text-decoration:none;"
+    >← All exemplars</a
+  >
+
+  <div style="display:flex; align-items:center; gap:0.8rem; margin-top:1rem;">
+    <span class="eyebrow" style="margin:0;">{data.modality.replace('-', ' ')}</span>
+    <StatusBadge status={data.status} />
+  </div>
+  <h1 style="font-size:var(--step-3); margin-top:0.5rem;">{data.title}</h1>
+
+  <div
+    style="background:var(--paper-2); border-left:3px solid var(--coral); padding:1rem 1.3rem; border-radius:var(--radius); margin:1.5rem 0; max-width:var(--measure);"
+  >
+    <p class="eyebrow" style="margin-bottom:0.3rem;">Why it's an exemplar</p>
+    <p style="margin:0;">{data.annotation}</p>
+  </div>
+
+  {
+    data.anatomy && (
+      <a
+        href={`/cases/${entry.id}/anatomy/`}
+        style="display:inline-flex; align-items:center; gap:0.5rem; font-family:var(--mono); font-size:0.78rem; letter-spacing:0.05em; text-transform:uppercase; text-decoration:none; background:var(--petrol); color:var(--paper); padding:0.6rem 1.1rem; border-radius:var(--radius); margin-bottom:1.2rem;"
+      >
+        ⌖ Dissect this case
+      </a>
+    )
+  }
+
+  <dl class="meta" style="max-width:var(--measure);">
+    <dt>Author</dt><dd>{data.author}</dd>
+    <dt>Year</dt><dd>{data.year}</dd>
+    {data.chiefComplaint && (<><dt>Chief complaint</dt><dd>{data.chiefComplaint}</dd></>)}
+    {data.duration && (<><dt>Duration</dt><dd>{data.duration} min</dd></>)}
+    <dt>Learners</dt><dd>{data.targetLearners.join(', ')}</dd>
+    {data.milestones.length > 0 && (<><dt>Milestones</dt><dd>{data.milestones.join(', ')}</dd></>)}
+  </dl>
+
+  <section style="margin-top:1.5rem;">
+    <p class="eyebrow">Objectives</p>
+    <ul class="prose">
+      {data.objectives.map((o) => <li>{o}</li>)}
+    </ul>
+  </section>
+
+  {
+    data.attachments.length > 0 && (
+      <section style="margin-top:1rem;">
+        <p class="eyebrow">Files</p>
+        <ul class="clean">
+          {data.attachments.map((a) => (
+            <li>
+              <a href={a.href}>{a.label} ↗</a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  <hr />
+  <article class="prose"><Content components={{ Note: NotePlain }} /></article>
+
+  <ReadingList tags={data.zoteroTags} />
+</Base>

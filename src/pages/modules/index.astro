@@ -1,0 +1,40 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const modules = (await getCollection('modules', ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<Base title="Curriculum">
+  <p class="eyebrow">Learning pathway</p>
+  <h1 style="font-size:var(--step-3);">Curriculum</h1>
+  <p class="lede">
+    Worked in order, the modules take a resident from understanding what
+    simulation is for, through debriefing, to designing and running their own
+    case as a capstone.
+  </p>
+
+  <ul class="clean" style="margin-top:2rem;">
+    {
+      modules.map((m) => (
+        <li style="border-top:1px solid var(--line); padding:1.4rem 0;">
+          <div style="display:flex; gap:1.4rem; align-items:baseline;">
+            <span style="font-family:var(--mono); color:var(--coral); font-size:1rem;">
+              {String(m.data.order).padStart(2, '0')}
+            </span>
+            <div style="flex:1;">
+              <h2 style="font-size:var(--step-2); margin:0 0 0.3rem;">
+                <a href={`/modules/${m.id}/`} style="text-decoration:none;">
+                  {m.data.title}
+                </a>
+              </h2>
+              <p style="margin:0; color:var(--ink-soft); max-width:var(--measure);">{m.data.summary}</p>
+            </div>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</Base>

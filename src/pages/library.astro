@@ -1,0 +1,73 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const docs = await getCollection('documents');
+const bib = (await getCollection('bibliography')).sort((a, b) =>
+  a.data.title.localeCompare(b.data.title),
+);
+
+const kinds = [...new Set(docs.map((d) => d.data.kind))].sort();
+---
+
+<Base title="Library">
+  <p class="eyebrow">Resources</p>
+  <h1 style="font-size:var(--step-3);">Library</h1>
+  <p class="lede">
+    Curated documents, tools, and templates, plus the full reading list. Texts
+    link to institutionally-licensed copies rather than re-hosted files.
+  </p>
+
+  <section style="margin-top:2.5rem;">
+    <h2 style="font-size:var(--step-2);">Documents &amp; tools</h2>
+    {
+      kinds.map((kind) => (
+        <div style="margin-top:1.5rem;">
+          <p class="eyebrow">{kind.replace('-', ' ')}</p>
+          <ul class="clean" style="display:flex; flex-direction:column; gap:0.7rem;">
+            {docs
+              .filter((d) => d.data.kind === kind)
+              .map((d) => (
+                <li style="border-bottom:1px solid var(--line); padding-bottom:0.7rem;">
+                  <a href={d.data.href} style="font-size:var(--step-0);">
+                    {d.data.title} ↗
+                  </a>
+                  {d.data.source && (
+                    <span style="font-family:var(--mono); font-size:0.7rem; color:var(--ink-soft);">
+                      {' '}· {d.data.source}
+                    </span>
+                  )}
+                  {d.data.note && (
+                    <p style="margin:0.2rem 0 0; color:var(--ink-soft); font-size:var(--step--1);">
+                      {d.data.note}
+                    </p>
+                  )}
+                </li>
+              ))}
+          </ul>
+        </div>
+      ))
+    }
+  </section>
+
+  <section style="margin-top:3rem;">
+    <h2 style="font-size:var(--step-2);">Bibliography</h2>
+    {
+      bib.length === 0 ? (
+        <p style="color:var(--ink-soft);">
+          Empty until the Zotero group library is wired up. Set
+          <code>ZOTERO_GROUP_ID</code> (and <code>ZOTERO_API_KEY</code> for a
+          private group) in the Pages build environment.
+        </p>
+      ) : (
+        <ul class="clean" style="display:flex; flex-direction:column; gap:0.9rem; margin-top:1rem;">
+          {bib.map((i) => (
+            <li style="font-size:var(--step--1); line-height:1.5;">
+              <span set:html={i.data.bibHtml} />
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </section>
+</Base>

@@ -1,0 +1,8 @@
+# Faculty/sim leads review all content changes.
+# Replace with real GitHub usernames or a team handle (e.g. @wustl-em/sim-faculty).
+
+/src/content/        @SIM-FACULTY-HANDLE
+/docs/               @SIM-FACULTY-HANDLE
+
+# Site code changes get a maintainer review.
+*                    @SITE-MAINTAINER-HANDLE

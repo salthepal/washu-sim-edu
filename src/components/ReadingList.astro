@@ -1,0 +1,45 @@
+---
+import { getCollection } from 'astro:content';
+
+interface Props {
+  tags: string[];
+  heading?: string;
+}
+const { tags, heading = 'Reading list' } = Astro.props;
+
+const all = await getCollection('bibliography');
+const items =
+  tags.length === 0
+    ? []
+    : all.filter((i) => i.data.tags.some((t) => tags.includes(t)));
+---
+
+{
+  tags.length > 0 && (
+    <section style="margin-top:2.5rem;">
+      <p class="eyebrow">{heading}</p>
+      {items.length === 0 ? (
+        <p style="color:var(--ink-soft); font-size:var(--step--1);">
+          No bibliography items found for {tags.map((t) => `#${t}`).join(', ')}.
+          {' '}Tag items in the Zotero group library and set <code>ZOTERO_GROUP_ID</code> to populate this.
+        </p>
+      ) : (
+        <ul class="clean" style="display:flex; flex-direction:column; gap:0.9rem;">
+          {items.map((i) => (
+            <li style="font-size:var(--step--1); line-height:1.5;">
+              <span set:html={i.data.bibHtml} />
+              {i.data.url && (
+                <>
+                  {' '}
+                  <a href={i.data.url} style="font-family:var(--mono); font-size:0.72rem;">
+                    link ↗
+                  </a>
+                </>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
+  )
+}

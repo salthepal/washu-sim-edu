@@ -1,0 +1,53 @@
+---
+import Base from '../../layouts/Base.astro';
+import CaseCard from '../../components/CaseCard.astro';
+import { getCollection } from 'astro:content';
+
+const all = await getCollection('simCases');
+const reviewed = all.filter((c) => c.data.status === 'peer-reviewed');
+const inProgress = all.filter((c) => c.data.status === 'draft' || c.data.status === 'in-review');
+---
+
+<Base title="Exemplars">
+  <p class="eyebrow">Case library</p>
+  <h1 style="font-size:var(--step-3);">Exemplar sim cases</h1>
+  <p class="lede">
+    Peer-reviewed cases, each annotated with <em>why</em> it teaches well. The best
+    resident-authored capstone cases enter this library after clearing the rubric.
+  </p>
+
+  <section style="margin-top:2.5rem;">
+    <h2 style="font-size:var(--step-1); border-bottom:1px solid var(--line); padding-bottom:0.5rem;">
+      Peer-reviewed
+    </h2>
+    {
+      reviewed.length === 0 ? (
+        <p style="color:var(--ink-soft);">None yet.</p>
+      ) : (
+        <div class="grid" style="margin-top:1.2rem;">
+          {reviewed.map((entry) => (
+            <CaseCard entry={entry} />
+          ))}
+        </div>
+      )
+    }
+  </section>
+
+  {
+    inProgress.length > 0 && (
+      <section style="margin-top:3rem;">
+        <h2 style="font-size:var(--step-1); border-bottom:1px solid var(--line); padding-bottom:0.5rem; color:var(--ink-soft);">
+          In progress
+          <span style="font-family:var(--mono); font-size:0.7rem; font-weight:400;">
+            {' '}· visible to faculty for review
+          </span>
+        </h2>
+        <div class="grid" style="margin-top:1.2rem;">
+          {inProgress.map((entry) => (
+            <CaseCard entry={entry} />
+          ))}
+        </div>
+      </section>
+    )
+  }
+</Base>

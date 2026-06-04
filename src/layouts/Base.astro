@@ -1,0 +1,39 @@
+---
+import '../styles/global.css';
+import SiteHeader from '../components/SiteHeader.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = 'WashU Sim EDU — Emergency Medicine simulation curriculum & resources' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title} — WashU Sim EDU</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Spline+Sans:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <SiteHeader />
+    <main class="wrap" style="padding-block: 2.5rem 4rem;">
+      <slot />
+    </main>
+    <footer class="wrap" style="border-top:1px solid var(--line); padding-block:1.6rem; color:var(--ink-soft); font-size:var(--step--1);">
+      <p style="margin:0;">
+        WashU Sim EDU · Emergency Medicine simulation resource ·
+        access restricted via Cloudflare Access.
+      </p>
+    </footer>
+  </body>
+</html>

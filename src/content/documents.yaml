@@ -1,0 +1,35 @@
+# Curated link library. Link to institutionally-licensed copies (e.g. via the
+# Becker library / EZproxy) rather than re-hosting copyrighted material.
+# `id` must be unique. Replace these examples with your real resources.
+
+- id: pearls-debriefing-tool
+  title: PEARLS Debriefing Tool
+  href: https://example.org/pearls-tool
+  kind: tool
+  source: Society for Simulation in Healthcare
+  note: One-page cognitive aid for structuring a debrief.
+  tags: [debriefing, pearls]
+
+- id: case-template
+  title: Standard Sim Case Template
+  href: https://example.org/case-template
+  kind: template
+  source: WashU EM Sim
+  note: Required starting point for resident-authored cases.
+  tags: [case-writing, template]
+
+- id: dasil-textbook-becker
+  title: Comprehensive Healthcare Simulation (Becker licensed access)
+  href: https://becker.wustl.edu/example-ezproxy-link
+  kind: library-link
+  source: Becker Medical Library
+  note: Full text via institutional license — replace with the real EZproxy URL.
+  tags: [simulation-pedagogy, reference]
+
+- id: acgme-em-milestones
+  title: ACGME Emergency Medicine Milestones
+  href: https://www.acgme.org/specialties/emergency-medicine/milestones/
+  kind: reference
+  source: ACGME
+  note: Reference for the milestone IDs used in case metadata.
+  tags: [milestones, assessment]

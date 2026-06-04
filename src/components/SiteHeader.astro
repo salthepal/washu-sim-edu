@@ -1,0 +1,38 @@
+---
+const path = Astro.url.pathname;
+const links = [
+  { href: '/modules/', label: 'Curriculum' },
+  { href: '/cases/', label: 'Exemplars' },
+  { href: '/library/', label: 'Library' },
+];
+const isActive = (href: string) => path === href || (href !== '/' && path.startsWith(href));
+---
+
+<header
+  class="wrap"
+  style="display:flex; align-items:baseline; justify-content:space-between; gap:1.5rem; padding-block:1.3rem; border-bottom:1px solid var(--line); flex-wrap:wrap;"
+>
+  <a href="/" style="text-decoration:none; display:flex; align-items:baseline; gap:0.6rem;">
+    <span
+      style="font-family:var(--mono); font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--coral);"
+      >WashU</span
+    >
+    <span style="font-family:var(--display); font-size:1.35rem; font-weight:540; color:var(--ink);"
+      >Sim <span style="color:var(--petrol);">EDU</span></span
+    >
+  </a>
+  <nav style="display:flex; gap:1.4rem; font-family:var(--mono); font-size:0.78rem; letter-spacing:0.04em;">
+    {
+      links.map((l) => (
+        <a
+          href={l.href}
+          style={`text-decoration:none; padding-bottom:0.2rem; border-bottom:2px solid ${
+            isActive(l.href) ? 'var(--coral)' : 'transparent'
+          }; color:${isActive(l.href) ? 'var(--ink)' : 'var(--ink-soft)'};`}
+        >
+          {l.label}
+        </a>
+      ))
+    }
+  </nav>
+</header>

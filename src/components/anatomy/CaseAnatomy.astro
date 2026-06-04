@@ -1,0 +1,178 @@
+---
+// Wraps a case MDX body (rendered with the interactive <Note> component) and
+// provides the dissection UX: a numbered annotation rail, a category filter,
+// and a step-through guided tour. Vanilla JS — no framework island needed.
+const kinds = [
+  { id: 'objective', label: 'Objective link' },
+  { id: 'decision-point', label: 'Decision point' },
+  { id: 'distractor', label: 'Distractor' },
+  { id: 'cue', label: 'Embedded cue' },
+  { id: 'fidelity', label: 'Fidelity choice' },
+  { id: 'debrief-hook', label: 'Debrief hook' },
+  { id: 'safety', label: 'Safety / equity' },
+];
+---
+
+<div class="legend" id="legend" role="group" aria-label="Filter annotations by type">
+  {
+    kinds.map((k) => (
+      <button data-filter={k.id} aria-pressed="true" style={`--kc:var(--k-${k.id});`}>
+        <span class="dot" /> {k.label}
+      </button>
+    ))
+  }
+</div>
+
+<div class="tour-bar">
+  <button class="btn" id="tour-start">▶ Start guided dissection</button>
+  <span id="note-count" style="font-family:var(--mono); font-size:0.75rem; color:var(--ink-soft);"></span>
+</div>
+
+<div class="anatomy-grid" style="margin-top:1.6rem;">
+  <article class="prose anatomy-body" id="anatomy-body">
+    <slot />
+  </article>
+  <aside class="anatomy-rail-wrap">
+    <p class="eyebrow">Annotations</p>
+    <ol class="rail" id="rail"></ol>
+  </aside>
+</div>
+
+<!-- Guided-tour card -->
+<div class="tour-card" id="tour-card" aria-live="polite">
+  <div class="tc-meta">
+    <span class="tc-kind" id="tc-kind"></span>
+    <span class="tc-count" id="tc-count"></span>
+  </div>
+  <h3 class="tc-title" id="tc-title"></h3>
+  <p class="tc-note" id="tc-note"></p>
+  <div class="tc-actions">
+    <button class="btn ghost" id="tour-exit">Exit</button>
+    <button class="btn ghost" id="tour-prev">← Prev</button>
+    <button class="btn" id="tour-next">Next →</button>
+  </div>
+</div>
+
+<script>
+  const KIND_LABEL: Record<string, string> = {
+    objective: 'Objective link',
+    'decision-point': 'Decision point',
+    distractor: 'Distractor',
+    cue: 'Embedded cue',
+    fidelity: 'Fidelity choice',
+    'debrief-hook': 'Debrief hook',
+    safety: 'Safety / equity',
+  };
+
+  const body = document.getElementById('anatomy-body');
+  const rail = document.getElementById('rail') as HTMLOListElement | null;
+  const card = document.getElementById('tour-card');
+  if (body && rail && card) {
+    const notes = Array.from(body.querySelectorAll<HTMLElement>('.sim-note'));
+    document.getElementById('note-count')!.textContent =
+      notes.length > 0 ? `${notes.length} annotations` : 'No annotations yet';
+
+    // Number markers + build the rail
+    notes.forEach((el, i) => {
+      const n = i + 1;
+      const kind = el.dataset.kind || '';
+      el.dataset.index = String(i);
+      const marker = el.querySelector('.sim-note__marker');
+      if (marker) marker.textContent = String(n);
+
+      const li = document.createElement('li');
+      li.style.setProperty('--rc', `var(--k-${kind})`);
+      li.dataset.index = String(i);
+      li.dataset.kind = kind;
+      li.innerHTML =
+        `<div class="rl-head"><span class="rl-num">${String(n).padStart(2, '0')}</span>` +
+        `<span class="rl-kind">${KIND_LABEL[kind] ?? kind}</span></div>` +
+        (el.dataset.title ? `<p class="rl-title">${el.dataset.title}</p>` : '') +
+        `<p class="rl-note">${el.dataset.note ?? ''}</p>`;
+      li.addEventListener('click', () => focusNote(i, true));
+      rail.appendChild(li);
+    });
+
+    const railItems = Array.from(rail.querySelectorAll<HTMLElement>('li'));
+
+    function setActive(i: number | null) {
+      notes.forEach((el, j) => el.classList.toggle('is-active', i === j));
+      railItems.forEach((el, j) => el.classList.toggle('is-active', i === j));
+    }
+
+    function focusNote(i: number, scroll: boolean) {
+      setActive(i);
+      if (scroll) notes[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    notes.forEach((el, i) => {
+      el.addEventListener('click', () => focusNote(i, false));
+      el.addEventListener('keydown', (e) => {
+        if ((e as KeyboardEvent).key === 'Enter') focusNote(i, false);
+      });
+    });
+
+    // Category filter
+    document.querySelectorAll<HTMLButtonElement>('#legend button').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const pressed = btn.getAttribute('aria-pressed') === 'true';
+        btn.setAttribute('aria-pressed', String(!pressed));
+        const active = new Set(
+          Array.from(document.querySelectorAll<HTMLButtonElement>('#legend button'))
+            .filter((b) => b.getAttribute('aria-pressed') === 'true')
+            .map((b) => b.dataset.filter),
+        );
+        const dim = active.size < 7;
+        body!.classList.toggle('dimming', dim);
+        notes.forEach((el) => el.classList.toggle('is-shown', active.has(el.dataset.kind)));
+        railItems.forEach((el) => {
+          el.style.display = active.has(el.dataset.kind || '') ? '' : 'none';
+        });
+      });
+    });
+
+    // Guided tour
+    let tour = -1;
+    const setCardColor = (kind: string) => card!.style.setProperty('--tc', `var(--k-${kind})`);
+
+    function showStep(i: number) {
+      if (i < 0 || i >= notes.length) return;
+      tour = i;
+      const el = notes[i];
+      const kind = el.dataset.kind || '';
+      document.body.classList.add('tour-active');
+      card!.classList.add('open');
+      setCardColor(kind);
+      document.getElementById('tc-kind')!.textContent = KIND_LABEL[kind] ?? kind;
+      document.getElementById('tc-count')!.textContent = `${i + 1} / ${notes.length}`;
+      document.getElementById('tc-title')!.textContent = el.dataset.title || 'Design note';
+      document.getElementById('tc-note')!.textContent = el.dataset.note || '';
+      (document.getElementById('tour-prev') as HTMLButtonElement).disabled = i === 0;
+      const next = document.getElementById('tour-next')!;
+      next.textContent = i === notes.length - 1 ? 'Done ✓' : 'Next →';
+      focusNote(i, true);
+    }
+
+    function exitTour() {
+      tour = -1;
+      document.body.classList.remove('tour-active');
+      card!.classList.remove('open');
+      setActive(null);
+    }
+
+    document.getElementById('tour-start')!.addEventListener('click', () =>
+      notes.length ? showStep(0) : null,
+    );
+    document.getElementById('tour-prev')!.addEventListener('click', () => showStep(tour - 1));
+    document.getElementById('tour-next')!.addEventListener('click', () =>
+      tour === notes.length - 1 ? exitTour() : showStep(tour + 1),
+    );
+    document.getElementById('tour-exit')!.addEventListener('click', exitTour);
+    document.addEventListener('keydown', (e) => {
+      if (tour < 0) return;
+      if (e.key === 'ArrowRight') showStep(Math.min(tour + 1, notes.length - 1));
+      if (e.key === 'ArrowLeft') showStep(Math.max(tour - 1, 0));
+      if (e.key === 'Escape') exitTour();
+    });
+  }
+</script>

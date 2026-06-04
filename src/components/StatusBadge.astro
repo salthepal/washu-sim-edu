@@ -1,0 +1,8 @@
+---
+interface Props {
+  status: string;
+}
+const { status } = Astro.props;
+const label = status.replace('-', ' ');
+---
+<span class="badge" data-status={status}>{label}</span>

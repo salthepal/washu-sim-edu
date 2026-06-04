@@ -1,0 +1,29 @@
+---
+import StatusBadge from './StatusBadge.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'simCases'>;
+}
+const { entry } = Astro.props;
+const { data } = entry;
+---
+
+<a
+  href={`/cases/${entry.id}/`}
+  style="text-decoration:none; color:inherit; display:flex; flex-direction:column; gap:0.7rem; background:var(--paper); border:1px solid var(--line); border-radius:var(--radius); padding:1.2rem; transition:border-color .15s, transform .15s;"
+  onmouseover="this.style.borderColor='var(--coral)'; this.style.transform='translateY(-2px)';"
+  onmouseout="this.style.borderColor='var(--line)'; this.style.transform='none';"
+>
+  <div style="display:flex; justify-content:space-between; align-items:center; gap:0.6rem;">
+    <span class="eyebrow" style="margin:0;">{data.modality.replace('-', ' ')}</span>
+    <StatusBadge status={data.status} />
+  </div>
+  <h3 style="font-size:var(--step-1); margin:0; line-height:1.15;">{data.title}</h3>
+  <p style="margin:0; color:var(--ink-soft); font-size:var(--step--1); flex:1;">
+    {data.annotation.slice(0, 130)}{data.annotation.length > 130 ? '…' : ''}
+  </p>
+  <div class="tag-row">
+    {data.targetLearners.map((l) => <span class="chip">{l}</span>)}
+  </div>
+</a>

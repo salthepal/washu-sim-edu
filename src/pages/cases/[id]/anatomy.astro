@@ -1,0 +1,32 @@
+---
+import Base from '../../../layouts/Base.astro';
+import CaseAnatomy from '../../../components/anatomy/CaseAnatomy.astro';
+import Note from '../../../components/anatomy/Note.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const cases = await getCollection('simCases', ({ data }) => data.anatomy);
+  return cases.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { data } = entry;
+const { Content } = await render(entry);
+---
+
+<Base title={`Dissection — ${data.title}`} description={`A guided teardown of the design of "${data.title}".`}>
+  <a href={`/cases/${entry.id}/`} style="font-family:var(--mono); font-size:0.75rem; text-decoration:none;"
+    >← Back to the case</a
+  >
+  <p class="eyebrow" style="margin-top:1rem;">Case dissection</p>
+  <h1 style="font-size:var(--step-3);">{data.title}</h1>
+  <p class="lede">
+    The same case, with the author's design reasoning exposed. Hover or tap a
+    highlight to read why it's there, filter by the kind of design choice, or
+    take the guided dissection to step through the case the way it was built.
+  </p>
+
+  <CaseAnatomy>
+    <Content components={{ Note }} />
+  </CaseAnatomy>
+</Base>
