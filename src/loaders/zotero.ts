@@ -22,9 +22,11 @@ export function zoteroLoader(): Loader {
 
   return {
     name: 'zotero',
-    async load({ store, logger, parseData, generateDigest, config }) {
+    async load({ store, logger, parseData, generateDigest }) {
       const groupId = process.env.ZOTERO_GROUP_ID;
       const apiKey = process.env.ZOTERO_API_KEY;
+
+      store.clear();
 
       if (!groupId) {
         logger.warn(
@@ -38,7 +40,6 @@ export function zoteroLoader(): Loader {
       const headers: Record<string, string> = { 'Zotero-API-Version': '3' };
       if (apiKey) headers.Authorization = `Bearer ${apiKey}`;
 
-      store.clear();
       let start = 0;
       let total = Infinity;
       let fetched = 0;

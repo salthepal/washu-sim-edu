@@ -84,11 +84,34 @@ const kinds = [
       li.style.setProperty('--rc', `var(--k-${kind})`);
       li.dataset.index = String(i);
       li.dataset.kind = kind;
-      li.innerHTML =
-        `<div class="rl-head"><span class="rl-num">${String(n).padStart(2, '0')}</span>` +
-        `<span class="rl-kind">${KIND_LABEL[kind] ?? kind}</span></div>` +
-        (el.dataset.title ? `<p class="rl-title">${el.dataset.title}</p>` : '') +
-        `<p class="rl-note">${el.dataset.note ?? ''}</p>`;
+
+      const head = document.createElement('div');
+      head.className = 'rl-head';
+
+      const num = document.createElement('span');
+      num.className = 'rl-num';
+      num.textContent = String(n).padStart(2, '0');
+      head.appendChild(num);
+
+      const kindLabel = document.createElement('span');
+      kindLabel.className = 'rl-kind';
+      kindLabel.textContent = KIND_LABEL[kind] ?? kind;
+      head.appendChild(kindLabel);
+
+      li.appendChild(head);
+
+      if (el.dataset.title) {
+        const title = document.createElement('p');
+        title.className = 'rl-title';
+        title.textContent = el.dataset.title;
+        li.appendChild(title);
+      }
+
+      const note = document.createElement('p');
+      note.className = 'rl-note';
+      note.textContent = el.dataset.note ?? '';
+      li.appendChild(note);
+
       li.addEventListener('click', () => focusNote(i, true));
       rail.appendChild(li);
     });
