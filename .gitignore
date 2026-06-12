@@ -15,3 +15,8 @@ node_modules/
 .DS_Store
 *.log
 .vscode/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
