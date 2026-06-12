@@ -42,7 +42,7 @@ const reviewedCount = (await getCollection('simCases', ({ data }) => data.status
       defensible teaching objective, an intentional scenario structure, and a
       debrief plan that matches what you wanted learners to practice.
     </p>
-    <div class="grid" style="margin-top:1.2rem;">
+    <ul class="grid clean" style="margin-top:1.2rem;">
       {
         [
           'A focused learner-level objective',
@@ -52,14 +52,14 @@ const reviewedCount = (await getCollection('simCases', ({ data }) => data.status
           'A completed case ready for review and presentation',
           'A short explanation of why the case teaches well',
         ].map((item) => (
-          <div
+          <li
             style="border:1px solid var(--line); background:var(--paper); border-radius:var(--radius); padding:1rem;"
           >
             <p style="margin:0; font-weight:500;">{item}</p>
-          </div>
+          </li>
         ))
       }
-    </div>
+    </ul>
   </section>
 
   <section>

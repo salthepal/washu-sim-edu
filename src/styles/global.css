@@ -72,9 +72,19 @@ a:hover { color: var(--coral); }
   display: grid;
   gap: 0.05rem;
   text-decoration: none;
+  transition: opacity .15s ease;
 }
 
-.site-mark:hover { color: var(--ink); }
+.site-mark:hover,
+.site-mark:focus-visible {
+  color: var(--ink);
+  opacity: 0.82;
+}
+
+.site-mark:focus-visible {
+  outline: 2px solid var(--coral);
+  outline-offset: 4px;
+}
 
 .site-mark__unit {
   color: var(--ink-soft);
