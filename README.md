@@ -1,10 +1,14 @@
 # WashU Emergency Medicine Simulation Education
 
-A gated learning portal for the Emergency Medicine residency simulation track:
-annotated case exemplars, **interactive case dissections**, a structured
-curriculum, a curated document library, and a live Zotero-backed reading list.
-Built with **Astro** content collections, hosted on **Cloudflare Pages**, gated
-by **Cloudflare Access** (email allowlist).
+A learning portal for the simulation component of the Emergency Medicine
+residency Education Rotation: asynchronous case-design modules, annotated case
+exemplars, **interactive case dissections**, a curated document library, and a
+Zotero-backed reading list. Residents use it to build one simulation case with
+a defensible teaching objective, intentional scenario structure, and debrief
+plan.
+
+Built with **Astro** content collections and hosted on **Cloudflare Pages** at
+`https://washu-sim-edu.pages.dev`.
 
 ## Architecture at a glance
 
@@ -14,9 +18,9 @@ by **Cloudflare Access** (email allowlist).
 - **Bibliography is pulled at build time** from a Zotero *group* library via a
   custom Content Layer loader (`src/loaders/zotero.ts`). Zotero renders the
   citations server-side in AMA style, so there's no citation engine in the bundle.
-- **No auth code in the app.** Cloudflare Access sits in front of the static
-  site and enforces the email allowlist. Swapping to SSO later is a policy
-  change in the dashboard, not a rebuild.
+- **No auth code in the app.** When gating is enabled, Cloudflare Access sits in
+  front of the static site and enforces the email allowlist. Swapping to SSO
+  later is a policy change in the dashboard, not a rebuild.
 
 ## Local development
 
@@ -34,8 +38,8 @@ Everything else runs out of the box.
 
 | Collection | Location | Notes |
 |------------|----------|-------|
-| `simCases` | `src/content/sim-cases/*.mdx` | The exemplar library. `status` gates public visibility. |
-| `modules` | `src/content/modules/*.mdx` | Ordered curriculum; can reference cases and Zotero tags. |
+| `simCases` | `src/content/sim-cases/*.mdx` | The exemplar library. `status` marks review state. |
+| `modules` | `src/content/modules/*.mdx` | Ordered simulation curriculum; can reference cases and Zotero tags. |
 | `documents` | `src/content/documents.yaml` | Curated, tagged link library. |
 | `bibliography` | Zotero API | Tag items by module; reading lists assemble themselves. |
 
@@ -78,9 +82,37 @@ See `src/content/sim-cases/pediatric-anaphylaxis.mdx` for a worked example.
    `ZOTERO_API_KEY`, `ZOTERO_STYLE`.
 5. Deploy. PRs get preview deployments automatically.
 
-## Gate the site — Cloudflare Access (email allowlist)
+## Access control — Cloudflare Access
 
-This restricts the whole site to a list of resident/faculty emails. No app code.
+The app contains no authentication code. Access is controlled in Cloudflare Zero
+Trust.
+
+### Current development state
+
+Gating is temporarily disabled while the site is under active development. The
+existing Access application remains attached to `washu-sim-edu.pages.dev`, but
+its policy is currently:
+
+- Application: `WashU Sim EDU`
+- Application ID: `bd50748a-8788-40ae-898b-561ee9f40ec4`
+- Policy ID: `96a940f4-8232-4829-b32e-67417193add3`
+- Policy name: `Temporary development bypass`
+- Decision: `bypass`
+- Include: `everyone`
+
+This makes the Pages hostname publicly reachable without changing the app code
+or deleting the Access application.
+
+### Restore the WashU email gate
+
+When development previews no longer need to be public, restore the policy to:
+
+- Policy name: `WashU Email Domain`
+- Decision: `allow`
+- Include: email domain `wustl.edu`
+- Precedence: `1`
+
+### Configure gating from scratch
 
 1. Add the Pages project to a custom domain (Access policies attach to a
    hostname, e.g. `sim.your-domain.org`).
