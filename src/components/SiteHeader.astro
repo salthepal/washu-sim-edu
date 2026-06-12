@@ -10,16 +10,11 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
 
 <header
   class="wrap"
-  style="display:flex; align-items:baseline; justify-content:space-between; gap:1.5rem; padding-block:1.3rem; border-bottom:1px solid var(--line); flex-wrap:wrap;"
+  style="display:flex; align-items:center; justify-content:space-between; gap:1.5rem; padding-block:1.1rem; border-bottom:1px solid var(--line); flex-wrap:wrap;"
 >
-  <a href="/" style="text-decoration:none; display:flex; align-items:baseline; gap:0.6rem;">
-    <span
-      style="font-family:var(--mono); font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--coral);"
-      >WashU</span
-    >
-    <span style="font-family:var(--display); font-size:1.35rem; font-weight:540; color:var(--ink);"
-      >Sim <span style="color:var(--petrol);">EDU</span></span
-    >
+  <a href="/" class="site-mark" aria-label="WashU Emergency Medicine Simulation Education home">
+    <span class="site-mark__unit">WashU Emergency Medicine</span>
+    <span class="site-mark__name">Simulation Education</span>
   </a>
   <nav style="display:flex; gap:1.4rem; font-family:var(--mono); font-size:0.78rem; letter-spacing:0.04em;">
     {
