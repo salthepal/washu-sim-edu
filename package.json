@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.1.0",
   "private": true,
-  "description": "WashU Sim EDU — Emergency Medicine simulation curriculum & resource portal",
+  "description": "WashU Emergency Medicine Simulation Education curriculum and resource portal",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",

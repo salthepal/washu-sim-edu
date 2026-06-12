@@ -5,9 +5,9 @@ import sitemap from '@astrojs/sitemap';
 
 // Fully static build. Authentication is enforced *in front* of the site by
 // Cloudflare Access (email-allowlist policy), so the app itself ships no auth code.
-// Set `site` to your production URL once the Pages project is named.
+// Production Pages hostname. Authentication is handled by Cloudflare Access.
 export default defineConfig({
-  site: 'https://sim-curriculum.pages.dev',
+  site: 'https://washu-sim-edu.pages.dev',
   output: 'static',
   integrations: [mdx(), sitemap()],
   markdown: {

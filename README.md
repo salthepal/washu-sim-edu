@@ -1,4 +1,4 @@
-# WashU Sim EDU
+# WashU Emergency Medicine Simulation Education
 
 A gated learning portal for the Emergency Medicine residency simulation track:
 annotated case exemplars, **interactive case dissections**, a structured

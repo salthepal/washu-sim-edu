@@ -6,7 +6,10 @@ interface Props {
   title: string;
   description?: string;
 }
-const { title, description = 'WashU Sim EDU — Emergency Medicine simulation curriculum & resources' } = Astro.props;
+const {
+  title,
+  description = 'WashU Emergency Medicine Simulation Education curriculum and resources',
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -15,7 +18,7 @@ const { title, description = 'WashU Sim EDU — Emergency Medicine simulation cu
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <title>{title} — WashU Sim EDU</title>
+    <title>{title} — WashU Simulation Education</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -31,8 +34,7 @@ const { title, description = 'WashU Sim EDU — Emergency Medicine simulation cu
     </main>
     <footer class="wrap" style="border-top:1px solid var(--line); padding-block:1.6rem; color:var(--ink-soft); font-size:var(--step--1);">
       <p style="margin:0;">
-        WashU Sim EDU · Emergency Medicine simulation resource ·
-        access restricted via Cloudflare Access.
+        Washington University Emergency Medicine Simulation Education
       </p>
     </footer>
   </body>
