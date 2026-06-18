@@ -1,4 +1,30 @@
 import type { Loader } from 'astro/loaders';
+import { existsSync, readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+
+let localEnv: Record<string, string> | undefined;
+
+function getBuildEnv(name: string): string | undefined {
+  if (process.env[name]) return process.env[name];
+
+  if (!localEnv) {
+    localEnv = {};
+    const envPath = resolve(process.cwd(), '.env');
+
+    if (existsSync(envPath)) {
+      const lines = readFileSync(envPath, 'utf8').split(/\r?\n/);
+      for (const line of lines) {
+        const match = line.match(/^\s*([\w.-]+)\s*=\s*(.*)?\s*$/);
+        if (!match) continue;
+
+        const [, key, rawValue = ''] = match;
+        localEnv[key] = rawValue.replace(/^['"]|['"]$/g, '');
+      }
+    }
+  }
+
+  return localEnv[name];
+}
 
 /**
  * Zotero Content Layer loader.
@@ -18,13 +44,13 @@ import type { Loader } from 'astro/loaders';
  */
 export function zoteroLoader(): Loader {
   const PAGE_SIZE = 100;
-  const STYLE = process.env.ZOTERO_STYLE ?? 'american-medical-association';
+  const STYLE = getBuildEnv('ZOTERO_STYLE') ?? 'american-medical-association';
 
   return {
     name: 'zotero',
     async load({ store, logger, parseData, generateDigest }) {
-      const groupId = process.env.ZOTERO_GROUP_ID;
-      const apiKey = process.env.ZOTERO_API_KEY;
+      const groupId = getBuildEnv('ZOTERO_GROUP_ID');
+      const apiKey = getBuildEnv('ZOTERO_API_KEY');
 
       store.clear();
 
