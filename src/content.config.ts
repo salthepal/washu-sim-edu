@@ -58,6 +58,16 @@ const modules = defineCollection({
     order: z.number().int(),
     summary: z.string(),
     objectives: z.array(z.string()).default([]),
+    responsePrompts: z
+      .array(
+        z.object({
+          id: z.string().regex(/^[a-z0-9-]+$/),
+          title: z.string(),
+          prompt: z.string(),
+          required: z.boolean().default(true),
+        }),
+      )
+      .default([]),
     caseRefs: z.array(reference('simCases')).default([]),
     zoteroTags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),

@@ -1,0 +1,102 @@
+---
+interface ResponsePrompt {
+  id: string;
+  title: string;
+  prompt: string;
+  required: boolean;
+}
+
+interface Props {
+  moduleId: string;
+  prompts: ResponsePrompt[];
+}
+
+const { moduleId, prompts } = Astro.props;
+---
+
+{
+  prompts.length > 0 && (
+    <section class="response-panel" aria-labelledby="module-responses-heading">
+      <p class="eyebrow">Module responses</p>
+      <h2 id="module-responses-heading" class="response-panel__title">Submit your reflections</h2>
+      <p class="response-panel__intro">
+        These responses are saved for faculty review. They are not shown to other learners.
+      </p>
+
+      <div class="response-panel__forms">
+        {prompts.map((prompt) => (
+          <form class="module-response-form" data-module-id={moduleId} data-prompt-id={prompt.id}>
+            <label class="module-response-form__label" for={`${moduleId}-${prompt.id}`}>
+              <span class="module-response-form__title">{prompt.title}</span>
+              <span class="module-response-form__prompt">{prompt.prompt}</span>
+            </label>
+            <textarea
+              id={`${moduleId}-${prompt.id}`}
+              name="responseText"
+              required={prompt.required}
+              rows="6"
+              maxlength="4000"
+            />
+            <div class="module-response-form__actions">
+              <button type="submit">Submit response</button>
+              <p class="module-response-form__status" role="status" aria-live="polite" />
+            </div>
+          </form>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+<script>
+  const forms = document.querySelectorAll<HTMLFormElement>('.module-response-form');
+
+  for (const form of forms) {
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const textarea = form.querySelector<HTMLTextAreaElement>('textarea[name="responseText"]');
+      const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      const status = form.querySelector<HTMLElement>('.module-response-form__status');
+      const responseText = textarea?.value.trim() ?? '';
+
+      if (!textarea || !button || !status) return;
+      if (textarea.required && responseText.length === 0) {
+        status.textContent = 'Add a response before submitting.';
+        status.dataset.state = 'error';
+        textarea.focus();
+        return;
+      }
+
+      button.disabled = true;
+      status.textContent = 'Saving...';
+      status.dataset.state = 'pending';
+
+      try {
+        const response = await fetch('/api/responses', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            moduleId: form.dataset.moduleId,
+            promptId: form.dataset.promptId,
+            responseText,
+          }),
+        });
+
+        const result = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+          throw new Error(result.error ?? 'Unable to save response.');
+        }
+
+        status.textContent = 'Saved.';
+        status.dataset.state = 'saved';
+      } catch (error) {
+        status.textContent = error instanceof Error ? error.message : 'Unable to save response.';
+        status.dataset.state = 'error';
+      } finally {
+        button.disabled = false;
+      }
+    });
+  }
+</script>

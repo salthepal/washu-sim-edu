@@ -2,6 +2,8 @@
 import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 
+export const prerender = true;
+
 const modules = (await getCollection('modules', ({ data }) => !data.draft)).sort(
   (a, b) => a.data.order - b.data.order,
 );

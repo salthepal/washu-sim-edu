@@ -5,12 +5,11 @@ import sitemap from '@astrojs/sitemap';
 
 import cloudflare from "@astrojs/cloudflare";
 
-// Fully static build. Authentication is enforced *in front* of the site by
-// Cloudflare Access (email-allowlist policy), so the app itself ships no auth code.
-// Production Pages hostname. Authentication is handled by Cloudflare Access.
+// Static content pages are prerendered, while API endpoints run on Cloudflare
+// for authenticated response submission and export.
 export default defineConfig({
   site: 'https://washu-sim-edu.pages.dev',
-  output: 'static',
+  output: 'server',
   integrations: [mdx(), sitemap()],
 
   markdown: {

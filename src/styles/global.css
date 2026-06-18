@@ -249,6 +249,109 @@ ul.clean { list-style: none; padding: 0; margin: 0; }
 }
 .btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line-strong); }
 
+/* Module free-text response forms */
+.response-panel {
+  max-width: var(--measure);
+  margin-top: 2.5rem;
+  border-top: 1px solid var(--line);
+  padding-top: 1.8rem;
+}
+
+.response-panel__title {
+  font-size: var(--step-2);
+}
+
+.response-panel__intro {
+  color: var(--ink-soft);
+  margin: 0 0 1.2rem;
+}
+
+.response-panel__forms {
+  display: grid;
+  gap: 1rem;
+}
+
+.module-response-form {
+  border: 1px solid var(--line);
+  background: var(--paper);
+  border-radius: var(--radius);
+  padding: 1rem;
+}
+
+.module-response-form__label {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.module-response-form__title {
+  font-family: var(--display);
+  font-size: var(--step-1);
+  line-height: 1.2;
+}
+
+.module-response-form__prompt {
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+}
+
+.module-response-form textarea {
+  width: 100%;
+  margin-top: 0.8rem;
+  resize: vertical;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: #fffdf8;
+  color: var(--ink);
+  font: inherit;
+  line-height: 1.5;
+  padding: 0.75rem;
+}
+
+.module-response-form textarea:focus {
+  outline: 2px solid var(--coral);
+  outline-offset: 2px;
+}
+
+.module-response-form__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  align-items: center;
+  margin-top: 0.8rem;
+}
+
+.module-response-form button {
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.6rem 1.1rem;
+  cursor: pointer;
+  background: var(--petrol);
+  color: var(--paper);
+}
+
+.module-response-form button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.module-response-form__status {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+}
+
+.module-response-form__status[data-state='saved'] {
+  color: var(--st-reviewed);
+}
+
+.module-response-form__status[data-state='error'] {
+  color: var(--coral);
+}
+
 .tour-card {
   position: fixed; left: 50%; bottom: 1.4rem; transform: translateX(-50%) translateY(140%);
   width: min(34rem, calc(100vw - 2rem)); z-index: 50;

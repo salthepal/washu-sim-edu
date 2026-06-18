@@ -2,6 +2,8 @@
 import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 
+export const prerender = true;
+
 const docs = await getCollection('documents');
 const bib = (await getCollection('bibliography')).sort((a, b) =>
   a.data.title.localeCompare(b.data.title),

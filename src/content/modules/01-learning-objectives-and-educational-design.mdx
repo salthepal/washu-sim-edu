@@ -9,6 +9,20 @@ objectives:
   - Match case complexity to PGY level and expected clinical role.
   - Define what successful performance looks like before writing the scenario.
   - Limit the case to the decisions and behaviors that serve the objective.
+responsePrompts:
+  - id: objective-draft
+    title: Draft your core objective
+    prompt: >
+      Write one focused learning objective for the simulation case you are
+      considering. Name the learner level and the observable behavior you want
+      to see.
+    required: true
+  - id: success-criteria
+    title: Define success
+    prompt: >
+      List two or three behaviors, decisions, or communication moves that would
+      tell you the learner met this objective.
+    required: true
 caseRefs: [pediatric-anaphylaxis]
 zoteroTags: [simulation-pedagogy, learning-objectives]
 ---

@@ -1,7 +1,10 @@
 ---
 import Base from '../../layouts/Base.astro';
+import ModuleResponseForm from '../../components/ModuleResponseForm.astro';
 import ReadingList from '../../components/ReadingList.astro';
 import { getCollection, getEntry, render } from 'astro:content';
+
+export const prerender = true;
 
 export async function getStaticPaths() {
   const modules = await getCollection('modules');
@@ -56,6 +59,8 @@ const linkedCases = await Promise.all(
       </section>
     )
   }
+
+  <ModuleResponseForm moduleId={entry.id} prompts={data.responsePrompts} />
 
   <ReadingList tags={data.zoteroTags} />
 </Base>

@@ -9,6 +9,19 @@ objectives:
   - Brief standardized patients, confederates, and embedded participants with clear boundaries.
   - Use a dry run to find operational problems before learners enter the room.
   - Manage common technical or learner-flow problems during the case.
+responsePrompts:
+  - id: modality-choice
+    title: Match modality to objective
+    prompt: >
+      Which modality will best support your objective, and what does that
+      modality let the learner practice or reveal?
+    required: true
+  - id: operations-plan
+    title: Identify operational risks
+    prompt: >
+      Name two logistics, technology, or participant-briefing issues you would
+      test during a dry run.
+    required: true
 caseRefs: [pediatric-anaphylaxis, stemi-cardiogenic-shock]
 zoteroTags: [simulation-operations, simulation-pedagogy]
 ---

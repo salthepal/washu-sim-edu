@@ -82,26 +82,65 @@ See `src/content/sim-cases/pediatric-anaphylaxis.mdx` for a worked example.
    `ZOTERO_API_KEY`, `ZOTERO_STYLE`.
 5. Deploy. PRs get preview deployments automatically.
 
+## Module responses
+
+Modules can include structured free-text prompts in frontmatter under
+`responsePrompts`. Learners submit responses from the module page; the API saves
+one latest response per learner/module/prompt in Cloudflare D1. Faculty review
+is via CSV export at `/api/responses/export.csv`.
+
+Current production resources:
+
+- D1 database: `washu-sim-edu-responses`
+- D1 database ID: `e0d582c3-5b5b-4314-be31-e64033244091`
+- Pages binding: `DB`
+- CSV faculty allowlist: `sphadnisuf@gmail.com`
+
+If rebuilding this setup from scratch:
+
+1. Create a D1 database, for example:
+   ```bash
+   npx wrangler d1 create washu-sim-edu-responses
+   ```
+2. Replace the D1 `database_id` in `wrangler.jsonc` with the returned database
+   id.
+3. Apply the migration:
+   ```bash
+   npx wrangler d1 migrations apply washu-sim-edu-responses --remote
+   ```
+4. Set the Cloudflare Access values in `wrangler.jsonc` or the Pages dashboard:
+   - `TEAM_DOMAIN`: your Access team domain, e.g. `https://team.cloudflareaccess.com`
+   - `POLICY_AUD`: this Access application's audience tag
+   - `FACULTY_EMAILS`: comma-separated faculty emails allowed to export CSVs
+
+For local API testing, Wrangler uses local D1 state:
+
+```bash
+npx wrangler d1 migrations apply washu-sim-edu-responses --local
+npm run build
+npx wrangler dev --local
+```
+
 ## Access control — Cloudflare Access
 
-The app contains no authentication code. Access is controlled in Cloudflare Zero
-Trust.
+Site access is controlled in Cloudflare Zero Trust. Module response API routes
+also validate the Cloudflare Access JWT so submissions are tied to the signed-in
+learner email.
 
-### Current development state
-
-Gating is temporarily disabled while the site is under active development. The
-existing Access application remains attached to `washu-sim-edu.pages.dev`, but
-its policy is currently:
+### Current access state
 
 - Application: `WashU Sim EDU`
 - Application ID: `bd50748a-8788-40ae-898b-561ee9f40ec4`
 - Policy ID: `96a940f4-8232-4829-b32e-67417193add3`
-- Policy name: `Temporary development bypass`
-- Decision: `bypass`
-- Include: `everyone`
+- Policy name: `WashU Email Domain`
+- Decision: `allow`
+- Include: email domain `wustl.edu`
+- Include: email `sphadnisuf@gmail.com` for faculty export/admin access
+- Precedence: `1`
 
-This makes the Pages hostname publicly reachable without changing the app code
-or deleting the Access application.
+The production Pages hostname requires Cloudflare Access sign-in. Deployment
+preview hostnames are separate hostnames and are not covered by this Access
+application unless added explicitly.
 
 ### Restore the WashU email gate
 

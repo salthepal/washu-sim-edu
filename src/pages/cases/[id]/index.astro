@@ -5,6 +5,8 @@ import ReadingList from '../../../components/ReadingList.astro';
 import NotePlain from '../../../components/anatomy/NotePlain.astro';
 import { getCollection, render } from 'astro:content';
 
+export const prerender = true;
+
 export async function getStaticPaths() {
   const cases = await getCollection('simCases');
   return cases.map((entry) => ({ params: { id: entry.id }, props: { entry } }));

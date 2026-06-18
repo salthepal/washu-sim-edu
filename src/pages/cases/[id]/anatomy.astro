@@ -4,6 +4,8 @@ import CaseAnatomy from '../../../components/anatomy/CaseAnatomy.astro';
 import Note from '../../../components/anatomy/Note.astro';
 import { getCollection, render } from 'astro:content';
 
+export const prerender = true;
+
 export async function getStaticPaths() {
   const cases = await getCollection('simCases', ({ data }) => data.anatomy);
   return cases.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
