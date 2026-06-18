@@ -26,6 +26,33 @@ function getBuildEnv(name: string): string | undefined {
   return localEnv[name];
 }
 
+function slugifyTag(value: string): string {
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, ' and ')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+function inferLocalTags(item: { title?: string; abstractNote?: string; tags?: string[] }): string[] {
+  const haystack = [item.title, item.abstractNote, ...(item.tags ?? [])]
+    .filter(Boolean)
+    .join(' ')
+    .toLowerCase();
+
+  const tags = new Set<string>();
+
+  if (haystack.includes('debrief')) tags.add('debriefing');
+  if (haystack.includes('advocacy') && haystack.includes('inquiry')) {
+    tags.add('advocacy-inquiry');
+  }
+  if (haystack.includes('psychological safety')) tags.add('psychological-safety');
+  if (haystack.includes('learning objective')) tags.add('learning-objectives');
+
+  return [...tags];
+}
+
 /**
  * Zotero Content Layer loader.
  *
@@ -97,6 +124,22 @@ export function zoteroLoader(): Loader {
               .filter(Boolean)
               .join(', ');
 
+            const zoteroTags = (d.tags ?? [])
+              .map((t: any) => t.tag)
+              .filter(Boolean)
+              .map(slugifyTag)
+              .filter(Boolean);
+            const tags = [
+              ...new Set([
+                ...zoteroTags,
+                ...inferLocalTags({
+                  title: d.title,
+                  abstractNote: d.abstractNote,
+                  tags: zoteroTags,
+                }),
+              ]),
+            ];
+
             const raw = {
               key: item.key,
               itemType: d.itemType ?? 'unknown',
@@ -105,7 +148,7 @@ export function zoteroLoader(): Loader {
               date: d.date || undefined,
               url: d.url || undefined,
               doi: d.DOI || undefined,
-              tags: (d.tags ?? []).map((t: any) => t.tag).filter(Boolean),
+              tags,
               bibHtml: item.bib ?? '',
             };
 

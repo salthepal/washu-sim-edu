@@ -34,42 +34,15 @@ const reviewedCount = (await getCollection('simCases', ({ data }) => data.status
     </div>
   </section>
 
-  <section style="margin-bottom:3rem;">
-    <p class="eyebrow">Simulation deliverable</p>
-    <h2 style="font-size:var(--step-2); max-width:24ch;">What you are building toward</h2>
-    <p style="max-width:var(--measure); color:var(--ink-soft);">
-      By the end of the rotation, you should have one simulation case with a
-      defensible teaching objective, an intentional scenario structure, and a
-      debrief plan that matches what you wanted learners to practice.
-    </p>
-    <ul class="grid clean" style="margin-top:1.2rem;">
-      {
-        [
-          'A focused learner-level objective',
-          'A scenario that creates the right decision point',
-          'Cues, distractors, and fidelity choices that serve the objective',
-          'A debrief plan tied to the case’s teaching target',
-          'A completed case ready for review and presentation',
-          'A short explanation of why the case teaches well',
-        ].map((item) => (
-          <li
-            style="border:1px solid var(--line); background:var(--paper); border-radius:var(--radius); padding:1rem;"
-          >
-            <p style="margin:0; font-weight:500;">{item}</p>
-          </li>
-        ))
-      }
-    </ul>
-  </section>
-
   <section>
     <p class="eyebrow">How to use this site</p>
     <h2 style="font-size:var(--step-2); max-width:24ch;">Build a case with a teaching argument</h2>
     <p style="max-width:var(--measure); color:var(--ink-soft);">
-      Start with the modules, then compare your draft against the exemplar
-      cases. Your check-ins with the simulation team should focus on the design
-      choices behind the case: what you are testing, how the scenario pressures
-      that skill, and how the debrief will make the learning visible.
+      Work through the modules in order, then compare your draft against the
+      exemplar cases. By the end of the rotation, you should have one simulation
+      case with a defensible teaching objective, an intentional scenario
+      structure, and a debrief plan that matches what you wanted learners to
+      practice.
     </p>
     <ul class="clean" style="border-top:1px solid var(--line);">
       {
