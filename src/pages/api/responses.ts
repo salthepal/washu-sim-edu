@@ -1,5 +1,5 @@
 import type { APIContext } from 'astro';
-import { getCollection } from 'astro:content';
+import { moduleResponsePrompts } from '../../data/moduleResponsePrompts';
 import { getRuntimeEnv, jsonError, requireAccessUser, ResponseError } from '../../lib/access';
 
 export const prerender = false;
@@ -36,11 +36,10 @@ export async function POST({ request, locals }: APIContext): Promise<Response> {
       throw new ResponseError(400, `Responses must be ${MAX_RESPONSE_LENGTH} characters or fewer.`);
     }
 
-    const modules = await getCollection('modules', ({ data }) => !data.draft);
-    const module = modules.find((entry) => entry.id === moduleId);
+    const module = moduleResponsePrompts[moduleId as keyof typeof moduleResponsePrompts];
     if (!module) throw new ResponseError(404, 'Module not found.');
 
-    const prompt = module.data.responsePrompts.find((item) => item.id === promptId);
+    const prompt = module[promptId as keyof typeof module];
     if (!prompt) throw new ResponseError(404, 'Prompt not found.');
 
     if (prompt.required && responseText.length === 0) {

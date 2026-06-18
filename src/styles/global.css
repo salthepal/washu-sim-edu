@@ -169,7 +169,14 @@ a:hover { color: var(--coral); }
   margin: 1.4rem 0; padding: 0.2rem 0 0.2rem 1.2rem;
   color: var(--ink-soft); font-style: italic;
 }
-.prose code { font-family: var(--mono); font-size: 0.88em; background: var(--paper-2); padding: 0.1em 0.35em; border-radius: var(--radius); }
+.prose code {
+  font-family: var(--mono);
+  font-size: 0.88em;
+  background: var(--paper-2);
+  padding: 0.1em 0.35em;
+  border-radius: var(--radius);
+  overflow-wrap: anywhere;
+}
 
 hr { border: none; border-top: 1px solid var(--line); margin: 2rem 0; }
 

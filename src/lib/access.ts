@@ -1,3 +1,4 @@
+import { env as cloudflareEnv } from 'cloudflare:workers';
 import { createRemoteJWKSet, jwtVerify } from 'jose';
 
 interface D1Result<T = unknown> {
@@ -27,7 +28,8 @@ export interface AccessUser {
 }
 
 export function getRuntimeEnv(locals: App.Locals): ResponseEnv {
-  return ((locals as { runtime?: { env?: ResponseEnv } }).runtime?.env ?? {}) as ResponseEnv;
+  void locals;
+  return cloudflareEnv as ResponseEnv;
 }
 
 export async function requireAccessUser(request: Request, env: ResponseEnv): Promise<AccessUser> {
@@ -86,9 +88,20 @@ export class ResponseError extends Error {
 }
 
 export function jsonError(error: unknown): Response {
-  if (error instanceof ResponseError) {
+  if (error instanceof ResponseError || isStatusError(error)) {
     return Response.json({ error: error.message }, { status: error.status });
   }
 
   return Response.json({ error: 'Unexpected server error.' }, { status: 500 });
+}
+
+function isStatusError(error: unknown): error is { message: string; status: number } {
+  return (
+    typeof error === 'object' &&
+    error !== null &&
+    'status' in error &&
+    'message' in error &&
+    typeof (error as { status: unknown }).status === 'number' &&
+    typeof (error as { message: unknown }).message === 'string'
+  );
 }

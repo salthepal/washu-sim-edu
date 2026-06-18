@@ -56,6 +56,7 @@ const modules = defineCollection({
   schema: z.object({
     title: z.string(),
     order: z.number().int(),
+    category: z.enum(['core', 'additional']).default('core'),
     summary: z.string(),
     objectives: z.array(z.string()).default([]),
     responsePrompts: z

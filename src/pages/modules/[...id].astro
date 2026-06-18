@@ -25,7 +25,9 @@ const linkedCases = await Promise.all(
   <a href="/modules/" style="font-family:var(--mono); font-size:0.75rem; text-decoration:none;"
     >← Curriculum</a
   >
-  <p class="eyebrow" style="margin-top:1rem;">Module {String(data.order).padStart(2, '0')}</p>
+  <p class="eyebrow" style="margin-top:1rem;">
+    {data.category === 'additional' ? 'Additional topic' : `Module ${String(data.order).padStart(2, '0')}`}
+  </p>
   <h1 style="font-size:var(--step-3);">{data.title}</h1>
   <p class="lede">{data.summary}</p>
 

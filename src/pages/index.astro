@@ -1,11 +1,14 @@
 ---
 import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
-import { additionalTopics } from '../data/additionalTopics';
 
 export const prerender = true;
 
-const modules = (await getCollection('modules', ({ data }) => !data.draft)).sort(
+const allModules = await getCollection('modules', ({ data }) => !data.draft);
+const modules = allModules.filter((m) => m.data.category === 'core').sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const additionalTopics = allModules.filter((m) => m.data.category === 'additional').sort(
   (a, b) => a.data.order - b.data.order,
 );
 const reviewedCount = (await getCollection('simCases', ({ data }) => data.status === 'peer-reviewed'))
@@ -73,9 +76,11 @@ const reviewedCount = (await getCollection('simCases', ({ data }) => data.status
     <ul class="clean grid" style="margin-top:1.4rem;">
       {
         additionalTopics.map((topic) => (
-          <li style="border:1px solid var(--line); border-radius:var(--radius); padding:1rem; background:var(--paper);">
-            <h3 style="font-size:var(--step-1); margin:0 0 0.35rem;">{topic.title}</h3>
-            <p style="margin:0; color:var(--ink-soft); font-size:var(--step--1);">{topic.summary}</p>
+          <li style="border:1px solid var(--line); border-radius:var(--radius); background:var(--paper);">
+            <a href={`/modules/${topic.id}/`} style="display:block; padding:1rem; text-decoration:none; color:inherit;">
+              <h3 style="font-size:var(--step-1); margin:0 0 0.35rem;">{topic.data.title}</h3>
+              <p style="margin:0; color:var(--ink-soft); font-size:var(--step--1);">{topic.data.summary}</p>
+            </a>
           </li>
         ))
       }
