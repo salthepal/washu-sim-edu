@@ -8,22 +8,17 @@ const links = [
 const isActive = (href: string) => path === href || (href !== '/' && path.startsWith(href));
 ---
 
-<header
-  class="wrap"
-  style="display:flex; align-items:center; justify-content:space-between; gap:1.5rem; padding-block:1.1rem; border-bottom:1px solid var(--line); flex-wrap:wrap;"
->
+<header class="site-header wrap">
   <a href="/" class="site-mark" aria-label="WashU Emergency Medicine Simulation Education home">
     <span class="site-mark__unit">WashU Emergency Medicine</span>
     <span class="site-mark__name">Simulation Education</span>
   </a>
-  <nav style="display:flex; gap:1.4rem; font-family:var(--mono); font-size:0.78rem; letter-spacing:0.04em;">
+  <nav class="site-nav" aria-label="Primary navigation">
     {
       links.map((l) => (
         <a
           href={l.href}
-          style={`text-decoration:none; padding-bottom:0.2rem; border-bottom:2px solid ${
-            isActive(l.href) ? 'var(--coral)' : 'transparent'
-          }; color:${isActive(l.href) ? 'var(--ink)' : 'var(--ink-soft)'};`}
+          class={isActive(l.href) ? 'site-nav__link is-active' : 'site-nav__link'}
         >
           {l.label}
         </a>

@@ -12,8 +12,7 @@ const reviewedCount = (await getCollection('simCases', ({ data }) => data.status
 ---
 
 <Base title="Home">
-  <section style="margin-bottom:3rem;">
-    <p class="eyebrow">Emergency Medicine Residency · Education Rotation</p>
+  <section class="home-hero">
     <h1 style="font-size:var(--step-4); max-width:18ch;">
       Build a simulation case worth teaching.
     </h1>
@@ -22,17 +21,9 @@ const reviewedCount = (await getCollection('simCases', ({ data }) => data.status
       Use it to learn the basics of case design and debriefing, study strong
       exemplars, and shape your own case into a clear teaching experience.
     </p>
-    <div style="display:flex; gap:1rem; margin-top:1.8rem; flex-wrap:wrap;">
-      <a
-        href="/modules/"
-        style="font-family:var(--mono); font-size:0.8rem; letter-spacing:0.05em; text-transform:uppercase; text-decoration:none; background:var(--petrol); color:var(--paper); padding:0.7rem 1.3rem; border-radius:var(--radius);"
-        >Start the sim modules →</a
-      >
-      <a
-        href="/cases/"
-        style="font-family:var(--mono); font-size:0.8rem; letter-spacing:0.05em; text-transform:uppercase; text-decoration:none; color:var(--ink); border:1px solid var(--line-strong); padding:0.7rem 1.3rem; border-radius:var(--radius);"
-        >Review {reviewedCount} case exemplar{reviewedCount === 1 ? '' : 's'}</a
-      >
+    <div class="action-row">
+      <a href="/modules/" class="btn">Start the sim modules →</a>
+      <a href="/cases/" class="btn ghost">Review {reviewedCount} case exemplar{reviewedCount === 1 ? '' : 's'}</a>
     </div>
   </section>
 

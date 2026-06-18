@@ -2,76 +2,314 @@
 title: Prebriefing and Debriefing
 order: 4
 summary: >
-  How to establish psychological safety, set the fiction contract, run a focused
-  prebrief, and debrief with structure, curiosity, and alignment to the objective.
+  How to establish the learning contract, run a focused prebrief, and debrief
+  with structure, psychological safety, good judgment, and alignment to the case objective.
 objectives:
-  - Deliver a prebrief that orients learners to the environment and expectations.
-  - Apply a structured debriefing framework (e.g. PEARLS) end to end.
-  - Use advocacy-inquiry to surface a learner's frame without judgment.
-  - Choose a debriefing strategy that matches the learning objective and time available.
+  - Explain why debriefing is designed before the scenario runs, not improvised afterward.
+  - Deliver a prebrief that orients learners to the environment, expectations, roles, and fiction contract.
+  - Use reactions, analysis, and summary phases to keep a debrief organized and learner-centered.
+  - Apply debriefing with good judgment and advocacy-inquiry to surface learner frames.
+  - Choose a debriefing method that fits the objective, time, learner level, and facilitator skill.
+  - Respond constructively when the scenario, technology, or learner engagement does not go as planned.
 responsePrompts:
   - id: prebrief-plan
     title: Draft your prebrief priorities
     prompt: >
-      What must learners know before your case starts so they can engage safely
-      and realistically?
+      What must learners know before your case starts so they can engage safely,
+      realistically, and without avoidable confusion? Include the fiction contract,
+      equipment expectations, roles, and participation norms.
     required: true
-  - id: debrief-plan
-    title: Plan one debrief exchange
+  - id: debrief-map
+    title: Map the debrief
     prompt: >
-      Choose one expected case moment and write an advocacy-inquiry question you
-      could use to explore the learner's frame.
+      Pick one objective from your case and identify the exact case moment you
+      will return to in the debrief. What result, action, and possible learner
+      frame will you explore?
+    required: true
+  - id: advocacy-inquiry
+    title: Write one advocacy-inquiry exchange
+    prompt: >
+      Write one debriefing prompt with three parts: what you observed, why it
+      mattered from your point of view, and a genuine question about what the
+      learner was thinking at the time.
     required: true
 caseRefs: [pediatric-anaphylaxis, stemi-cardiogenic-shock]
 zoteroTags: [psychological-safety, debriefing, advocacy-inquiry, pearls]
 ---
 
-## Psychological safety and the fiction contract
+## Debriefing starts before the case
 
-Simulation asks learners to perform in an artificial environment while being
-observed. The prebrief should lower unnecessary threat by naming the fiction
-contract, confidentiality expectations, available equipment, facilitator roles,
-and the basic assumption that everyone is capable, committed, and trying to
-improve.
+The debrief is not a cleanup conversation after the "real" simulation. It is
+where much of the learning is made explicit. Palaganas, Littlewood, and Szyld
+describe debriefing as a core part of simulation education because it helps
+participants reconsider how they think and practice, not just whether they
+completed a checklist.
 
-Psychological safety does not mean avoiding challenge. It means creating enough
-trust that challenge can lead to learning.
+That means debriefing begins during case design. The objective determines what
+moments must occur in the scenario, what the facilitator should watch for, how
+much time the debrief needs, and what kind of method will fit. A case with no
+debrief plan often drifts toward a mini-lecture, a list of missed facts, or a
+discussion of whatever felt most dramatic.
 
-## What belongs in the prebrief
+Before learners enter the room, the facilitator should know:
 
-A practical prebrief orients learners to the room, manikin or standardized
-patient, monitors, medications, time frame, call-for-help rules, and any
-simulation-specific limitations. It should also clarify whether learners should
-act as they would clinically or verbalize actions that cannot be performed.
+1. Which objective is the debrief built around?
+2. Which scenario moment will likely reveal the learner's reasoning?
+3. What result or performance gap might be visible?
+4. What learner frames could explain the actions?
+5. What take-home behavior or mental model should learners leave with?
 
-This is where the facilitator prevents common friction points, including the
-"no touch" learner who narrates every action instead of examining or treating
-the patient.
+For most simulation sessions, protect real time for the debrief. A short case
+with a rushed debrief is usually a poor trade. The debrief may need as much time
+as the scenario or more, especially when the objective involves clinical
+reasoning, teamwork, communication, or systems thinking.
 
-## Structured debriefing with PEARLS
+## Prebriefing sets the learning contract
 
-Most of the learning in simulation happens in the debrief, not the scenario.
-This module is where residents move from *running* a case to *teaching* with one.
+The prebrief creates the conditions for the scenario and the debrief that
+follows. Learners are vulnerable in simulation because they are performing under
+observation in an artificial environment. A strong prebrief reduces avoidable
+threat without removing challenge.
 
-PEARLS gives facilitators a flexible structure: reactions, description,
-analysis, and summary. The structure keeps the conversation focused while still
-allowing the facilitator to choose the right strategy for the moment.
+A practical prebrief should address:
 
-## Advocacy-inquiry and learner frames
+- **Purpose:** What the session is for and how it connects to the curriculum.
+- **Basic assumption:** Participants are capable, committed, and trying to
+  improve.
+- **Fiction contract:** The simulation will not be perfectly real; learners and
+  facilitators agree to work with its limitations in good faith.
+- **Confidentiality:** What stays in the room and what, if anything, is
+  documented or assessed.
+- **Environment:** Room layout, monitor behavior, manikin or standardized
+  patient limitations, available equipment, medications, and how to call for
+  help.
+- **Expected behavior:** Whether learners should act as they would clinically,
+  verbalize actions that cannot be performed, touch the patient, delegate tasks,
+  or ask for unavailable data.
+- **Debrief process:** Learners should know that the debrief will include their
+  reactions, reconstruction of key events, analysis of decisions, and summary of
+  changes for future practice.
+- **Participation norms:** Respectful challenge is expected. The group will
+  critique behaviors, decisions, and systems, not personal worth.
 
-Pair an observation and your point of view (advocacy) with genuine curiosity
-about the learner's reasoning (inquiry): *"I saw epinephrine was held until the
-second set of vitals — I was concerned that delayed treatment. I'm curious what
-you were seeing at that moment."*
+The prebrief is also where the facilitator prevents common friction points. If
+the case requires learners to examine the manikin, say so. If medications are
+simulated, clarify how orders and administration should occur. If the scenario
+will include a distressed family member or an embedded participant, explain that
+the role exists to support the objective, not to trick or humiliate anyone.
 
-Advocacy-inquiry is useful because it treats performance as the visible result
-of an underlying frame. The debrief is not just about what happened; it is about
-understanding how the learner interpreted the situation at the time.
+## Psychological safety is not comfort
 
-## Adjusting the debrief to the objective
+Psychological safety means learners can take interpersonal risks: speak up,
+make uncertainty visible, admit confusion, ask questions, and examine mistakes
+without being shamed. It does not mean the facilitator avoids difficult topics.
 
-Not every interesting clinical issue deserves debrief time. Return to the
-objective, the key decisions, and the moments that reveal learner reasoning. If
-the group is junior, the debrief may focus on recognition and first actions. If
-the group is senior, the same case may focus on leadership, prioritization, and
-systems factors.
+The Rudolph, Simon, Dufresne, and Raemer paper is useful because it challenges
+the idea that debriefers can be truly "nonjudgmental." Facilitators notice
+things, hold clinical standards, and make judgments about performance. If those
+judgments are hidden behind vague questions, learners may feel confused,
+manipulated, or left to guess what the facilitator really thinks.
+
+The goal is not to have no judgment. The goal is good judgment: clear enough to
+name the concern, humble enough to test the facilitator's interpretation, and
+curious enough to understand why the learner's action made sense in the moment.
+
+## Use a simple debriefing progression
+
+Different debriefing methods use different names, but most debriefs move
+through three broad phases: reactions, analysis, and summary. PEARLS and GAS
+both fit this general arc, and the same progression can guide a novice
+facilitator.
+
+| Phase | Purpose | Facilitator moves |
+| --- | --- | --- |
+| Reactions | Clear the air, acknowledge emotion, and surface immediate concerns. | Ask how the case felt, listen actively, clarify major technical distractions, and note topics worth returning to. |
+| Analysis | Explore the experience in relation to objectives and clinical practice. | Reconstruct key moments, compare expected and actual performance, explore learner frames, teach briefly when needed, and connect the case to future work. |
+| Summary | Consolidate learning and translate it into action. | Ask learners for takeaways, name unresolved but important points, and define one or two changes they will carry forward. |
+
+Do not skip the reactions phase just because it feels less efficient. Learners
+may be self-critical, frustrated by technology, worried about peer judgment, or
+stuck on a clinical fact. If those concerns are ignored, they often leak into
+the analysis phase and prevent deeper reflection.
+
+The analysis phase is where the facilitator spends most of the intellectual
+effort. Choose a small number of high-yield moments. A debrief that tries to
+cover every missed step usually becomes shallow. A debrief that explores one or
+two important moments well can change future practice.
+
+The summary should not be an instructor monologue. Whenever possible, ask
+learners to state what they are taking away. The facilitator can then refine,
+correct, and connect those takeaways to the objective.
+
+## Choose the method that fits the moment
+
+No single debriefing method is best for every simulation. The right choice
+depends on the objective, available time, learner experience, emotional charge,
+and facilitator skill.
+
+| Method | Best fit | Watch out for |
+| --- | --- | --- |
+| Plus-delta | Quick review of what worked and what should change, especially for technical skills or brief sessions. | Vague entries such as "good teamwork" or "better communication." Push for specific behaviors. |
+| GAS | Standardized programs that need a clear gather, analyze, summarize structure. | Over-structuring can feel procedural if the facilitator does not listen for learner priorities. |
+| 4Es | Sessions where events, emotions, empathy, and explanation are central, especially with complex interpersonal dynamics. | The facilitator still needs to connect discussion back to the objective and future action. |
+| PEARLS | Flexible debriefs where the facilitator may blend learner self-assessment, focused facilitation, directive feedback, and teaching. | Flexibility requires judgment; avoid using the framework as permission to wander. |
+| Advocacy-inquiry / good judgment | Clinical reasoning, teamwork, prioritization, communication, and moments where learner frames matter. | It requires real curiosity. If the question is a disguised accusation, learners will hear it. |
+
+For this curriculum, advocacy-inquiry is especially useful because the exemplar
+cases are designed around decision points. The point is not just whether the
+learner gave epinephrine or assigned a team leader. The point is what they saw,
+assumed, prioritized, feared, or misunderstood at the time.
+
+## Debrief actions, frames, and results
+
+The good-judgment model links three things:
+
+- **Results:** What happened in the scenario, such as delayed epinephrine,
+  persistent hypotension, role confusion, or smooth escalation.
+- **Actions:** What learners did or did not do.
+- **Frames:** The knowledge, assumptions, emotions, priorities, and mental
+  models that made those actions seem reasonable in the moment.
+
+Actions and results are visible. Frames are not. The debriefer's job is to use
+visible performance as an entry point into learner reasoning. This matters
+because the same action can come from different frames. A resident may delay
+epinephrine because they do not know the indication, because they are anchored
+on asthma, because they fear medication harm, because the parent is pushing a
+different explanation, or because no one owns the medication role. Each frame
+needs a different teaching response.
+
+## Write advocacy-inquiry in three parts
+
+Advocacy-inquiry pairs the facilitator's view with genuine curiosity about the
+learner's view.
+
+Use this template:
+
+1. **Observation:** "I noticed..."
+2. **Point of view:** "I was concerned because..." or "I thought that helped because..."
+3. **Inquiry:** "What were you seeing or thinking at that moment?"
+
+Examples:
+
+> I noticed epinephrine was not given until after the second set of vital signs.
+> I was concerned because the child had respiratory symptoms plus hypotension,
+> and delayed epinephrine can worsen anaphylaxis. What were you considering at
+> that moment?
+
+> I saw you step back, name yourself as team leader, and assign airway,
+> medications, and documentation in the first minute. I thought that gave the
+> team a clear structure early. What prompted you to do that?
+
+> I noticed the group continued discussing nitrates after the inferior STEMI
+> tracing and hypotension were recognized. I was worried about right-ventricular
+> involvement and worsening preload dependence. How were you interpreting the
+> ECG and blood pressure at that point?
+
+Advocacy-inquiry is not a script for being polite. It is a disciplined way to
+make errors and successes discussable. The facilitator states their concern or
+appreciation clearly, then tests it against the learner's reasoning.
+
+## Debrief the pediatric anaphylaxis case
+
+The pediatric anaphylaxis exemplar has a clean debrief hook: the caregiver asks
+for a breathing treatment "like last time," while the child has features of
+anaphylaxis. If learners delay epinephrine, avoid asking, "Why didn't you give
+epi?" That question may sound like a cross-examination and usually points only
+to the action.
+
+Use the frame:
+
+> I heard the parent ask for a breathing treatment, and I saw the team move
+> toward albuterol before epinephrine. I was concerned because the hypotension
+> and airway symptoms made anaphylaxis the time-critical diagnosis. What was
+> most salient to you when the parent made that request?
+
+Possible frames include anchoring on prior wheezing, reluctance to give
+epinephrine to a child, uncertainty about dose or route, or social pressure from
+the caregiver. Once the frame is visible, the debrief can rehearse the future
+move: name anaphylaxis out loud, assign medication dosing, give IM epinephrine,
+and explain to the caregiver why the treatment differs from prior asthma care.
+
+## Debrief the STEMI cardiogenic shock case
+
+The STEMI case can support a senior-level debrief. The key issue may be less
+about recognizing STEMI and more about prioritizing shock physiology,
+contraindications, leadership, and escalation.
+
+An advocacy-inquiry prompt might be:
+
+> I noticed nitrates were discussed while the patient was hypotensive with an
+> inferior STEMI pattern. I was concerned that this could worsen right-sided
+> preload-dependent shock. What was your working model of the hypotension at
+> that moment?
+
+If the frame is "all chest pain gets nitro," the teaching response is different
+from "we saw shock but did not know how to stabilize before cath" or "no one
+owned the medication decision." The debrief should make the frame visible, then
+connect it to a future action plan.
+
+## When the scenario does not go as planned
+
+A "failed" simulation can still produce useful learning, but the facilitator has
+to protect the objective and the learners.
+
+If learners perform poorly, proceed with respect and directness. Participants
+often know when things went badly. Critique the behavior, decision, or system,
+not the person. Integrity still requires naming unsafe or incorrect performance;
+otherwise the debrief may accidentally endorse it.
+
+If technology fails, decide whether to pause, narrate missing data, restart,
+abort, or redirect the scenario. Then be transparent in the debrief. Do not let
+learners spend the whole conversation litigating the manikin if the educational
+objective can still be salvaged.
+
+If a learner resists the scenario or debrief, first connect back to the clinical
+relevance: "When you have seen this issue with a real patient, how have you
+handled it?" If behavior disrupts the group, name the participation norm and
+redirect. In rare cases, a private conversation after the session is more
+appropriate than continuing to manage the behavior in front of peers.
+
+## Improve the debriefer
+
+Debriefing expertise develops the same way clinical expertise does: deliberate
+practice, observation, coaching, feedback, and repeated attempts. Basic
+structures can be learned quickly, but expert facilitation takes time.
+
+After running a session, debrief the debriefer:
+
+1. Did the prebrief establish the learning contract clearly?
+2. Did the debrief stay aligned with the objective?
+3. Did the facilitator make enough space for reactions?
+4. Were the analysis topics prioritized, or did the conversation sprawl?
+5. Did questions uncover learner frames or only review actions?
+6. Were judgments stated clearly and respectfully?
+7. Did learners leave with a concrete future action?
+
+Quality tools such as DASH and OSAD exist for more formal debriefing assessment,
+but the essential habit is simpler: watch debriefs, ask for feedback, practice
+specific moves, and make debriefing quality part of the simulation program's
+routine improvement work.
+
+## Working product
+
+By the end of this module, you should have a prebrief checklist, a debrief map
+linked to your case objective, and at least one advocacy-inquiry prompt for a
+high-yield moment. Those products make the simulation teachable: learners know
+how to engage, facilitators know what to watch for, and the debrief has a clear
+path from experience to future practice.
+
+## Sources Used
+
+- Littlewood KE, Szyld D. "Chapter 8.2: Debriefing." Excerpt provided in
+  `Palaganas - Debriefing.pdf`. Used to develop the module's treatment of
+  debriefing as part of curriculum design, prebriefing, reactions-analysis-summary
+  progression, debriefing methods, failed simulations, learner engagement, and
+  debriefer quality improvement.
+- Rudolph JW, Simon R, Dufresne RL, Raemer DB. "There's No Such Thing as
+  'Nonjudgmental' Debriefing: A Theory and Method for Debriefing with Good
+  Judgment." Excerpt provided in
+  `there_s_no_such_thing_as__nonjudgmental_.6.pdf`. Used to develop the
+  module's treatment of learner frames, good judgment, psychological safety, and
+  advocacy-inquiry.
+- Local exemplar cases: `pediatric-anaphylaxis` and `stemi-cardiogenic-shock`.
+  Used for the case-specific debriefing examples.

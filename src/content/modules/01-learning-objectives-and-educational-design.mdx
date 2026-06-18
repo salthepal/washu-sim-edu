@@ -2,64 +2,222 @@
 title: Learning Objectives and Educational Design
 order: 1
 summary: >
-  How to choose defensible learning objectives, match them to learner level,
-  define success, and keep a simulation case focused enough to teach well.
+  How to turn a broad simulation idea into specific, observable objectives
+  that focus case content, learner expectations, assessment, and debriefing.
 objectives:
-  - Write learning objectives that are specific, observable, and appropriate for the target learner.
-  - Match case complexity to PGY level and expected clinical role.
-  - Define what successful performance looks like before writing the scenario.
-  - Limit the case to the decisions and behaviors that serve the objective.
+  - Distinguish broad educational goals from specific measurable objectives.
+  - Write objectives that answer who, will do, how well, of what, and by when.
+  - Choose objective types and cognitive levels that match the intended learner performance.
+  - Map simulation objectives to competency, EPA, milestone, or local program expectations.
+  - Use objectives to decide what belongs in the case, what belongs in assessment, and what belongs in debriefing.
 responsePrompts:
-  - id: objective-draft
-    title: Draft your core objective
+  - id: goal-to-objective
+    title: Move from goal to objective
     prompt: >
-      Write one focused learning objective for the simulation case you are
-      considering. Name the learner level and the observable behavior you want
-      to see.
+      Write one broad educational goal for the simulation case you are considering,
+      then rewrite it as one specific measurable objective using the five-part
+      test: who, will do, how well, of what, and by when.
     required: true
   - id: success-criteria
-    title: Define success
+    title: Define observable success
     prompt: >
-      List two or three behaviors, decisions, or communication moves that would
-      tell you the learner met this objective.
+      List two or three behaviors, decisions, communication moves, or work products
+      that would tell a facilitator the learner met this objective during the case.
+    required: true
+  - id: alignment-check
+    title: Check alignment
+    prompt: >
+      Name the competency, EPA, milestone, or local program expectation this
+      objective supports. Then identify one case element you would remove because
+      it does not serve that objective.
     required: true
 caseRefs: [pediatric-anaphylaxis]
 zoteroTags: [simulation-pedagogy, learning-objectives]
 ---
 
-## Why objectives come first
+## Start with the difference between a goal and an objective
 
-A good simulation case starts with a narrow answer to a practical question:
-what should the learner be able to do differently after this experience? The
-objective should name an observable decision, behavior, communication move, or
-team process rather than a broad topic area.
+A simulation case can begin with a broad educational goal: "Residents should
+manage pediatric anaphylaxis" or "Senior residents should lead unstable cardiac
+patients." That kind of goal gives direction, but it is not yet strong enough to
+design a case, choose an assessment, or run a focused debrief.
 
-Objectives also protect the case from becoming too busy. If a lab value,
-confederate line, technology choice, or complication does not serve the
-objective, it probably belongs in another case.
+A specific measurable objective narrows the goal into learner performance. It
+names the learner, the action, the standard, the content or task, and the time
+frame. In practical terms, a useful objective answers five questions:
 
-## Matching objectives to PGY level
+1. Who is the learner?
+2. What will the learner do?
+3. How well, how much, or to what standard?
+4. Of what clinical task, concept, behavior, or work product?
+5. By when?
 
-Learner level should shape the case before the clinical content does. A PGY1
-case may focus on recognizing a time-sensitive diagnosis and taking the first
-correct action. A senior resident case can ask for parallel processing,
-leadership, prioritization, systems awareness, or management of uncertainty.
+For simulation design, this distinction matters because goals describe the
+general destination, while objectives tell the facilitator what to watch for.
+The objective becomes the filter for the scenario stem, vital sign changes,
+confederate prompts, equipment, checklist items, and debrief priorities.
 
-The pediatric anaphylaxis exemplar is intentionally appropriate for junior
-residents because the diagnosis is not the trick. The learning target is early
-epinephrine under time pressure.
+## Why objectives matter in simulation
 
-## Choosing the right amount of complexity
+Objectives are not administrative decoration. They make the case teachable.
+Thomas emphasizes that objectives direct content priorities, suggest teaching
+methods, shape learner and curriculum evaluation, define the boundaries of a
+curriculum, connect local teaching to program-level expectations, and
+communicate intent to learners and faculty.
 
-Complexity is useful only when it creates the right decision pressure. Add
-noise when it reveals a learner's frame, exposes a common error, or gives the
-debrief a teachable moment. Remove noise when it distracts from the intended
-objective.
+In simulation, the same logic applies at the case level:
 
-## Defining what success looks like
+- **Content:** Include details that create the intended decision pressure.
+  Remove details that make the case busy without advancing the objective.
+- **Method:** Choose the modality that lets the learner perform the target
+  behavior. A communication objective may need a standardized participant; a
+  procedural objective may need a task trainer; a team leadership objective may
+  need a full team and time pressure.
+- **Assessment:** Assess the highest-order performance you actually care about,
+  not just a fact that is easier to test.
+- **Debrief:** Return to moments that reveal the learner's frame around the
+  objective. Do not let the debrief become a tour of every possible teaching
+  point.
 
-Before writing the scenario, define the behaviors that would count as success.
-For example: gives IM epinephrine within the first few minutes, calls for help
-before airway collapse, assigns roles clearly, or names right-ventricular
-involvement before giving nitrates. Those success criteria become the backbone
-for the scenario, facilitator cues, assessment notes, and debrief.
+## Use precise verbs
+
+Weak objectives often hide behind verbs such as "know," "understand," "learn,"
+or "appreciate." Those words are hard to observe. They may be acceptable in a
+broad goal, but they do not tell a facilitator what counts as success during a
+case.
+
+Prefer verbs that describe visible performance:
+
+| Instead of | Try |
+| --- | --- |
+| know the treatment for anaphylaxis | administer IM epinephrine at the correct dose |
+| understand shock physiology | differentiate obstructive, distributive, cardiogenic, and hypovolemic shock from available data |
+| appreciate family-centered communication | explain the plan to the caregiver using plain language and invite questions |
+| learn airway management | call for airway support and prepare backup airway equipment before decompensation |
+
+The verb should match the level of performance expected. "List" is appropriate
+when recall is the target. "Interpret," "prioritize," "demonstrate," "manage,"
+"lead," and "adapt" usually ask more of the learner and require a different
+case design.
+
+## Match the objective type to the learning need
+
+Thomas separates objectives into learner, process, and outcome objectives. For
+simulation educators, learner objectives are usually the center of the case, but
+the other types still help define the curriculum around the case.
+
+| Objective type | Simulation use | Example |
+| --- | --- | --- |
+| Cognitive | What the learner should recognize, interpret, explain, or decide | By the end of the case, each PGY1 will identify anaphylaxis as the cause of respiratory distress and hypotension from the history, exam, and vital signs. |
+| Affective | What the learner should value, attend to, or reflect on | By the end of the debrief, each learner will describe how caregiver anxiety affected their communication and prioritization. |
+| Psychomotor or skill | What the learner should demonstrate in the simulated environment | During the case, each learner assigned to medications will draw up and administer IM epinephrine using the correct route, concentration, and dose. |
+| Behavioral | What the learner should incorporate habitually in clinical work | During subsequent ED shifts, learners will routinely call for help and assign roles early when caring for unstable pediatric patients. |
+| Process | What must happen for the educational intervention to be delivered | Before the simulation session, each learner will complete the assigned prework and review the emergency medication dosing card. |
+| Patient or system outcome | The downstream clinical aim the curriculum ultimately supports | The curriculum aims to reduce delayed epinephrine administration in pediatric anaphylaxis cases. |
+
+Not every simulation needs every objective type. Most cases work best with a
+small number of learner objectives and a few explicit process expectations. Use
+patient or system outcomes to clarify why the case matters, even when those
+outcomes are not directly measurable from a single session.
+
+## Aim for the highest meaningful performance
+
+Objectives can target different cognitive levels. A novice may need to recall a
+time-critical dose or recognize a classic presentation. A senior resident may
+need to integrate competing data, manage uncertainty, lead the team, and adapt
+when the first plan fails.
+
+Choose the highest level that is reasonable for the learner and the available
+simulation time. Then write any necessary enabling objectives underneath it.
+For example, a PGY1 objective might be:
+
+> During the first five minutes of the case, each PGY1 will identify pediatric
+> anaphylaxis and order IM epinephrine before treating wheeze with albuterol
+> alone.
+
+That objective requires enabling knowledge: diagnostic features of anaphylaxis,
+epinephrine route and dose, and the limits of bronchodilator-only treatment.
+The case does not need to list all of those as separate headline objectives,
+but the facilitator should know they sit underneath the main performance.
+
+## Map objectives to competencies without losing specificity
+
+Competency-based education asks educators to describe observable work, not just
+time spent in training. EPAs describe professional tasks or units of work.
+Milestones describe developmental progress toward competence. These frameworks
+are useful because they connect a single simulation case to the larger training
+program.
+
+The risk is that competency language can become too broad for case writing.
+"Provide patient care" or "communicate effectively" may be true, but it does
+not tell anyone what to build. Treat the competency, EPA, or milestone as the
+map, then write the simulation objective as the local, observable performance.
+
+For example:
+
+| Program language | Simulation objective |
+| --- | --- |
+| Patient Care: recognizes and manages unstable patients | During the case, the PGY1 will recognize hypotension and respiratory distress as anaphylaxis and administer IM epinephrine before clinical deterioration. |
+| Interpersonal and Communication Skills: communicates with patients and families | During the case, the team leader will give the caregiver a concise explanation of the diagnosis, immediate treatment, and next step while maintaining role clarity with the team. |
+| Systems-Based Practice: mobilizes appropriate resources | During the case, the senior resident will assign roles, request airway backup, and escalate disposition planning within the first five minutes. |
+
+This approach lets the case serve program requirements without becoming generic.
+
+## Keep the list short enough to use
+
+Objectives usually need revision. A first draft often includes too many facts,
+too much detail for the learner level, or objectives that are easier to write
+than to teach. A strong module objective set should be manageable enough that
+learners can remember it and facilitators can debrief it.
+
+Use this audit before finalizing a case:
+
+1. Does each objective answer who, will do, how well, of what, and by when?
+2. Does each objective use an observable verb?
+3. Is the expected performance appropriate for the learner level?
+4. Does the objective support the broader educational goal?
+5. Can the objective be mapped to a competency, EPA, milestone, or local program expectation?
+6. Does the case include a moment where the learner can demonstrate the objective?
+7. Does the assessment or debrief return to that moment?
+8. Is there anything in the case that does not serve one of the objectives?
+
+## Apply it to the pediatric anaphylaxis exemplar
+
+The pediatric anaphylaxis case is intentionally focused. The diagnosis should be
+recognizable enough that the main learning target is action under pressure:
+early epinephrine, role clarity, escalation, and communication with a worried
+caregiver.
+
+A broad goal might be:
+
+> Residents will manage pediatric anaphylaxis.
+
+A stronger objective is:
+
+> During a simulated pediatric resuscitation, each PGY1 team will recognize
+> anaphylaxis and administer weight-based IM epinephrine within the first five
+> minutes while assigning team roles and calling for help.
+
+That objective now tells the case writer what to build. The case needs early
+features of anaphylaxis, a time-sensitive deterioration path, enough medication
+information to assess dosing and route, and a caregiver or team dynamic that
+reveals communication under stress. It does not need every possible rash
+differential, rare medication adverse effect, or prolonged ICU management path.
+
+## Working product
+
+By the end of this module, you should have one broad goal, one to three specific
+measurable objectives, and a short list of success criteria. Those products
+will become the design constraints for Module 2, where the case structure,
+progression, cues, and distractors are built around the objectives rather than
+added after the fact.
+
+## Sources Used
+
+- Thomas PA. "Step 3: Goals and Objectives." Excerpt provided in
+  `Thomas - Learning Objectives.pdf`. Used to develop the module's treatment of
+  goals versus objectives, the five-part test for specific measurable
+  objectives, objective types, competency-based education, EPAs, milestones, and
+  objective refinement.
+- Local exemplar case: `pediatric-anaphylaxis`. Used for the simulation-specific
+  application examples.
