@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
+import { additionalTopics } from '../data/additionalTopics';
 
 export const prerender = true;
 
@@ -56,6 +57,25 @@ const reviewedCount = (await getCollection('simCases', ({ data }) => data.status
               </span>
               <span style="color:var(--ink-soft);">→</span>
             </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section style="margin-top:3rem; border-top:1px solid var(--line); padding-top:2rem;">
+    <p class="eyebrow">Additional topics</p>
+    <h2 style="font-size:var(--step-2); max-width:24ch;">Go deeper after the core modules</h2>
+    <p style="max-width:var(--measure); color:var(--ink-soft);">
+      Interested learners can use these topics to extend their case design,
+      facilitation, and assessment work beyond the required sequence.
+    </p>
+    <ul class="clean grid" style="margin-top:1.4rem;">
+      {
+        additionalTopics.map((topic) => (
+          <li style="border:1px solid var(--line); border-radius:var(--radius); padding:1rem; background:var(--paper);">
+            <h3 style="font-size:var(--step-1); margin:0 0 0.35rem;">{topic.title}</h3>
+            <p style="margin:0; color:var(--ink-soft); font-size:var(--step--1);">{topic.summary}</p>
           </li>
         ))
       }

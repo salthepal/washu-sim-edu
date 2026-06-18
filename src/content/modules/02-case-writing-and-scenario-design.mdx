@@ -3,11 +3,12 @@ title: Case Writing and Scenario Design
 order: 2
 summary: >
   How to build the case structure: signal-to-noise ratio, stepwise progression,
-  learner cues, distractors, and debrief hooks.
+  learner cues, distractors, assessment criteria, and debrief hooks.
 objectives:
   - Describe the essential components of a simulation case.
   - Build a scenario progression that escalates in service of the objective.
   - Use cues, distractors, and confederate prompts intentionally.
+  - Choose observable learner behaviors and assessment tools that match the objective and case modality.
   - Plant debriefable moments during case design rather than improvising them afterward.
 responsePrompts:
   - id: case-decision-point
@@ -21,6 +22,14 @@ responsePrompts:
     prompt: >
       Describe one cue, distractor, or confederate line you might include. What
       learner frame or common error is it designed to reveal?
+    required: true
+  - id: case-assessment-plan
+    title: Define what you will assess
+    prompt: >
+      Choose one objective from your case. What observable learner behaviors
+      would count as meeting it, and would you assess those behaviors with a
+      checklist, a rating scale, direct narrative feedback, or another tool?
+      Explain why that tool fits the objective and modality.
     required: true
 caseRefs: [pediatric-anaphylaxis, stemi-cardiogenic-shock]
 zoteroTags: [case-design, simulation-pedagogy]
@@ -56,6 +65,53 @@ Write the progression so the facilitator knows what changes when learners act,
 what changes when they delay, and when the scenario should be advanced for
 teaching value rather than realism.
 
+## Designing for accurate learner assessment
+
+Assessment is part of case design because the case determines what performance
+the facilitator can actually observe. Before choosing a checklist or rating
+scale, decide whether the case is meant to support formative assessment,
+summative assessment, or both.
+
+Formative assessment helps the learner close a performance gap. In simulation,
+that usually means noticing a behavior tied to a predetermined objective,
+describing the gap, exploring the learner's frame, and using the debrief to
+coach toward better future performance. Summative assessment is different: it
+uses predetermined criteria to make a defensible judgment about competence, such
+as pass/fail, advancement, remediation, or credentialing. Most resident-authored
+rotation cases should be written primarily for formative assessment unless the
+program has built a more formal testing process around them.
+
+Use the objective to decide what counts as evidence. A knowledge objective may
+not need simulation at all. Simulation is most useful when the objective lives
+near the "shows how" or "does" levels of Miller's pyramid: learners must
+demonstrate clinical decision making, technical performance, communication,
+leadership, or team behavior in context.
+
+When writing the case, define three things:
+
+1. **Observable behaviors:** What should the learner do or say if they meet the
+   objective?
+2. **Assessment method:** Is this best captured by a checklist, a global rating
+   scale, a behaviorally anchored scale, direct narrative feedback, or a team
+   performance tool?
+3. **Fairness controls:** What must be standardized so the observation is fair:
+   cues, timing, confederate behavior, equipment, expected vital sign changes,
+   and rater expectations?
+
+Checklists work well for concrete actions where the important question is
+whether the learner did the step: called for epinephrine, placed the patient on
+the monitor, used ultrasound before cannulation, or verbalized a backup plan.
+Rating scales work better when quality matters: leadership, prioritization,
+closed-loop communication, procedural fluency, or crisis resource management.
+Behaviorally anchored rating scales are stronger than vague numerical scores
+because they define what different performance levels look like.
+
+For a low-stakes teaching case, you may not need a psychometrically validated
+tool. You still need alignment. Do not assess behaviors the case never gives the
+learner a fair opportunity to show, and do not turn every possible action into a
+score. Select a small number of assessment targets that map directly to the
+objective and that will also make the debrief more focused.
+
 ## Designing the debrief before the case runs
 
 The debrief begins during case design. Decide in advance which moments are worth
@@ -70,3 +126,7 @@ rather than a long list of possible teaching points.
 - Local exemplar cases: `pediatric-anaphylaxis` and `stemi-cardiogenic-shock`.
   Used for examples of decision points, distractors, progression, and debrief
   hooks.
+- Anson W. Assessment in healthcare simulation. In: Palaganas et al.,
+  *Defining Excellence in Simulation Programs*. Used for the formative versus
+  summative assessment distinction, Miller's pyramid framing, assessment tool
+  selection, and fairness/reliability considerations.
