@@ -7,8 +7,10 @@ Zotero-backed reading list. Residents use it to build one simulation case with
 a defensible teaching objective, intentional scenario structure, and debrief
 plan.
 
-Built with **Astro** content collections and hosted on **Cloudflare Pages** at
-`https://washu-sim-edu.pages.dev`.
+Built with **Astro** content collections and deployed as a full-stack
+Cloudflare Worker at `https://washu-sim-edu.sphadnisuf.workers.dev`. The
+previous Cloudflare Pages deployment remains available only as a temporary
+static fallback during cutover.
 
 ## Architecture at a glance
 
@@ -18,16 +20,17 @@ Built with **Astro** content collections and hosted on **Cloudflare Pages** at
 - **Bibliography is pulled at build time** from a Zotero *group* library via a
   custom Content Layer loader (`src/loaders/zotero.ts`). Zotero renders the
   citations server-side in AMA style, so there's no citation engine in the bundle.
-- **No auth code in the app.** When gating is enabled, Cloudflare Access sits in
-  front of the static site and enforces the email allowlist. Swapping to SSO
-  later is a policy change in the dashboard, not a rebuild.
+- **Cloudflare Access identifies learners.** Access can sit in front of the
+  Worker, while API routes also validate the Access JWT before writing or
+  exporting module responses.
 
 ## Local development
 
 ```bash
 npm install
 npm run dev        # http://localhost:4321
-npm run build      # static output to ./dist
+npm run build      # Worker output to ./dist
+npm run preview    # build and run with Wrangler
 npm run check      # type + content schema check
 ```
 
@@ -69,18 +72,22 @@ the parent asks for <Note kind="distractor" title="Planted anchoring trap"
 
 See `src/content/sim-cases/pediatric-anaphylaxis.mdx` for a worked example.
 
-## Deploy to Cloudflare Pages
+## Deploy to Cloudflare Workers
 
-1. Push this repo to GitHub.
-2. Cloudflare dashboard → **Workers & Pages → Create → Pages → Connect to Git**,
-   select the repo.
-3. Build settings:
-   - Framework preset: **Astro**
-   - Build command: `npm run build`
-   - Output directory: `dist`
-4. (Optional) Add build environment variables `ZOTERO_GROUP_ID`,
-   `ZOTERO_API_KEY`, `ZOTERO_STYLE`.
-5. Deploy. PRs get preview deployments automatically.
+```bash
+npm run check
+npm run build
+npm run deploy
+```
+
+The Worker serves both prerendered content and API routes. Static assets are
+deployed from Astro's generated `dist/client` output, while server code runs via
+the Cloudflare adapter entrypoint.
+
+The old Cloudflare Pages project at `https://washu-sim-edu.pages.dev` is a
+temporary static fallback during migration. Do not use it as the production
+target for module responses because Pages does not run the D1-backed API routes
+from this Worker build.
 
 ## Module responses
 
@@ -93,7 +100,7 @@ Current production resources:
 
 - D1 database: `washu-sim-edu-responses`
 - D1 database ID: `e0d582c3-5b5b-4314-be31-e64033244091`
-- Pages binding: `DB`
+- Worker binding: `DB`
 - CSV faculty allowlist: `sphadnisuf@gmail.com`
 
 If rebuilding this setup from scratch:
@@ -108,7 +115,7 @@ If rebuilding this setup from scratch:
    ```bash
    npx wrangler d1 migrations apply washu-sim-edu-responses --remote
    ```
-4. Set the Cloudflare Access values in `wrangler.jsonc` or the Pages dashboard:
+4. Set the Cloudflare Access values in `wrangler.jsonc` or the Worker dashboard:
    - `TEAM_DOMAIN`: your Access team domain, e.g. `https://team.cloudflareaccess.com`
    - `POLICY_AUD`: this Access application's audience tag
    - `FACULTY_EMAILS`: comma-separated faculty emails allowed to export CSVs
@@ -130,6 +137,7 @@ learner email.
 ### Current access state
 
 - Application: `WashU Sim EDU`
+- Protected hostname: `washu-sim-edu.sphadnisuf.workers.dev`
 - Application ID: `bd50748a-8788-40ae-898b-561ee9f40ec4`
 - Policy ID: `96a940f4-8232-4829-b32e-67417193add3`
 - Policy name: `WashU Email Domain`
@@ -138,9 +146,9 @@ learner email.
 - Include: email `sphadnisuf@gmail.com` for faculty export/admin access
 - Precedence: `1`
 
-The production Pages hostname requires Cloudflare Access sign-in. Deployment
-preview hostnames are separate hostnames and are not covered by this Access
-application unless added explicitly.
+The production Worker hostname requires Cloudflare Access sign-in once gating is
+enabled. Preview or alternate hostnames are separate hostnames and are not
+covered by this Access application unless added explicitly.
 
 ### Restore the WashU email gate
 
@@ -153,7 +161,7 @@ When development previews no longer need to be public, restore the policy to:
 
 ### Configure gating from scratch
 
-1. Add the Pages project to a custom domain (Access policies attach to a
+1. Add the Worker to a custom domain (Access policies attach to a
    hostname, e.g. `sim.your-domain.org`).
 2. Dashboard → **Zero Trust → Access → Applications → Add an application →
    Self-hosted**.
