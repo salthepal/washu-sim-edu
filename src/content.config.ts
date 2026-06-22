@@ -1,4 +1,5 @@
-import { defineCollection, reference, z } from 'astro:content';
+import { defineCollection, reference } from 'astro:content';
+import { z } from 'astro/zod';
 import { glob, file } from 'astro/loaders';
 import { zoteroLoader } from './loaders/zotero';
 
@@ -42,7 +43,7 @@ const simCases = defineCollection({
     zoteroTags: z.array(z.string()).default([]),
     // Optional supporting files hosted in R2 / linked out (not committed to git).
     attachments: z
-      .array(z.object({ label: z.string(), href: z.string().url() }))
+      .array(z.object({ label: z.string(), href: z.url() }))
       .default([]),
   }),
 });
@@ -84,7 +85,7 @@ const documents = defineCollection({
   schema: z.object({
     id: z.string(),
     title: z.string(),
-    href: z.string().url(),
+    href: z.url(),
     kind: z.enum(['guideline', 'template', 'tool', 'reference', 'video', 'library-link']),
     source: z.string().optional(),
     note: z.string().optional(),
