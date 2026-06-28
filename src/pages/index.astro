@@ -18,12 +18,12 @@ const reviewedCount = (await getCollection('simCases', ({ data }) => data.status
 <Base title="Home">
   <section class="home-hero">
     <h1 style="font-size:var(--step-4); max-width:18ch;">
-      Build a simulation case worth teaching.
+      Build a simulation case.
     </h1>
     <p class="lede" style="margin-top:1rem;">
-      This site supports the simulation component of the Education Rotation.
-      Use it to learn the basics of case design and debriefing, study strong
-      exemplars, and shape your own case into a clear teaching experience.
+      This site covers the simulation part of the Education Rotation. Work
+      through the modules on case design and debriefing, review the exemplar
+      cases, and build your own case.
     </p>
     <div class="action-row">
       <a href="/modules/" class="btn">Start the sim modules →</a>
@@ -33,13 +33,12 @@ const reviewedCount = (await getCollection('simCases', ({ data }) => data.status
 
   <section>
     <p class="eyebrow">How to use this site</p>
-    <h2 style="font-size:var(--step-2); max-width:24ch;">Build a case with a teaching argument</h2>
+    <h2 style="font-size:var(--step-2); max-width:24ch;">Work through the modules, then build your case</h2>
     <p style="max-width:var(--measure); color:var(--ink-soft);">
-      Work through the modules in order, then compare your draft against the
-      exemplar cases. By the end of the rotation, you should have one simulation
-      case with a defensible teaching objective, an intentional scenario
-      structure, and a debrief plan that matches what you wanted learners to
-      practice.
+      Do the modules in order, then compare your draft against the exemplar
+      cases. By the end of the rotation you should have one case with a clear
+      teaching objective, a deliberate scenario structure, and a matching
+      debrief plan.
     </p>
     <ul class="clean" style="border-top:1px solid var(--line);">
       {
@@ -68,10 +67,10 @@ const reviewedCount = (await getCollection('simCases', ({ data }) => data.status
 
   <section style="margin-top:3rem; border-top:1px solid var(--line); padding-top:2rem;">
     <p class="eyebrow">Additional topics</p>
-    <h2 style="font-size:var(--step-2); max-width:24ch;">Go deeper after the core modules</h2>
+    <h2 style="font-size:var(--step-2); max-width:24ch;">After the core modules</h2>
     <p style="max-width:var(--measure); color:var(--ink-soft);">
-      Interested learners can use these topics to extend their case design,
-      facilitation, and assessment work beyond the required sequence.
+      Optional topics that extend case design, facilitation, and assessment
+      beyond the required sequence.
     </p>
     <ul class="clean grid" style="margin-top:1.4rem;">
       {

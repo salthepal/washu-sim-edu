@@ -6,6 +6,9 @@
   "observability": {
     "enabled": true
   },
+  "routes": [
+    { "pattern": "edu.washuemsim.org", "custom_domain": true }
+  ],
   "main": "@astrojs/cloudflare/entrypoints/server",
   "compatibility_flags": [
     "global_fetch_strictly_public",
