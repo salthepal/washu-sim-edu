@@ -1,5 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import { existsSync, readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 
 interface Props {
   tags: string[];
@@ -7,7 +10,31 @@ interface Props {
 }
 const { tags, heading = 'Reading list' } = Astro.props;
 
-const all = await getCollection('bibliography');
+function hasZoteroGroupId(): boolean {
+  if (process.env.ZOTERO_GROUP_ID) return true;
+
+  const envPath = resolve(process.cwd(), '.env');
+  if (!existsSync(envPath)) return false;
+
+  return readFileSync(envPath, 'utf8')
+    .split(/\r?\n/)
+    .some((line) => /^\s*ZOTERO_GROUP_ID\s*=\s*\S+/.test(line));
+}
+
+async function getOptionalBibliography(): Promise<CollectionEntry<'bibliography'>[]> {
+  if (!hasZoteroGroupId()) return [];
+
+  try {
+    return await getCollection('bibliography');
+  } catch (error) {
+    if (error instanceof Error && error.message.includes('does not exist or is empty')) {
+      return [];
+    }
+    throw error;
+  }
+}
+
+const all = await getOptionalBibliography();
 const items =
   tags.length === 0
     ? []

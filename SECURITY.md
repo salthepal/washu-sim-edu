@@ -42,3 +42,7 @@ Out of scope:
 ## Security Practices
 
 This repository uses Dependabot and code scanning to help identify dependency and source-code security issues. Secrets must not be committed to the repository; use environment variables and deployment platform secret storage instead.
+
+## Data Residency
+
+The current production D1 database runs in Cloudflare `ENAM`. Treat this as the approved operating region for learner module responses; migrate to a newly created jurisdiction-pinned D1 database before accepting data with stricter residency requirements.

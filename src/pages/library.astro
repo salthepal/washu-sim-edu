@@ -1,11 +1,30 @@
 ---
 import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import { existsSync, readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 
 export const prerender = true;
 
+function hasZoteroGroupId(): boolean {
+  if (process.env.ZOTERO_GROUP_ID) return true;
+
+  const envPath = resolve(process.cwd(), '.env');
+  if (!existsSync(envPath)) return false;
+
+  return readFileSync(envPath, 'utf8')
+    .split(/\r?\n/)
+    .some((line) => /^\s*ZOTERO_GROUP_ID\s*=\s*\S+/.test(line));
+}
+
+async function getOptionalBibliography(): Promise<CollectionEntry<'bibliography'>[]> {
+  if (!hasZoteroGroupId()) return [];
+  return getCollection('bibliography');
+}
+
 const docs = await getCollection('documents');
-const bib = (await getCollection('bibliography')).sort((a, b) =>
+const bib = (await getOptionalBibliography()).sort((a, b) =>
   a.data.title.localeCompare(b.data.title),
 );
 

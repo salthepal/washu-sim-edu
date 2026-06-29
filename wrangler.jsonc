@@ -2,7 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "washu-sim-edu",
   "compatibility_date": "2026-06-04",
-  "workers_dev": true,
+  "workers_dev": false,
   "observability": {
     "enabled": true
   },

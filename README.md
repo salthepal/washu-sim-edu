@@ -8,9 +8,9 @@ a defensible teaching objective, intentional scenario structure, and debrief
 plan.
 
 Built with **Astro** content collections and deployed as a full-stack
-Cloudflare Worker at `https://washu-sim-edu.sphadnisuf.workers.dev`. The
-previous Cloudflare Pages deployment remains available only as a temporary
-static fallback during cutover.
+Cloudflare Worker at `https://edu.washuemsim.org`. The public `workers.dev`
+route is disabled; production traffic uses the custom domain behind Cloudflare
+Access.
 
 ## Architecture at a glance
 
@@ -84,10 +84,12 @@ The Worker serves both prerendered content and API routes. Static assets are
 deployed from Astro's generated `dist/client` output, while server code runs via
 the Cloudflare adapter entrypoint.
 
-The old Cloudflare Pages project at `https://washu-sim-edu.pages.dev` is a
-temporary static fallback during migration. Do not use it as the production
-target for module responses because Pages does not run the D1-backed API routes
-from this Worker build.
+The legacy Cloudflare Pages project at `https://washu-sim-edu.pages.dev` and
+its preview hostnames remain covered by Cloudflare Access, but they are not the
+production target for module responses. Use `https://edu.washuemsim.org` for
+the D1-backed Worker API routes.
+
+Security headers are served from `public/_headers`.
 
 ## Module responses
 
@@ -137,7 +139,9 @@ learner email.
 ### Current access state
 
 - Application: `WashU Sim EDU`
-- Protected hostname: `washu-sim-edu.sphadnisuf.workers.dev`
+- Protected hostname: `edu.washuemsim.org`
+- Protected Pages hostnames: `washu-sim-edu.pages.dev`,
+  `*.washu-sim-edu.pages.dev`
 - Application ID: `bd50748a-8788-40ae-898b-561ee9f40ec4`
 - Policy ID: `96a940f4-8232-4829-b32e-67417193add3`
 - Policy name: `WashU Email Domain`
@@ -146,9 +150,8 @@ learner email.
 - Include: email `sphadnisuf@gmail.com` for faculty export/admin access
 - Precedence: `1`
 
-The production Worker hostname requires Cloudflare Access sign-in once gating is
-enabled. Preview or alternate hostnames are separate hostnames and are not
-covered by this Access application unless added explicitly.
+The production Worker hostname and Pages preview hostnames require Cloudflare
+Access sign-in. The retired `workers.dev` hostname should not be used.
 
 ### Restore the WashU email gate
 

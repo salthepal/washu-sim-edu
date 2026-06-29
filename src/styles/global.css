@@ -116,6 +116,8 @@ a:hover { color: var(--coral); }
 
 .site-nav {
   display: flex;
+  align-items: center;
+  flex-wrap: wrap;
   gap: 1.4rem;
   font-family: var(--mono);
   font-size: 0.78rem;
@@ -142,6 +144,28 @@ a:hover { color: var(--coral); }
 .site-nav__link.is-active {
   color: var(--ink);
   border-bottom-color: var(--coral);
+}
+
+.site-nav__home {
+  color: var(--paper);
+  background: var(--petrol);
+  border: 1px solid var(--petrol);
+  border-radius: var(--radius);
+  padding: 0.45rem 0.75rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.site-nav__home:hover,
+.site-nav__home:focus-visible {
+  color: var(--paper);
+  background: var(--petrol-2);
+  border-color: var(--petrol-2);
+}
+
+.site-nav__home:focus-visible {
+  outline: 2px solid var(--coral);
+  outline-offset: 3px;
 }
 
 /* Mono eyebrow / metadata labels */
