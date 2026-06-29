@@ -20,18 +20,7 @@ const {
     <meta name="description" content={description} />
     <meta name="color-scheme" content="light dark" />
     <title>{title} — WashU Simulation Education</title>
-    <script is:inline>
-      (() => {
-        try {
-          document.documentElement.classList.toggle(
-            'dark',
-            localStorage.getItem('washu-em-sim-theme') === 'dark'
-          );
-        } catch {
-          document.documentElement.classList.remove('dark');
-        }
-      })();
-    </script>
+    <script is:inline src="/theme.js"></script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
