@@ -49,6 +49,35 @@ Everything else runs out of the box.
 Required fields per type live in `src/content.config.ts`. The contribution
 standard is `docs/sim-case-rubric.md`.
 
+## Case file storage
+
+Downloadable case packets are stored in Cloudflare R2, not in `public/`.
+The production bucket is `washu-sim-edu-case-files`, bound to the Worker as
+`CASE_FILES` in `wrangler.jsonc`.
+
+Use object keys under the `cases/` prefix:
+
+```bash
+npx wrangler r2 object put washu-sim-edu-case-files/cases/example-case.docx \
+  --file ./example-case.docx \
+  --remote
+```
+
+The site serves those private R2 objects through the Worker route
+`/downloads/cases/<filename>`. Case frontmatter and `documents.yaml` should link
+to that route, for example:
+
+```yaml
+attachments:
+  - label: Example source case DOCX
+    href: /downloads/cases/example-case.docx
+```
+
+This keeps the external URL stable at `https://edu.washuemsim.org/downloads/cases/...`
+while letting the object storage scale independently from site deploys. The R2
+bucket should remain private; the Worker route sits behind the same Cloudflare
+Access protection as the rest of the site.
+
 ## Case dissections (the "anatomy" view)
 
 Any case can carry an interactive teardown that exposes the author's design
@@ -70,7 +99,7 @@ the parent asks for <Note kind="distractor" title="Planted anchoring trap"
 - The dissection page gives learners hover/tap annotations, a category filter,
   and a **guided step-through** of the case in design order.
 
-See `src/content/sim-cases/pediatric-anaphylaxis.mdx` for a worked example.
+See `src/content/sim-cases/pediatric-drowning.mdx` for a worked example.
 
 ## Deploy to Cloudflare Workers
 

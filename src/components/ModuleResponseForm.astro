@@ -51,6 +51,19 @@ const { moduleId, prompts } = Astro.props;
 <script>
   const forms = document.querySelectorAll<HTMLFormElement>('.module-response-form');
 
+  function errorMessageFromPayload(payload: unknown): string {
+    if (
+      typeof payload === 'object' &&
+      payload !== null &&
+      'error' in payload &&
+      typeof payload.error === 'string'
+    ) {
+      return payload.error;
+    }
+
+    return 'Unable to save response.';
+  }
+
   for (const form of forms) {
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
@@ -86,7 +99,7 @@ const { moduleId, prompts } = Astro.props;
         const result = await response.json().catch(() => ({}));
 
         if (!response.ok) {
-          throw new Error(result.error ?? 'Unable to save response.');
+          throw new Error(errorMessageFromPayload(result));
         }
 
         status.textContent = 'Saved.';

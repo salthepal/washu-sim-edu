@@ -15,8 +15,21 @@ interface D1Database {
   prepare(query: string): D1PreparedStatement;
 }
 
+interface R2ObjectBody {
+  body: ReadableStream;
+  size: number;
+  etag: string;
+  httpEtag?: string;
+  writeHttpMetadata(headers: Headers): void;
+}
+
+interface R2Bucket {
+  get(key: string): Promise<R2ObjectBody | null>;
+}
+
 export interface ResponseEnv {
   DB?: D1Database;
+  CASE_FILES?: R2Bucket;
   TEAM_DOMAIN?: string;
   POLICY_AUD?: string;
   FACULTY_EMAILS?: string;

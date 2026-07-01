@@ -53,6 +53,16 @@ const { Content } = await render(entry);
     {data.duration && (<><dt>Duration</dt><dd>{data.duration} min</dd></>)}
     <dt>Learners</dt><dd>{data.targetLearners.join(', ')}</dd>
     {data.milestones.length > 0 && (<><dt>Milestones</dt><dd>{data.milestones.join(', ')}</dd></>)}
+    {
+      data.source && (
+        <>
+          <dt>Source</dt>
+          <dd>
+            <a href={data.source.href}>{data.source.name}</a>
+          </dd>
+        </>
+      )
+    }
   </dl>
 
   <section style="margin-top:1.5rem;">
@@ -63,13 +73,39 @@ const { Content } = await render(entry);
   </section>
 
   {
+    data.source && (
+      <section
+        style="background:var(--paper-2); border:1px solid var(--line); padding:1rem 1.3rem; border-radius:var(--radius); margin-top:1.5rem; max-width:var(--measure);"
+      >
+        <p class="eyebrow" style="margin-bottom:0.3rem;">Source attribution</p>
+        <p style="margin:0;">
+          Original case from <a href={data.source.href}>{data.source.name}</a>
+          {data.source.license && (
+            <>
+              {' '}under{' '}
+              {data.source.licenseHref ? (
+                <a href={data.source.licenseHref}>{data.source.license}</a>
+              ) : (
+                data.source.license
+              )}
+            </>
+          )}
+          {data.source.note && <>. {data.source.note}</>}
+        </p>
+      </section>
+    )
+  }
+
+  {
     data.attachments.length > 0 && (
       <section style="margin-top:1rem;">
         <p class="eyebrow">Files</p>
         <ul class="clean">
           {data.attachments.map((a) => (
             <li>
-              <a href={a.href}>{a.label} ↗</a>
+              <a href={a.href} download={a.href.startsWith('/') ? true : undefined}>
+                {a.label}{a.href.startsWith('/') ? ' (download)' : ' ↗'}
+              </a>
             </li>
           ))}
         </ul>

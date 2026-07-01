@@ -3,61 +3,267 @@ title: Simulation Research
 order: 12
 category: additional
 summary: >
-  Use a question-first framework to classify projects as descriptive,
-  justification, or clarification studies, then align the literature review,
-  theory, methods, outcomes, and validity evidence.
+  Use theory, translational outcomes, and protocol-level planning to turn a
+  simulation idea into a feasible study that can explain learning, test an
+  intervention, or improve clinical practice.
 objectives:
-  - Draft a focused simulation research question.
+  - Draft a focused simulation research question with a clear purpose.
   - Distinguish descriptive, justification, and clarification studies.
-  - Match study purpose to methods, outcomes, and validity evidence.
+  - Use scientific theory to align the research question, intervention, measures, and analysis.
+  - Select outcomes across the simulation-to-patient-care translational chain.
+  - Identify when a project needs multicenter collaboration and what operational controls that requires.
+responsePrompts:
+  - id: research-question
+    title: Draft the research question
+    prompt: >
+      Write one focused simulation research question. Name the learner or team,
+      the intervention or phenomenon, the comparison if relevant, the outcome,
+      and the time frame. Then classify it as descriptive, justification, or
+      clarification.
+    required: true
+  - id: theory-outcomes
+    title: Link theory to outcomes
+    prompt: >
+      Identify one theory or conceptual framework that should shape the study.
+      Explain how it changes the intervention, what you would measure, and how
+      you would interpret a positive or negative result.
+    required: true
+  - id: protocol-risks
+    title: Find protocol risks
+    prompt: >
+      List three protocol risks for this project, such as weak validity evidence,
+      unreliable simulator data, inconsistent facilitation, missing clinical
+      outcomes, IRB delays, or rater bias. For each risk, write one mitigation.
+    required: true
 caseRefs: []
-zoteroTags: []
+zoteroTags: [simulation-research]
 ---
 
-## Start with the research question
+## Start with what the study is trying to do
 
-Simulation research should begin with a focused question, not with a favorite
-scenario or tool. A strong question identifies the learner group, intervention or
-phenomenon, comparison if relevant, outcomes of interest, and timeframe.
-
-The literature review should do more than prove that the topic is interesting.
-It should show what is already known, what remains unclear, and which theory or
-conceptual framework can guide the project.
-
-## Classify the purpose of the study
-
-One useful framework separates education research into three purposes:
+Simulation research is not just "we ran a simulation and measured something."
+It should answer a question that matters to educators, learners, patients, or
+systems. The question should make the study purpose explicit:
 
 1. **Description:** What is happening? These studies describe a curriculum,
-   process, implementation, learner experience, or observed pattern.
-2. **Justification:** Did it work? These studies test whether an intervention
-   improves an outcome compared with a baseline or comparison condition.
-3. **Clarification:** How or why did it work? These studies use theory and
-   conceptual frameworks to explain mechanisms, context, and meaning.
+   process, implementation, learner experience, team behavior, or observed
+   pattern.
+2. **Justification:** Did it work? These studies test whether a simulation
+   intervention improved an outcome compared with a baseline, another
+   intervention, or usual training.
+3. **Clarification:** How, why, for whom, and under what conditions did it work?
+   These studies use theory, mechanism, and context to explain the result.
 
-Many novice projects stop at description or try to jump straight to proving that
-a simulation "works." A stronger project asks what decision the study can
-actually support and chooses the design accordingly.
+Many novice projects stop at description or jump straight to proving that a
+simulation "works." A stronger project asks what decision the study should
+support. If the decision is whether a new curriculum is ready to adopt, a
+justification study may fit. If the decision is how to adapt a curriculum for
+different learners or sites, a clarification study may be more useful.
 
-## Align methods and outcomes
+## Use theory as a design constraint
+
+Pusic, Boutis, and McGaghie argue that simulation education research is stronger
+when it is grounded in scientific theory rather than only in local intuition.
+They distinguish scientific theory from a loose hunch: a useful theory explains
+why something happens, makes predictions that could be wrong, applies across
+settings, and generates new questions.
+
+For a simulation researcher, theory should change the study. It should affect
+the intervention, the comparison group, the dose of practice, the outcomes, the
+timing of measurement, and the analysis plan.
+
+| Theory or framework | What it helps ask | Design implication |
+| --- | --- | --- |
+| Learning curve theory | How much practice is needed, and how quickly does performance improve? | Measure performance over repeated attempts instead of only using one posttest. Analyze rate of learning, plateau, and learners who do not improve as expected. |
+| Forgetting curve theory | How quickly does skill decay after training? | Include delayed retention testing and plan booster training or refresher simulation. |
+| Deliberate practice | Does focused practice with feedback move learners toward a mastery standard? | Define a minimum passing standard, give feedback, and allow repeated practice until mastery is reached. |
+| Cognitive load theory | Does the simulation design help or overload the learner? | Control extraneous complexity, sequence information intentionally, and measure whether task design supports the intended cognitive work. |
+| Social constructivism and reflective practice | How do learners make meaning with peers, facilitators, and debriefing? | Study interaction, facilitation, psychological safety, and learner reflection rather than treating the simulator as the whole intervention. |
+| Activity theory or situated learning | How does the simulation environment relate to real clinical work? | Examine tools, roles, workflow, institutional context, and transfer between the sim center and clinical setting. |
+
+Theory also helps interpret negative or unexpected results. If a repeated
+practice curriculum does not show improvement, the answer may not be "simulation
+does not work." The result may point to poor measurement, insufficient feedback,
+inadequate practice dose, weak learner engagement, or a mismatch between the
+theory and the intervention.
+
+## Match the question to methods and outcomes
 
 Quantitative methods are useful when the question involves measurable variables,
-relationships, or intervention effects. Qualitative methods are useful when the
-goal is to understand experience, meaning, behavior, or process. Mixed methods
-can be useful when the project needs both outcome data and explanation.
+relationships, intervention effects, or performance thresholds. Qualitative
+methods are useful when the goal is to understand experience, meaning,
+implementation, workflow, or decision making. Mixed methods are useful when the
+project needs both outcome data and explanation.
 
-Simulation studies also need careful attention to reliability and validity. If
-the study uses performance scores, decide who will rate the performance, how
-raters will be trained, which tool will be used, and what validity evidence
-supports interpreting the results.
+The outcome should be as close as feasible to the decision the study is meant to
+support. Cheng and colleagues describe simulation outcomes along a translational
+chain:
+
+| Outcome level | What it measures | Examples |
+| --- | --- | --- |
+| T1 | Outcomes inside the simulation or learning environment | Knowledge, checklist score, time to critical action, team behavior, learner confidence, debriefing quality |
+| T2 | Change in clinical practice or provider behavior | Documentation quality, adherence to a bundle, airway checklist use, time to antibiotics, code team performance |
+| T3 | Patient or public health outcomes | Complication rates, infection rates, survival, length of stay, safety events |
+
+T1 outcomes are often easier to collect, but they need validity evidence. If a
+study uses a checklist, global rating scale, simulator-generated metric, or
+video review, decide what evidence supports the interpretation. Who will rate
+the performance? How will raters be trained? Are raters blinded? Are videos good
+enough for scoring? If simulator data are used, has the equipment been tested
+and calibrated?
+
+T2 and T3 outcomes are more persuasive when they fit the intervention, but they
+are harder to attribute to the simulation alone. A protocol should describe the
+causal chain from simulation activity to clinical behavior to patient outcome,
+and it should name the likely confounders.
+
+## Learn from a patient-outcome example
+
+Barsuk and colleagues studied whether simulation-based mastery learning for
+central venous catheter insertion was associated with fewer catheter-related
+bloodstream infections. The study is useful because it connects a simulator
+curriculum to a patient-facing outcome while also showing the design discipline
+needed to make that claim.
+
+Key design features:
+
+1. The intervention was specific: second- and third-year internal medicine and
+   emergency medicine residents completed central venous catheter simulation
+   training before rotating in the medical ICU.
+2. The curriculum used mastery learning: residents had a baseline test, a
+   checklist-based posttest, deliberate practice with feedback, a minimum
+   passing standard, and additional practice and retesting if needed.
+3. The outcome was clinically meaningful: catheter-related bloodstream infections
+   per 1000 catheter-days.
+4. The investigators compared the intervention ICU before and after training and
+   also used another ICU in the same hospital as a comparison unit.
+
+The reported infection rate in the medical ICU decreased from 3.20 to 0.50
+infections per 1000 catheter-days after simulator-trained residents entered the
+unit. The comparison ICU remained much higher during the study period. The
+Poisson regression estimate corresponded to an 84.5% reduction in CRBSI
+incidence in the postintervention medical ICU.
+
+This is not a generic claim that any simulation improves patient outcomes. The
+claim is narrower and stronger: a specific mastery-learning intervention for a
+high-risk procedure, paired with infection-prevention content and ongoing bundle
+practice, was associated with a large reduction in a measured patient harm. The
+authors also noted important limitations, including the single-institution
+observational design, the small number of infections, possible unmeasured
+confounders, and lack of direct bundle-compliance measurement.
+
+For your own project, use this as a model for alignment:
+
+| Study element | Barsuk example | Question for your project |
+| --- | --- | --- |
+| Clinical problem | Preventable central line infections | What patient, learner, or system problem justifies the work? |
+| Simulation mechanism | Deliberate practice to mastery on CVC insertion | What mechanism should simulation improve? |
+| Assessment | Checklist, minimum passing standard, retesting | What evidence supports your measure and performance standard? |
+| Transfer target | Safer bedside CVC insertion | What clinical behavior should change after simulation? |
+| Patient outcome | CRBSI per 1000 catheter-days | Is a T2 or T3 outcome feasible, or do you need a strong T1 proxy? |
+| Validity threats | Case mix, secular trends, bundles, single center | What alternate explanations must your design address? |
 
 ## Build the protocol before collecting data
 
 A practical research protocol should include the problem statement, purpose,
-research questions or hypotheses, literature review, methods, measures, analysis
-plan, timeline, and required approvals. For resident or faculty simulation
-projects, early input from a statistician, qualitative methodologist, librarian,
-or experienced education researcher can prevent avoidable design problems.
+research questions or hypotheses, literature review, theory or conceptual
+framework, methods, measures, analysis plan, timeline, required approvals, and
+dissemination plan. For resident or faculty simulation projects, early input
+from a statistician, qualitative methodologist, librarian, infection prevention
+partner, informatician, or experienced education researcher can prevent
+avoidable design problems.
+
+Use this sequence:
+
+1. **Define the question.** Confirm that the question is feasible, interesting,
+   novel, ethical, and relevant. Review simulation literature and adjacent
+   clinical or education literature before assuming the gap is local.
+2. **Choose the theory.** State how the theory or framework shaped the
+   intervention, timing, comparison, outcomes, and interpretation.
+3. **Select outcomes.** Decide whether the study needs T1, T2, or T3 outcomes.
+   If you use T1 measures, gather validity evidence. If you use clinical
+   outcomes, define the data source and confounders.
+4. **Pilot the work.** Test recruitment, scenario timing, equipment, data
+   capture, debriefing or confederate scripts, consent, and scoring.
+5. **Write the analysis plan.** Decide how you will handle repeated measures,
+   clustering by team or site, missing data, baseline differences, and negative
+   results.
+6. **Get approvals.** Plan IRB review, data-use permissions, trial registration
+   when appropriate, and any clinical operations approvals before data
+   collection starts.
+
+## Know when multicenter research is worth the work
+
+Cheng and colleagues describe multicenter simulation research as a way to answer
+questions that single centers often cannot answer well. It can increase sample
+size, test whether an effect generalizes across institutions, compare variation
+between sites, and build research capacity. It also adds operational risk.
+
+Use a multicenter design when the question truly requires it:
+
+- The expected effect is small enough that one site will be underpowered.
+- The intervention must work across different learner populations, simulation
+  centers, equipment, or clinical environments.
+- Site-level variation is itself part of the question.
+- A network can provide expertise, data infrastructure, or access to rare
+  events that one center does not have.
+
+Do not go multicenter simply to make a small local project look larger. A weak
+single-site protocol usually becomes a weak multicenter protocol with more
+failure points.
+
+## Control the multicenter details that can break the study
+
+Cheng and colleagues organize multicenter simulation research into four phases:
+planning, project development, study execution, and dissemination. The details
+matter because simulation studies often depend on human performance, local
+equipment, facilitators, confederates, video review, and rater judgment.
+
+| Phase | Required work |
+| --- | --- |
+| Planning | Define the question, review the literature, choose outcomes, test whether clinical outcomes are possible, and conduct pilot work. |
+| Project development | Identify collaborators, assign roles, finalize the protocol, create an operations manual, prepare grants, obtain IRB and site agreements, register the study when appropriate, form a manuscript oversight committee, and run feasibility testing at each site. |
+| Study execution | Standardize recruitment, consent, randomization if used, communication, data capture, quality assurance, rater training, data abstraction, and missing-data review. |
+| Dissemination | Present and publish the main study before overlapping substudies, share educational materials when appropriate, engage media or professional networks thoughtfully, and plan translation to practice. |
+
+The research operations manual is the practical backbone. It should specify the
+study flow, inclusion and exclusion criteria, consent and recruitment scripts,
+simulation setup, equipment settings, confederate behavior, facilitator
+instructions, intervention delivery, debriefing constraints if relevant, data
+management, naming conventions, video handling, rater assignment, and the
+process for reporting protocol deviations.
+
+Feasibility testing should happen at every site. It should answer basic but
+important questions: Can the room be set up the same way? Does the manikin or
+task trainer produce the needed data? Are audio and video usable for rating? Do
+local confederates behave consistently? Does the case timing work? Are data
+fields complete? Are there site-specific barriers that would bias enrollment or
+performance?
+
+Quality assurance should be active during the study, not discovered at the end.
+Use centralized data checks, intermittent video review, rater calibration and
+booster training, dashboards when useful, and planned communication. When video
+review is used, avoid assigning raters to participants from their own site when
+possible. Analyze missing data to see whether it is systematic, such as poor
+performances not being recorded or one site missing a data field.
+
+## Working product
+
+By the end of this module, you should have a one-page simulation research
+concept sheet:
+
+1. Research question and study purpose.
+2. Theory or framework and how it changes the design.
+3. Proposed intervention or phenomenon of interest.
+4. Primary and secondary outcomes, labeled T1, T2, or T3.
+5. Validity evidence needed for each measure.
+6. Study design, comparison group, and analysis plan.
+7. Pilot plan and feasibility risks.
+8. IRB, data, operations, and dissemination needs.
+
+That concept sheet is not the full protocol, but it should make the project
+specific enough for feedback from a research mentor, statistician, librarian,
+operations partner, or multicenter collaborator.
 
 ## Sources Used
 
@@ -65,3 +271,17 @@ or experienced education researcher can prevent avoidable design problems.
   *Defining Excellence in Simulation Programs*. Used for the question-first
   research process, descriptive/justification/clarification framework,
   quantitative/qualitative/mixed methods framing, and protocol elements.
+- Pusic MV, Boutis K, McGaghie WC. Role of scientific theory in simulation
+  education research. *Simulation in Healthcare*. 2018;13:S7-S14. Used for the
+  theory-centered framing, features of useful scientific theory, learning curve
+  example, and theory-to-design implications.
+- Barsuk JH, Cohen ER, Feinglass J, McGaghie WC, Wayne DB. Use of
+  simulation-based education to reduce catheter-related bloodstream infections.
+  *Archives of Internal Medicine*. 2009;169(15):1420-1423. Used as the
+  patient-outcome example connecting mastery learning, procedural competence,
+  comparison design, and CRBSI outcomes.
+- Cheng A, Kessler D, Mackinnon R, et al. Conducting multicenter research in
+  healthcare simulation: lessons learned from the INSPIRE network. *Advances in
+  Simulation*. 2017;2:6. Used for the translational outcome framing,
+  multicenter phases, operations manual, feasibility testing, quality assurance,
+  rater training, dissemination, and translation-to-practice guidance.

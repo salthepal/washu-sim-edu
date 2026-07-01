@@ -28,6 +28,12 @@
       "id": "12ce5c1cbbdc4926844c82bf450d42f0"
     }
   ],
+  "r2_buckets": [
+    {
+      "binding": "CASE_FILES",
+      "bucket_name": "washu-sim-edu-case-files"
+    }
+  ],
   "vars": {
     "TEAM_DOMAIN": "https://salph.cloudflareaccess.com",
     "POLICY_AUD": "0f7bb10b8959257c8e9c3bbca7603cf250e28a19406137df1d59a31d6fdb79e5",

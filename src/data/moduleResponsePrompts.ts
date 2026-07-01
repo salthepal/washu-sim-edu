@@ -22,4 +22,9 @@ export const moduleResponsePrompts: Record<string, Record<string, ModuleResponse
     'debrief-map': { required: true },
     'advocacy-inquiry': { required: true },
   },
+  '12-simulation-research': {
+    'research-question': { required: true },
+    'theory-outcomes': { required: true },
+    'protocol-risks': { required: true },
+  },
 };

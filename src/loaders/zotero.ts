@@ -49,6 +49,14 @@ function inferLocalTags(item: { title?: string; abstractNote?: string; tags?: st
   }
   if (haystack.includes('psychological safety')) tags.add('psychological-safety');
   if (haystack.includes('learning objective')) tags.add('learning-objectives');
+  if (
+    haystack.includes('scientific theory') ||
+    haystack.includes('multicenter research') ||
+    haystack.includes('catheter-related bloodstream infections') ||
+    (haystack.includes('simulation') && haystack.includes('research'))
+  ) {
+    tags.add('simulation-research');
+  }
 
   return [...tags];
 }

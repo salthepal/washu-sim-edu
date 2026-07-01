@@ -3,6 +3,11 @@ import { z } from 'astro/zod';
 import { glob, file } from 'astro/loaders';
 import { zoteroLoader } from './loaders/zotero';
 
+const hrefSchema = z.union([
+  z.url(),
+  z.string().regex(/^\/(?!\/)/, 'Expected an absolute URL or root-relative path'),
+]);
+
 /**
  * Sim case exemplars — the centerpiece of the library.
  *
@@ -39,11 +44,21 @@ const simCases = defineCollection({
     status: z.enum(['draft', 'in-review', 'peer-reviewed', 'archived']).default('draft'),
     // True when the case body uses <Note> components and has a dissection view.
     anatomy: z.boolean().default(false),
+    // Source attribution for externally authored cases.
+    source: z
+      .object({
+        name: z.string(),
+        href: hrefSchema,
+        license: z.string().optional(),
+        licenseHref: hrefSchema.optional(),
+        note: z.string().optional(),
+      })
+      .optional(),
     // Cross-links the case to its reading list (matches Zotero item tags).
     zoteroTags: z.array(z.string()).default([]),
-    // Optional supporting files hosted in R2 / linked out (not committed to git).
+    // Optional supporting files, either served through the R2 download route or linked out.
     attachments: z
-      .array(z.object({ label: z.string(), href: z.url() }))
+      .array(z.object({ label: z.string(), href: hrefSchema }))
       .default([]),
   }),
 });
@@ -85,8 +100,8 @@ const documents = defineCollection({
   schema: z.object({
     id: z.string(),
     title: z.string(),
-    href: z.url(),
-    kind: z.enum(['guideline', 'template', 'tool', 'reference', 'video', 'library-link']),
+    href: hrefSchema,
+    kind: z.enum(['case', 'guideline', 'template', 'tool', 'reference', 'video', 'library-link']),
     source: z.string().optional(),
     note: z.string().optional(),
     tags: z.array(z.string()).default([]),
