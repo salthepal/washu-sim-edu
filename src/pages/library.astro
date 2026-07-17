@@ -90,7 +90,7 @@ const kinds = [...new Set(docs.map((d) => d.data.kind))].sort();
         <ol style="display:flex; flex-direction:column; gap:0.9rem; margin:1rem 0 0; padding:0; list-style:none;">
           {bib.map((i, index) => (
             <li style="display:grid; grid-template-columns:2rem minmax(0, 1fr); gap:0.5rem; font-size:var(--step--1); line-height:1.5;">
-              <span aria-hidden="true">{index + 1}.</span>
+              <span>{index + 1}.</span>
               <div set:html={formatCitationHtml(i.data.bibHtml)} />
             </li>
           ))}
