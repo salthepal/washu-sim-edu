@@ -1,8 +1,6 @@
 ---
 import Base from '../../../layouts/Base.astro';
-import StatusBadge from '../../../components/StatusBadge.astro';
 import ReadingList from '../../../components/ReadingList.astro';
-import NotePlain from '../../../components/anatomy/NotePlain.astro';
 import { getCollection, render } from 'astro:content';
 
 export const prerender = true;
@@ -24,7 +22,6 @@ const { Content } = await render(entry);
 
   <div style="display:flex; align-items:center; gap:0.8rem; margin-top:1rem;">
     <span class="eyebrow" style="margin:0;">{data.modality.replace('-', ' ')}</span>
-    <StatusBadge status={data.status} />
   </div>
   <h1 style="font-size:var(--step-3); margin-top:0.5rem;">{data.title}</h1>
 
@@ -34,17 +31,6 @@ const { Content } = await render(entry);
     <p class="eyebrow" style="margin-bottom:0.3rem;">Why it's an exemplar</p>
     <p style="margin:0;">{data.annotation}</p>
   </div>
-
-  {
-    data.anatomy && (
-      <a
-        href={`/cases/${entry.id}/anatomy/`}
-        style="display:inline-flex; align-items:center; gap:0.5rem; font-family:var(--mono); font-size:0.78rem; letter-spacing:0.05em; text-transform:uppercase; text-decoration:none; background:var(--petrol); color:var(--paper); padding:0.6rem 1.1rem; border-radius:var(--radius); margin-bottom:1.2rem;"
-      >
-        ⌖ Dissect this case
-      </a>
-    )
-  }
 
   <dl class="meta" style="max-width:var(--measure);">
     <dt>Author</dt><dd>{data.author}</dd>
@@ -114,7 +100,7 @@ const { Content } = await render(entry);
   }
 
   <hr />
-  <article class="prose"><Content components={{ Note: NotePlain }} /></article>
+  <article class="prose"><Content /></article>
 
   <ReadingList tags={data.zoteroTags} />
 </Base>

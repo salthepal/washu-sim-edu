@@ -1,5 +1,4 @@
 ---
-import StatusBadge from './StatusBadge.astro';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
@@ -15,9 +14,8 @@ const { data } = entry;
   onmouseover="this.style.borderColor='var(--coral)'; this.style.transform='translateY(-2px)';"
   onmouseout="this.style.borderColor='var(--line)'; this.style.transform='none';"
 >
-  <div style="display:flex; justify-content:space-between; align-items:center; gap:0.6rem;">
+  <div style="display:flex; align-items:center; gap:0.6rem;">
     <span class="eyebrow" style="margin:0;">{data.modality.replace('-', ' ')}</span>
-    <StatusBadge status={data.status} />
   </div>
   <h3 style="font-size:var(--step-1); margin:0; line-height:1.15;">{data.title}</h3>
   <p style="margin:0; color:var(--ink-soft); font-size:var(--step--1); flex:1;">
