@@ -3,51 +3,287 @@ title: Technology in Simulation
 order: 10
 category: additional
 summary: >
-  How monitors, task trainers, manikins, audiovisual tools, and emerging
-  platforms can support the learning objective without distracting from it.
+  How to select, operate, and evaluate manikins, virtual simulation, and
+  game-based tools so the technology serves the learning objective.
 objectives:
-  - Match simulation technology to the learning objective rather than choosing technology first.
-  - Decide which elements require fidelity and which can be simplified.
-  - Anticipate technology failure points before the case runs.
+  - Distinguish technology level from the learner's experience of fidelity.
+  - Explain manual input, physiologic modeling, and state-based modeling in manikin simulation.
+  - Match manikin, virtual, game-based, and hybrid approaches to a specific educational need.
+  - Evaluate technology choices for curricular fit, functional realism, staffing, support, and total cost.
+  - Build an operating, backup, and evaluation plan for a technology-supported simulation.
+responsePrompts:
+  - id: technology-fit
+    title: Build a technology fit statement
+    prompt: >
+      Choose one objective from your case. Name the learner action that must be
+      possible or visible, the technology you would use, the specific function
+      that technology must perform, and what you can simplify without weakening
+      the objective.
+    required: true
+  - id: operating-plan
+    title: Draft the operating and backup plan
+    prompt: >
+      Describe how your simulation will respond to learner actions, who will
+      operate each technology, what must be tested before the session, and how
+      the facilitator will preserve the same decision point if a critical
+      function fails.
+    required: true
+  - id: evaluation-plan
+    title: Plan the evaluation
+    prompt: >
+      Identify one learner outcome, one implementation measure, and one
+      technology-performance measure. State what evidence would lead you to
+      keep, revise, or stop using the technology.
+    required: true
 caseRefs: []
 zoteroTags: []
 ---
 
-## Let the objective choose the technology
+## Start with the performance, not the product
 
-Simulation technology should make learner performance observable. It should not
-be the center of the case unless the objective is actually about using that
-technology.
+Simulation technology is useful when it lets learners practice a meaningful
+clinical action, see the consequence of a decision, or make their performance
+available for feedback. The product itself is not the learning activity. A
+manikin, virtual environment, monitor, or game engine is a setting and a set of
+capabilities; the educator still has to design the experience.
 
-Start with the learner behavior you need to see. A communication objective may
-need a standardized participant more than a high-fidelity manikin. A procedural
-objective may need a task trainer and a clear scoring plan. A team leadership
-objective may need a realistic monitor, noise, task load, and confederate roles.
+Use this sequence before selecting a platform:
 
-## Choose fidelity deliberately
+1. Name the educational gap.
+2. Write the learner behavior that would demonstrate the objective.
+3. Identify what the environment must sense, display, or allow.
+4. Choose the lowest-complexity approach that can do those things credibly.
+5. Decide how learners will receive feedback and how performance will be evaluated.
 
-Fidelity is not one thing. A case may need physiologic fidelity, environmental
-fidelity, emotional fidelity, equipment fidelity, or team fidelity. More fidelity
-is not automatically better. Extra realism can add cognitive load, distract from
-the objective, or create technical failure points.
+For example, if the objective is to apply a tourniquet correctly, the decisive
+technology feature is controllable bleeding and realistic limb compression. A
+full-body manikin's heart sounds, speech, and physiologic model may add cost
+without helping that objective. If the objective is to lead a resuscitation,
+the important features may instead be a responsive monitor, evolving patient
+states, team roles, workload, and a reliable event log.
 
-For each technology choice, ask:
+This is curricular **fit**: the objective, content, activity, technology, and
+assessment all point toward the same learner performance. Technology selected
+only for novelty or excitement can become busy work, add avoidable cognitive
+load, and compete with the measured curriculum.
 
-1. What learner action does this make possible or visible?
-2. What could go wrong during setup or runtime?
-3. What can be simplified without weakening the objective?
+## Use precise language about fidelity
 
-## Build a backup plan
+Terms such as *high fidelity* and *low fidelity* are imprecise because fidelity
+is a continuum and depends on the learner, the objective, and the function being
+represented. It is more useful to separate the technology from the experience.
 
-Technology-dependent cases should include a facilitator backup plan. Decide what
-the facilitator will say or do if the monitor freezes, a manikin function fails,
-an audiovisual feed drops, or learners cannot interact with the equipment as
-expected.
+| Term | Practical meaning | Design implication |
+| --- | --- | --- |
+| Technology level | The complexity and capability of the tool or platform. | Describe the functions you need instead of using high or low as a product label. |
+| Functional realism | How credibly a specific function behaves, such as chest recoil, bleeding control, airway anatomy, or monitor response. | Test the exact function tied to the objective; a long feature list does not establish realism. |
+| Experiential fidelity | How convincingly the entire scenario represents the relevant practice for the learner. | Narrative, roles, cues, timing, and consequences may matter more than hardware. |
+| Physical or environmental fidelity | How closely the body, equipment, or setting resembles the clinical environment. | Include only the realism needed for learner action and transfer. |
+| Psychological or emotional fidelity | Whether the experience creates the attention, uncertainty, responsibility, or social pressure relevant to practice. | Build challenge deliberately without using surprise or threat as a substitute for good design. |
 
-If the backup plan preserves the same decision point and debrief hook, the case
-can still teach even when the technology is imperfect.
+A monitor-only case with strong narrative and realistic decisions can create a
+highly credible experience with modest technology. An expensive manikin in a
+clinically incoherent scenario can produce the opposite. Describe what must be
+realistic and why rather than calling the whole simulation high fidelity.
+
+## Understand how the manikin will respond
+
+The way a manikin changes during a scenario affects consistency, operator
+workload, and the risk of teaching an implausible physiologic relationship.
+Three operating approaches often overlap in current systems.
+
+| Operating approach | How it works | Strength | Risk |
+| --- | --- | --- | --- |
+| Manual input, or running on the fly | The operator changes vital signs, rhythms, sounds, and other parameters as the case unfolds. | Flexible and quick when learners take an unanticipated path. | Responses depend on operator attention and knowledge; related variables may become inconsistent. |
+| Physiologic modeling | A mathematical model changes linked variables in response to an intervention or altered parameter. | Can produce coordinated responses and reduce manual workload. | No model reproduces every patient accurately; the system may behave unexpectedly or make a target value difficult to produce. |
+| State-based modeling, scripting, or a finite-state approach | The author defines patient states and transitions triggered by learner actions, time, or events. | Supports reproducibility and lets several parameters change together. | Quality depends on the author's clinical logic, programming, testing, and handling of alternate learner actions. |
+
+The safest plan is not necessarily the most automated one. Select the approach
+that supports the objective and that the team can run reliably. If using manual
+input, script expected physiologic relationships and assign an operator who can
+focus on the manikin. If using a physiologic model, test the full scenario rather
+than assuming the model will produce the desired course. If using states, define
+both expected and off-path transitions and be cautious about overriding a
+running script in ways that break its internal logic.
+
+### Prevent negative teaching
+
+Technology can teach the wrong lesson when a function looks plausible but
+behaves incorrectly. Examples include chest compressions with unrealistic
+resistance, persistent blood pressure after prolonged apnea, or a treatment
+that produces an inappropriate monitor response.
+
+Before learners use the case:
+
+1. Test every function that is essential to an objective.
+2. Walk through the expected learner path and at least one alternate path.
+3. Check that linked findings change together in a clinically coherent way.
+4. Confirm what the operator may change during runtime without breaking the model or script.
+5. Decide how the facilitator will narrate any limitation during the prebrief.
+
+## Distinguish a virtual setting from a designed experience
+
+A virtual environment provides a digital place in which activity can occur. It
+does not create learning simply by existing. A designed experience adds a role,
+goal, relevant decisions, consequences, feedback, and a connection to the
+curriculum.
+
+Related terms help clarify the design:
+
+- **Virtual simulation:** A simulation that occurs primarily in a digital
+  environment, such as a screen-based patient encounter, branching case, or
+  immersive world.
+- **Game-based learning:** Learning organized through rules, goals, challenge,
+  feedback, and meaningful consequences within a game or game-like system.
+- **Gamification:** Selected game elements, such as progress indicators or
+  levels, added to a non-game activity. Points and badges alone do not create a
+  meaningful simulation.
+- **Minigame or tutorial:** A short embedded activity that teaches navigation,
+  equipment use, or another prerequisite before the main clinical task.
+- **Metagaming:** Use of resources outside the immediate game to support
+  success. In clinical education, consulting a reference, diagnostic result, or
+  team member may represent authentic information-seeking rather than cheating.
+- **Hybrid simulation:** A learning sequence that combines modalities, such as
+  virtual triage followed by management of the same patients with manikins or
+  standardized participants.
+
+The central question is what learners will *do*. A visually accurate emergency
+department without a purposeful task is a virtual tour. Add a clinical role,
+time-sensitive decisions, consequences, and feedback linked to an objective,
+and it becomes a designed learning experience.
+
+## Design for motivation without confusing fun with learning
+
+Engagement is strongest when the activity feels relevant to the learner's
+present or future practice. Game elements should support that intrinsic value,
+not cover weak alignment with rewards.
+
+Ask:
+
+- Does the activity represent a practice learners use now or will use later?
+- Do learners make clinically relevant decisions rather than merely click through content?
+- Do those decisions produce varied and appropriate consequences?
+- Does the system provide timely, interpretable feedback?
+- Does advancing in the experience represent increasing mastery rather than simple completion?
+
+Orientation is part of the design. Learners should have a low-stakes way to
+learn controls, navigation, communication tools, and help systems before those
+mechanics affect clinical performance. When the objective is clinical reasoning,
+do not accidentally assess familiarity with a controller or interface.
+
+## Choose the modality by its affordances
+
+No single technology is best for simulation. Match the modality to what it
+makes possible.
+
+| Educational need | A useful starting modality | Required function to verify |
+| --- | --- | --- |
+| Practice a discrete procedure | Task trainer or mixed physical-virtual trainer | Anatomical landmarks, tissue response, tool compatibility, and performance feedback |
+| Manage an evolving unstable patient | Manikin plus monitor, or a screen-based patient | Coherent response to actions, observable decision points, and reliable state changes |
+| Practice history, empathy, conflict, or disclosure | Standardized participant, conversational virtual patient, or hybrid format | Natural interaction, consistent role portrayal, and safe handling of emotional content |
+| Rehearse team leadership and coordination | In-situ, manikin-based, virtual multiplayer, or hybrid simulation | Roles, communication channels, workload, shared cues, and team-level observation |
+| Practice rare events across distance or asynchronously | Standalone virtual simulation or branching case | Clear instructions, access, compatibility, help, saved progress, and feedback without a live instructor |
+| Orient learners to a location or workflow | Virtual environment, walkthrough, or short tutorial | Accurate spatial and process cues without irrelevant detail |
+
+Mixed approaches can bridge gaps. Learners might triage a mass-casualty event
+asynchronously online, then receive the same patients in a team-based simulation
+lab and debrief the transition from scene decisions to emergency department
+care. The modalities should form one learning sequence rather than two
+unconnected activities.
+
+## Select and purchase for the whole program
+
+The purchase price is only one part of a technology decision. A technically
+capable product can still fail if the program cannot staff, maintain, integrate,
+or schedule it.
+
+Use this selection checklist:
+
+| Domain | Questions to answer before committing |
+| --- | --- |
+| Educational fit | Which learners and objectives will it serve? Which exact functions are essential? How often will it be used? |
+| Functional test | Have intended users tested those functions in a realistic scenario? Could any function teach an incorrect technique or physiologic relationship? |
+| People | Who will design cases, operate the system, teach, maintain it, and cover absences? How much initial and ongoing training is included? |
+| Infrastructure | What space, network, power, ventilation, gases, compressors, monitors, cables, accounts, licenses, or device integrations are required? |
+| Content and data | Are scenarios included and editable? Can event logs or performance data be exported? What privacy, accessibility, and retention requirements apply? |
+| Reliability | What commonly fails? Can staff repair it locally? What is the expected downtime and the replacement or loaner plan? |
+| Support | What do the warranty and service contract cover? How quickly is help available? Who tracks renewals and manufacturer accounts? |
+| Total cost | Include staff time, training, accessories, consumables, software, maintenance, repairs, upgrades, storage, and eventual replacement. |
+
+See the product in use and test the exact scenario functions before purchasing.
+Speak with several current users, including technical staff, rather than relying
+only on a demonstration. If the purchaser is not the end user, document the
+required accessories, service terms, department owner, account contact, asset
+identifier, and renewal dates so responsibility does not disappear after the
+purchase.
+
+## Build the operating and failure plan
+
+Technology-supported cases need two linked plans: how the system should respond
+when it works and how the teaching will continue when it does not.
+
+Create an operator map before the session:
+
+| Case event | Expected learner action | Technology response | Operator or trigger | Backup cue |
+| --- | --- | --- | --- | --- |
+| Patient becomes apneic | Recognize respiratory failure and ventilate | Respiratory rate falls; oxygen saturation and heart rate trend appropriately | Scripted state or manikin operator | Facilitator announces absent respirations and trends the monitor manually |
+| Learner gives treatment | Reassess response | Relevant findings improve, worsen, or remain unchanged | Sensor, operator input, or virtual rule | Facilitator provides a timed response card or verbal update |
+| Team requests unavailable data | Seek additional information | Result appears through the expected clinical channel | Confederate or virtual interface | Facilitator supplies a printed result |
+
+Test the primary plan in the actual room, on the actual network, with the actual
+accounts and accessories. Then test the backup. A backup is adequate when it
+preserves the same learner decision and debrief hook, even if it reduces realism.
+
+During the prebrief, state limitations learners need to know. During a failure,
+pause, narrate, redirect, restart, or stop according to the risk to the objective
+and the learners. In the debrief, acknowledge technology problems directly so
+learners are not blamed for cues they could not perceive.
+
+## Evaluate the learning and the technology
+
+Technology captures many events, but available data are not automatically useful
+evidence. Collect measures that answer whether the designed experience worked.
+
+Evaluate at three levels:
+
+1. **Learner performance:** Did learners demonstrate the target behavior, make
+   better decisions, improve with repetition, or transfer the skill to a later
+   setting?
+2. **Educational implementation:** Could learners access and understand the
+   activity? Did orientation, facilitation, feedback, and debriefing work as
+   planned?
+3. **Technology performance:** Did the platform behave reliably and credibly?
+   How much staff time, troubleshooting, downtime, and support did it require?
+
+Useful virtual-simulation data may include decision paths, time in a state,
+resource use, repeated attempts, or time to resolution. Interpret those measures
+against the objective. A shorter completion time may reflect mastery, guessing,
+or familiarity with the interface. Pair system logs with observation, learner
+reasoning, and debrief findings when the distinction matters.
+
+Treat implementation as iterative. After each run, decide what to keep, revise,
+or remove. Continued use should depend on learning value, reliability, access,
+and total resource demand, not on how much the program has already spent.
+
+## Working product
+
+By the end of this module, create a one-page technology plan containing:
+
+1. The educational gap and learner objective.
+2. The observable learner action.
+3. The selected modality and the exact function it must perform.
+4. The fidelity that matters and the elements that can be simplified.
+5. The operating model, staffing, orientation, and test plan.
+6. The failure backup that preserves the decision point.
+7. One learner, implementation, and technology measure.
+
+That plan turns a product choice into an educational design decision and gives
+the simulation team a shared basis for building, purchasing, testing, and
+improving the experience.
 
 ## Sources Used
 
-- Course-authored content synthesized from the local simulation case-design
-  framework.
+- Slone FL, Lampotang S. "Mannequins: Terminology, Selection, and Usage."
+  Chapter 3.2 in *Defining Excellence in Simulation Programs*.
+- Bauman EB, Ralston-Berg P. "Virtual Simulation." Chapter 3.7 in *Defining
+  Excellence in Simulation Programs*.
