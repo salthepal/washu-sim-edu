@@ -1,11 +1,21 @@
 # WashU Emergency Medicine Simulation Education
 
-A learning portal for the simulation component of the Emergency Medicine
-residency Education Rotation: asynchronous case-design modules, case
-exemplars, a curated document library, and a
-Zotero-backed reading list. Residents use it to build one simulation case with
-a defensible teaching objective, intentional scenario structure, and debrief
-plan.
+The online curriculum for the simulation component of WashU Emergency
+Medicine's residency Education Rotation. Residents move through a focused set
+of modules, use annotated cases and curated readings as references, and leave
+with a simulation case ready to run.
+
+The current learning experience includes:
+
+- Four core modules covering objectives and educational design, scenario
+  writing, case operations, and prebriefing and debriefing.
+- Additional modules on simulation technology, difficult learner encounters,
+  and simulation research.
+- Structured reflection prompts whose latest responses are saved for residents
+  and available to faculty as a CSV export.
+- Annotated emergency medicine case exemplars with attributed, downloadable
+  facilitator packets.
+- A curated document library and module-specific, Zotero-backed reading lists.
 
 Built with **Astro** content collections and deployed as a full-stack
 Cloudflare Worker at `https://edu.washuemsim.org`. The public `workers.dev`
@@ -23,6 +33,28 @@ Access.
 - **Cloudflare Access identifies learners.** Access can sit in front of the
   Worker, while API routes also validate the Access JWT before writing or
   exporting module responses.
+- **Learner work is saved in D1.** Each learner has one current response per
+  module prompt; submitting again updates that response.
+- **Case packets stay private in R2.** Downloads pass through the authenticated
+  Worker instead of being published as static assets.
+
+## Curriculum
+
+The required sequence is designed around the resident's working case:
+
+1. **Learning Objectives and Educational Design** — define the gap, learner,
+   objective, and assessment.
+2. **Case Writing and Scenario Design** — turn that objective into a coherent,
+   runnable scenario.
+3. **Running the Case** — prepare the people, environment, cues, and contingency
+   plan needed for reliable facilitation.
+4. **Prebriefing and Debriefing** — establish psychological safety and plan a
+   discussion tied to observed performance.
+
+Technology in Simulation, Difficult Learners, and Simulation Research extend
+the core sequence. The technology module now covers manikin operating models,
+virtual and game-based simulation, technology selection, failure planning, and
+evaluation—not just equipment setup.
 
 ## Local development
 
