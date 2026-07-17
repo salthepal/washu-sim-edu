@@ -34,6 +34,12 @@ async function getOptionalBibliography(): Promise<CollectionEntry<'bibliography'
   }
 }
 
+function formatCitationHtml(bibHtml: string): string {
+  return bibHtml
+    .replace(/<div class="csl-left-margin"[^>]*>[\s\S]*?<\/div>/g, '')
+    .replace(/\sstyle="margin:\s*0\s*\.4em\s*0\s*1\.5em;?"/g, '');
+}
+
 const all = await getOptionalBibliography();
 const items =
   tags.length === 0
@@ -45,21 +51,21 @@ const items =
   items.length > 0 && (
     <section style="margin-top:2.5rem;">
       <p class="eyebrow">{heading}</p>
-      <ul class="clean" style="display:flex; flex-direction:column; gap:0.9rem;">
-        {items.map((i) => (
-          <li style="font-size:var(--step--1); line-height:1.5;">
-            <span set:html={i.data.bibHtml} />
-            {i.data.url && (
-              <>
-                {' '}
+      <ol style="display:flex; flex-direction:column; gap:0.9rem; padding:0; margin:0; list-style:none;">
+        {items.map((i, index) => (
+          <li style="display:grid; grid-template-columns:2rem minmax(0, 1fr); gap:0.5rem; font-size:var(--step--1); line-height:1.5;">
+            <span>{index + 1}.</span>
+            <div>
+              <div set:html={formatCitationHtml(i.data.bibHtml)} />
+              {i.data.url && (
                 <a href={i.data.url} style="font-family:var(--mono); font-size:0.72rem;">
                   link ↗
                 </a>
-              </>
-            )}
+              )}
+            </div>
           </li>
         ))}
-      </ul>
+      </ol>
     </section>
   )
 }

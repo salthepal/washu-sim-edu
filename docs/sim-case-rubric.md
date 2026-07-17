@@ -1,8 +1,7 @@
-# Sim Case Peer-Review Rubric
+# Sim Case Review Rubric
 
-This rubric does double duty: it is the assessment standard for the
-resident-authored capstone case **and** the bar a case must clear to move from
-`draft` to `peer-reviewed` and enter the public exemplar library.
+This rubric is the assessment standard for the resident-authored capstone case
+and a guide for maintaining a consistent exemplar library.
 
 Score each dimension 1–4 (1 = needs major revision, 4 = exemplary). A case
 enters the library at a mean of ≥ 3 with no dimension below 2.
@@ -22,5 +21,5 @@ enters the library at a mean of ≥ 3 with no dimension below 2.
 
 1. Pull the PR branch and confirm the build passes (schema validation catches missing fields).
 2. Score against the table above; leave inline comments for anything below 4.
-3. If it clears: set `status: peer-reviewed`, approve, and merge — it appears in the public exemplar list on the next deploy.
-4. If not: request changes; the case stays `draft` (faculty-visible only).
+3. If it clears, approve and merge it into the exemplar library.
+4. If not, request changes before merging.

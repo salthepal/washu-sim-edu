@@ -41,9 +41,6 @@ const simCases = defineCollection({
     duration: z.number().int().positive().optional(), // minutes
     // The single most important field: why is THIS a teaching exemplar?
     annotation: z.string(),
-    status: z.enum(['draft', 'in-review', 'peer-reviewed', 'archived']).default('draft'),
-    // True when the case body uses <Note> components and has a dissection view.
-    anatomy: z.boolean().default(false),
     // Source attribution for externally authored cases.
     source: z
       .object({

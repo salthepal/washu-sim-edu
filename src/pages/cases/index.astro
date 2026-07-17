@@ -6,51 +6,18 @@ import { getCollection } from 'astro:content';
 export const prerender = true;
 
 const all = await getCollection('simCases');
-const reviewed = all.filter((c) => c.data.status === 'peer-reviewed');
-const inProgress = all.filter((c) => c.data.status === 'draft' || c.data.status === 'in-review');
 ---
 
 <Base title="Exemplars">
   <p class="eyebrow">Case library</p>
   <h1 style="font-size:var(--step-3);">Exemplar sim cases</h1>
   <p class="lede">
-    Peer-reviewed cases, each annotated with <em>why</em> it teaches well. Current
+    Exemplar cases, each presented with <em>why</em> it teaches well. Current
     source cases are adapted from EM Sim Cases with attribution and downloadable
     facilitator packets.
   </p>
 
-  <section style="margin-top:2.5rem;">
-    <h2 style="font-size:var(--step-1); border-bottom:1px solid var(--line); padding-bottom:0.5rem;">
-      Peer-reviewed
-    </h2>
-    {
-      reviewed.length === 0 ? (
-        <p style="color:var(--ink-soft);">None yet.</p>
-      ) : (
-        <div class="grid" style="margin-top:1.2rem;">
-          {reviewed.map((entry) => (
-            <CaseCard entry={entry} />
-          ))}
-        </div>
-      )
-    }
-  </section>
-
-  {
-    inProgress.length > 0 && (
-      <section style="margin-top:3rem;">
-        <h2 style="font-size:var(--step-1); border-bottom:1px solid var(--line); padding-bottom:0.5rem; color:var(--ink-soft);">
-          In progress
-          <span style="font-family:var(--mono); font-size:0.7rem; font-weight:400;">
-            {' '}· visible to faculty for review
-          </span>
-        </h2>
-        <div class="grid" style="margin-top:1.2rem;">
-          {inProgress.map((entry) => (
-            <CaseCard entry={entry} />
-          ))}
-        </div>
-      </section>
-    )
-  }
+  <div class="grid" style="margin-top:2.5rem;">
+    {all.map((entry) => <CaseCard entry={entry} />)}
+  </div>
 </Base>

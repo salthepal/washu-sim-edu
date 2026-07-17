@@ -11,8 +11,7 @@ const modules = allModules.filter((m) => m.data.category === 'core').sort(
 const additionalTopics = allModules.filter((m) => m.data.category === 'additional').sort(
   (a, b) => a.data.order - b.data.order,
 );
-const reviewedCount = (await getCollection('simCases', ({ data }) => data.status === 'peer-reviewed'))
-  .length;
+const caseCount = (await getCollection('simCases')).length;
 ---
 
 <Base title="Home">
@@ -26,7 +25,7 @@ const reviewedCount = (await getCollection('simCases', ({ data }) => data.status
     </p>
     <div class="action-row">
       <a href="/modules/" class="btn">Start the sim modules →</a>
-      <a href="/cases/" class="btn ghost">Review {reviewedCount} case exemplar{reviewedCount === 1 ? '' : 's'}</a>
+      <a href="/cases/" class="btn ghost">Review {caseCount} case exemplar{caseCount === 1 ? '' : 's'}</a>
     </div>
   </section>
 
