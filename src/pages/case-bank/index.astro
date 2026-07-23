@@ -1,0 +1,105 @@
+---
+import Base from '../../layouts/Base.astro';
+
+export const prerender = true;
+
+const categories = [
+  {
+    title: 'Airway and pulmonary',
+    topics: 'Severe asthma, angioedema, intubation, contaminated-airway/SALAD management, pediatric respiratory failure, pulmonary hypertension, and prostacyclin/Remodulin pump failure.',
+  },
+  {
+    title: 'Cardiac and resuscitation',
+    topics: 'Myocardial infarction, STEMI with ventricular tachycardia, cardiogenic shock, myocarditis, aortic dissection, congenital heart disease/coarctation, neonatal SVT, LVAD low-flow and thrombosis, PEA and cardiac arrest, post-ROSC care, hypothermic arrest, eCPR, and ECMO.',
+  },
+  {
+    title: 'Neurology',
+    topics: 'Ischemic stroke, posterior circulation stroke, thrombolysis/TNK complications, thrombectomy, wake-up stroke and hyperacute MRI, epidural hematoma, subdural hematoma, subarachnoid hemorrhage with hydrocephalus/elevated ICP, status epilepticus, and seizure-versus-syncope.',
+  },
+  {
+    title: 'Pediatric emergencies',
+    topics: 'Asthma, anaphylaxis, intussusception, Hirschsprung-associated enterocolitis, hyperammonemia, congenital adrenal hyperplasia, seizure with apnea, respiratory failure after ingestion, multisystem trauma, non-accidental trauma, neonatal sepsis with hypoglycemia, neonatal resuscitation, PALS, and pediatric foreign-body emergencies.',
+  },
+  {
+    title: 'Toxicology',
+    topics: 'Aspirin/salicylate overdose, digoxin toxicity, beta-blocker/calcium-channel-blocker poisoning, isoniazid-induced seizures, lithium overdose, organophosphate poisoning, TCA overdose with seizures, iron toxicity, toxic alcohol ingestion, and snake envenomation with anaphylaxis.',
+  },
+  {
+    title: 'Infectious disease and sepsis',
+    topics: 'Infected urinary stone, Fournier gangrene/necrotizing soft-tissue infection, toxic shock syndrome, cytokine-release syndrome after CAR-T therapy, Lyme carditis, pneumonia with sepsis, and septic abortion.',
+  },
+  {
+    title: 'Obstetrics and neonatology',
+    topics: 'Postpartum hemorrhage, resuscitative hysterotomy, second-trimester fetal demise, retained products of conception, septic abortion, postpartum eclampsia, neonatal resuscitation, and neonatal sepsis.',
+  },
+  {
+    title: 'Gastrointestinal, hepatic, and vascular',
+    topics: 'Massive upper GI bleeding, lower GI bleeding, hemorrhage from a dialysis fistula, hepatorenal syndrome with sepsis, carotid dissection, and Boerhaave syndrome.',
+  },
+  {
+    title: 'Trauma and burns',
+    topics: 'Multisystem trauma, hypotensive trauma requiring chest tube, pelvic fracture with intracranial hemorrhage, burn escharotomy with airway compromise, backboarding, splinting, and trauma triage.',
+  },
+  {
+    title: 'Wilderness and environmental medicine',
+    topics: 'Altitude illness, hyperthermia, drowning with hypothermia, lightning-strike mass casualty, snakebite, and in-flight/airline emergencies.',
+  },
+  {
+    title: 'Ophthalmology',
+    topics: 'Cortical blindness, open-globe injury, orbital compartment syndrome, lateral canthotomy, corneal/ocular foreign bodies, and intraocular-pressure assessment.',
+  },
+  {
+    title: 'Disaster medicine',
+    topics: 'Mass-casualty incidents, hot-air-balloon disaster response, out-of-hospital disaster scenarios, START/jumpSTART triage, tabletop disaster management, and patient distribution/sign-out.',
+  },
+  {
+    title: 'Behavioral health and communication',
+    topics: 'Verbal de-escalation, chemical and physical restraint, agitated patients, substance-use screening and brief intervention (SBIRT), difficult conversations, iatrogenic complications, leaving against medical advice, and death notification.',
+  },
+  {
+    title: 'Procedures and operational skills',
+    topics: 'Procedural sedation, airway workshops, intubation, chest-tube placement, burr-hole decompression, escharotomy, lateral canthotomy, splinting, backboarding, neonatal resuscitation, and TEE-assisted resuscitation.',
+  },
+];
+---
+
+<Base title="Case Bank Topics">
+  <p class="eyebrow">Updated July 17, 2026</p>
+  <h1 style="font-size:var(--step-3); max-width:18ch;">Topics in our case bank</h1>
+  <p class="lede" style="max-width:var(--measure);">
+    Use this inventory to see what WUEM Simulation has already
+    explored—and where your new case could expand the collection.
+  </p>
+
+  <aside style="margin-top:2rem; padding:1.25rem; border:1px solid var(--line); border-radius:var(--radius); background:var(--paper); max-width:var(--measure);">
+    <p style="margin:0;">
+      This review covers <strong>584 items across 116 folders, including 468 files</strong>.
+      Duplicate, archived, and learner-level variants were consolidated into one topic.
+    </p>
+  </aside>
+
+  <section style="margin-top:2.5rem;">
+    <ul class="clean" style="border-top:1px solid var(--line); max-width:var(--measure);">
+      {
+        categories.map((category) => (
+          <li style="border-bottom:1px solid var(--line); padding:1.25rem 0;">
+            <h2 style="font-size:var(--step-1); margin:0 0 0.4rem;">{category.title}</h2>
+            <p style="margin:0; color:var(--ink-soft);">{category.topics}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section style="margin-top:2.5rem; border-top:1px solid var(--line); padding-top:1.5rem; max-width:var(--measure);">
+    <h2 style="font-size:var(--step-1);">About this inventory</h2>
+    <p style="color:var(--ink-soft);">
+      Topics were identified primarily from case titles, folder structure, and associated
+      teaching materials. Historical and archived cases are included because they reflect
+      topics the program has explored, even when they are not currently scheduled.
+    </p>
+    <p>
+      <a href="https://app.box.com/folder/216515227861">Open the full Case Bank in Box →</a>
+    </p>
+  </section>
+</Base>

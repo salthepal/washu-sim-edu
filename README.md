@@ -1,14 +1,24 @@
-# WashU Emergency Medicine Simulation Education
+# WUEM Sim Edu
 
-A learning portal for the simulation component of the Emergency Medicine
-residency Education Rotation: asynchronous case-design modules, case
-exemplars, a curated document library, and a
-Zotero-backed reading list. Residents use it to build one simulation case with
-a defensible teaching objective, intentional scenario structure, and debrief
-plan.
+The online curriculum for the simulation component of WashU Emergency
+Medicine's residency Education Rotation. Residents move through a focused set
+of modules, use annotated cases and curated readings as references, and leave
+with a simulation case ready to run.
+
+The current learning experience includes:
+
+- Four core modules covering objectives and educational design, scenario
+  writing, case operations, and prebriefing and debriefing.
+- Additional modules on simulation technology, difficult learner encounters,
+  and simulation research.
+- Structured reflection prompts whose latest responses are saved for residents
+  and available to faculty as a CSV export.
+- Annotated emergency medicine case exemplars with attributed, downloadable
+  facilitator packets.
+- A curated document library and module-specific, Zotero-backed reading lists.
 
 Built with **Astro** content collections and deployed as a full-stack
-Cloudflare Worker at `https://edu.washuemsim.org`. The public `workers.dev`
+Cloudflare Worker at `https://edu.wuemsim.org`. The public `workers.dev`
 route is disabled; production traffic uses the custom domain behind Cloudflare
 Access.
 
@@ -23,6 +33,28 @@ Access.
 - **Cloudflare Access identifies learners.** Access can sit in front of the
   Worker, while API routes also validate the Access JWT before writing or
   exporting module responses.
+- **Learner work is saved in D1.** Each learner has one current response per
+  module prompt; submitting again updates that response.
+- **Case packets stay private in R2.** Downloads pass through the authenticated
+  Worker instead of being published as static assets.
+
+## Curriculum
+
+The required sequence is designed around the resident's working case:
+
+1. **Learning Objectives and Educational Design** — define the gap, learner,
+   objective, and assessment.
+2. **Case Writing and Scenario Design** — turn that objective into a coherent,
+   runnable scenario.
+3. **Running the Case** — prepare the people, environment, cues, and contingency
+   plan needed for reliable facilitation.
+4. **Prebriefing and Debriefing** — establish psychological safety and plan a
+   discussion tied to observed performance.
+
+Technology in Simulation, Difficult Learners, and Simulation Research extend
+the core sequence. The technology module now covers manikin operating models,
+virtual and game-based simulation, technology selection, failure planning, and
+evaluation—not just equipment setup.
 
 ## Local development
 
@@ -73,7 +105,7 @@ attachments:
     href: /downloads/cases/example-case.docx
 ```
 
-This keeps the external URL stable at `https://edu.washuemsim.org/downloads/cases/...`
+This keeps the external URL stable at `https://edu.wuemsim.org/downloads/cases/...`
 while letting the object storage scale independently from site deploys. The R2
 bucket should remain private; the Worker route sits behind the same Cloudflare
 Access protection as the rest of the site.
@@ -92,7 +124,7 @@ the Cloudflare adapter entrypoint.
 
 The legacy Cloudflare Pages project at `https://washu-sim-edu.pages.dev` and
 its preview hostnames remain covered by Cloudflare Access, but they are not the
-production target for module responses. Use `https://edu.washuemsim.org` for
+production target for module responses. Use `https://edu.wuemsim.org` for
 the D1-backed Worker API routes.
 
 Security headers are served from `public/_headers`.
@@ -144,8 +176,8 @@ learner email.
 
 ### Current access state
 
-- Application: `WashU Sim EDU`
-- Protected hostname: `edu.washuemsim.org`
+- Application: `WUEM Sim Edu`
+- Protected hostname: `edu.wuemsim.org`
 - Protected Pages hostnames: `washu-sim-edu.pages.dev`,
   `*.washu-sim-edu.pages.dev`
 - Application ID: `bd50748a-8788-40ae-898b-561ee9f40ec4`
