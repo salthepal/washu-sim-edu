@@ -7,6 +7,7 @@
     "enabled": true
   },
   "routes": [
+    { "pattern": "edu.wuemsim.org", "custom_domain": true },
     { "pattern": "edu.washuemsim.org", "custom_domain": true }
   ],
   "main": "@astrojs/cloudflare/entrypoints/server",

@@ -8,7 +8,7 @@ import cloudflare from "@astrojs/cloudflare";
 // Static content pages are prerendered, while API endpoints run on Cloudflare
 // for authenticated response submission and export.
 export default defineConfig({
-  site: 'https://edu.washuemsim.org',
+  site: 'https://edu.wuemsim.org',
   output: 'server',
   integrations: [mdx(), sitemap()],
 

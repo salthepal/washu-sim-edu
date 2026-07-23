@@ -1,4 +1,4 @@
-# WashU Emergency Medicine Simulation Education
+# WUEM Sim Edu
 
 The online curriculum for the simulation component of WashU Emergency
 Medicine's residency Education Rotation. Residents move through a focused set
@@ -18,7 +18,7 @@ The current learning experience includes:
 - A curated document library and module-specific, Zotero-backed reading lists.
 
 Built with **Astro** content collections and deployed as a full-stack
-Cloudflare Worker at `https://edu.washuemsim.org`. The public `workers.dev`
+Cloudflare Worker at `https://edu.wuemsim.org`. The public `workers.dev`
 route is disabled; production traffic uses the custom domain behind Cloudflare
 Access.
 
@@ -105,7 +105,7 @@ attachments:
     href: /downloads/cases/example-case.docx
 ```
 
-This keeps the external URL stable at `https://edu.washuemsim.org/downloads/cases/...`
+This keeps the external URL stable at `https://edu.wuemsim.org/downloads/cases/...`
 while letting the object storage scale independently from site deploys. The R2
 bucket should remain private; the Worker route sits behind the same Cloudflare
 Access protection as the rest of the site.
@@ -124,7 +124,7 @@ the Cloudflare adapter entrypoint.
 
 The legacy Cloudflare Pages project at `https://washu-sim-edu.pages.dev` and
 its preview hostnames remain covered by Cloudflare Access, but they are not the
-production target for module responses. Use `https://edu.washuemsim.org` for
+production target for module responses. Use `https://edu.wuemsim.org` for
 the D1-backed Worker API routes.
 
 Security headers are served from `public/_headers`.
@@ -176,8 +176,8 @@ learner email.
 
 ### Current access state
 
-- Application: `WashU Sim EDU`
-- Protected hostname: `edu.washuemsim.org`
+- Application: `WUEM Sim Edu`
+- Protected hostname: `edu.wuemsim.org`
 - Protected Pages hostnames: `washu-sim-edu.pages.dev`,
   `*.washu-sim-edu.pages.dev`
 - Application ID: `bd50748a-8788-40ae-898b-561ee9f40ec4`

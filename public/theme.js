@@ -8,7 +8,12 @@
 
   const writeCookieTheme = (theme) => {
     const host = window.location.hostname;
-    const domain = host === 'localhost' || host === '127.0.0.1' ? '' : '; domain=.washuemsim.org';
+    const domain =
+      host === 'localhost' || host === '127.0.0.1'
+        ? ''
+        : host.endsWith('.washuemsim.org') || host === 'washuemsim.org'
+          ? '; domain=.washuemsim.org'
+          : '; domain=.wuemsim.org';
     document.cookie = `${key}=${theme}; path=/; max-age=31536000; SameSite=Lax${domain}`;
   };
 
