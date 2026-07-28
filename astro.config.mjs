@@ -6,7 +6,7 @@ import sitemap from '@astrojs/sitemap';
 import cloudflare from "@astrojs/cloudflare";
 
 // Static content pages are prerendered, while API endpoints run on Cloudflare
-// for authenticated response submission and export.
+// for response submission and export.
 export default defineConfig({
   site: 'https://edu.wuemsim.org',
   output: 'server',

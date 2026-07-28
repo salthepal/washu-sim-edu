@@ -2,37 +2,23 @@
 import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
-import { existsSync, readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { formatCitationHtml, sortBibliography } from '../lib/zotero';
 
 export const prerender = true;
 
-function hasZoteroGroupId(): boolean {
-  if (process.env.ZOTERO_GROUP_ID) return true;
-
-  const envPath = resolve(process.cwd(), '.env');
-  if (!existsSync(envPath)) return false;
-
-  return readFileSync(envPath, 'utf8')
-    .split(/\r?\n/)
-    .some((line) => /^\s*ZOTERO_GROUP_ID\s*=\s*\S+/.test(line));
-}
-
 async function getOptionalBibliography(): Promise<CollectionEntry<'bibliography'>[]> {
-  if (!hasZoteroGroupId()) return [];
-  return getCollection('bibliography');
-}
-
-function formatCitationHtml(bibHtml: string): string {
-  return bibHtml
-    .replace(/<div class="csl-left-margin"[^>]*>[\s\S]*?<\/div>/g, '')
-    .replace(/\sstyle="margin:\s*0\s*\.4em\s*0\s*1\.5em;?"/g, '');
+  try {
+    return await getCollection('bibliography');
+  } catch (error) {
+    if (error instanceof Error && error.message.includes('does not exist or is empty')) {
+      return [];
+    }
+    throw error;
+  }
 }
 
 const docs = await getCollection('documents');
-const bib = (await getOptionalBibliography()).sort((a, b) =>
-  a.data.title.localeCompare(b.data.title),
-);
+const bib = sortBibliography(await getOptionalBibliography());
 
 const kinds = [...new Set(docs.map((d) => d.data.kind))].sort();
 ---
@@ -82,15 +68,12 @@ const kinds = [...new Set(docs.map((d) => d.data.kind))].sort();
     {
       bib.length === 0 ? (
         <p style="color:var(--ink-soft);">
-          Empty until the Zotero group library is wired up. Set
-          <code>ZOTERO_GROUP_ID</code> (and <code>ZOTERO_API_KEY</code> for a
-          private group) in the Pages build environment.
+          The Zotero bibliography is temporarily unavailable.
         </p>
       ) : (
-        <ol style="display:flex; flex-direction:column; gap:0.9rem; margin:1rem 0 0; padding:0; list-style:none;">
-          {bib.map((i, index) => (
-            <li style="display:grid; grid-template-columns:2rem minmax(0, 1fr); gap:0.5rem; font-size:var(--step--1); line-height:1.5;">
-              <span>{index + 1}.</span>
+        <ol style="display:flex; flex-direction:column; gap:0.9rem; margin:1rem 0 0; padding-left:2rem;">
+          {bib.map((i) => (
+            <li style="padding-left:0.25rem; font-size:var(--step--1); line-height:1.5;">
               <div set:html={formatCitationHtml(i.data.bibHtml)} />
             </li>
           ))}

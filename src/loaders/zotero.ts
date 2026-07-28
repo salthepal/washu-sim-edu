@@ -3,6 +3,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 let localEnv: Record<string, string> | undefined;
+const DEFAULT_ZOTERO_GROUP_ID = '6590613';
 
 function getBuildEnv(name: string): string | undefined {
   if (process.env[name]) return process.env[name];
@@ -70,12 +71,12 @@ function inferLocalTags(item: { title?: string; abstractNote?: string; tags?: st
  * or any CSL engine in the bundle.
  *
  * Configure via Cloudflare Pages build environment variables:
- *   ZOTERO_GROUP_ID   numeric group library id          (required to load anything)
+ *   ZOTERO_GROUP_ID   numeric group library id          (defaults to the public WUEM library)
  *   ZOTERO_API_KEY    read key for a private group       (omit for a public group)
  *   ZOTERO_STYLE      CSL style slug, default below      (e.g. american-medical-association)
  *
- * If ZOTERO_GROUP_ID is unset the loader no-ops and the build still succeeds,
- * so a fresh clone runs out of the box before any secrets are wired up.
+ * The public WUEM group needs no API key, so every deployment includes the
+ * bibliography even when it is built from a fresh checkout.
  */
 export function zoteroLoader(): Loader {
   const PAGE_SIZE = 100;
@@ -84,18 +85,10 @@ export function zoteroLoader(): Loader {
   return {
     name: 'zotero',
     async load({ store, logger, parseData, generateDigest }) {
-      const groupId = getBuildEnv('ZOTERO_GROUP_ID');
+      const groupId = getBuildEnv('ZOTERO_GROUP_ID') ?? DEFAULT_ZOTERO_GROUP_ID;
       const apiKey = getBuildEnv('ZOTERO_API_KEY');
 
       store.clear();
-
-      if (!groupId) {
-        logger.warn(
-          'ZOTERO_GROUP_ID not set — bibliography collection will be empty. ' +
-            'Set it in Cloudflare Pages build env to populate the reading lists.',
-        );
-        return;
-      }
 
       const base = `https://api.zotero.org/groups/${groupId}/items`;
       const headers: Record<string, string> = { 'Zotero-API-Version': '3' };

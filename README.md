@@ -12,15 +12,14 @@ The current learning experience includes:
 - Additional modules on simulation technology, difficult learner encounters,
   and simulation research.
 - Structured reflection prompts whose latest responses are saved for residents
-  and available to faculty as a CSV export.
+  and available to faculty in Cloudflare D1.
 - Annotated emergency medicine case exemplars with attributed, downloadable
   facilitator packets.
 - A curated document library and module-specific, Zotero-backed reading lists.
 
 Built with **Astro** content collections and deployed as a full-stack
 Cloudflare Worker at `https://edu.wuemsim.org`. The public `workers.dev`
-route is disabled; production traffic uses the custom domain behind Cloudflare
-Access.
+route is disabled; production traffic uses the public custom domain.
 
 ## Architecture at a glance
 
@@ -30,13 +29,11 @@ Access.
 - **Bibliography is pulled at build time** from a Zotero *group* library via a
   custom Content Layer loader (`src/loaders/zotero.ts`). Zotero renders the
   citations server-side in AMA style, so there's no citation engine in the bundle.
-- **Cloudflare Access identifies learners.** Access can sit in front of the
-  Worker, while API routes also validate the Access JWT before writing or
-  exporting module responses.
-- **Learner work is saved in D1.** Each learner has one current response per
-  module prompt; submitting again updates that response.
-- **Case packets stay private in R2.** Downloads pass through the authenticated
-  Worker instead of being published as static assets.
+- **Learner work is saved in D1.** The active resident has one current response
+  per module prompt; submitting again updates that response without requiring
+  an account or sign-in.
+- **Case packets stay private in R2.** Downloads pass through the public Worker
+  instead of being published as static assets.
 
 ## Curriculum
 
@@ -66,8 +63,8 @@ npm run preview    # build and run with Wrangler
 npm run check      # type + content schema check
 ```
 
-The bibliography is empty until you set `ZOTERO_GROUP_ID` (see `.env.example`).
-Everything else runs out of the box.
+The public WUEM Zotero group is configured by default. `.env.example` documents
+optional overrides for another group, style, or a private-library API key.
 
 ## Content model
 
@@ -107,8 +104,8 @@ attachments:
 
 This keeps the external URL stable at `https://edu.wuemsim.org/downloads/cases/...`
 while letting the object storage scale independently from site deploys. The R2
-bucket should remain private; the Worker route sits behind the same Cloudflare
-Access protection as the rest of the site.
+bucket should remain private; the Worker route is public and exposes only the
+explicitly linked case files.
 
 ## Deploy to Cloudflare Workers
 
@@ -122,10 +119,9 @@ The Worker serves both prerendered content and API routes. Static assets are
 deployed from Astro's generated `dist/client` output, while server code runs via
 the Cloudflare adapter entrypoint.
 
-The legacy Cloudflare Pages project at `https://washu-sim-edu.pages.dev` and
-its preview hostnames remain covered by Cloudflare Access, but they are not the
-production target for module responses. Use `https://edu.wuemsim.org` for
-the D1-backed Worker API routes.
+The legacy Cloudflare Pages project at `https://washu-sim-edu.pages.dev` is not
+the production target for module responses. Use `https://edu.wuemsim.org` for
+the D1-backed Worker API route.
 
 Security headers are served from `public/_headers`.
 
@@ -133,15 +129,15 @@ Security headers are served from `public/_headers`.
 
 Modules can include structured free-text prompts in frontmatter under
 `responsePrompts`. Learners submit responses from the module page; the API saves
-one latest response per learner/module/prompt in Cloudflare D1. Faculty review
-is via CSV export at `/api/responses/export.csv`.
+one latest response for the active resident per module prompt in Cloudflare D1.
+No account or sign-in is required. Faculty review stays within the Cloudflare
+account rather than being exposed through a public web export.
 
 Current production resources:
 
 - D1 database: `washu-sim-edu-responses`
 - D1 database ID: `e0d582c3-5b5b-4314-be31-e64033244091`
 - Worker binding: `DB`
-- CSV faculty allowlist: `sphadnisuf@gmail.com`
 
 If rebuilding this setup from scratch:
 
@@ -155,10 +151,6 @@ If rebuilding this setup from scratch:
    ```bash
    npx wrangler d1 migrations apply washu-sim-edu-responses --remote
    ```
-4. Set the Cloudflare Access values in `wrangler.jsonc` or the Worker dashboard:
-   - `TEAM_DOMAIN`: your Access team domain, e.g. `https://team.cloudflareaccess.com`
-   - `POLICY_AUD`: this Access application's audience tag
-   - `FACULTY_EMAILS`: comma-separated faculty emails allowed to export CSVs
 
 For local API testing, Wrangler uses local D1 state:
 
@@ -168,58 +160,14 @@ npm run build
 npx wrangler dev --local
 ```
 
-## Access control — Cloudflare Access
+## Public access
 
-Site access is controlled in Cloudflare Zero Trust. Module response API routes
-also validate the Cloudflare Access JWT so submissions are tied to the signed-in
-learner email.
-
-### Current access state
-
-- Application: `WUEM Sim Edu`
-- Protected hostname: `edu.wuemsim.org`
-- Protected Pages hostnames: `washu-sim-edu.pages.dev`,
-  `*.washu-sim-edu.pages.dev`
-- Application ID: `bd50748a-8788-40ae-898b-561ee9f40ec4`
-- Policy ID: `96a940f4-8232-4829-b32e-67417193add3`
-- Policy name: `WashU Email Domain`
-- Decision: `allow`
-- Include: email domain `wustl.edu`
-- Include: email `sphadnisuf@gmail.com` for faculty export/admin access
-- Precedence: `1`
-
-The production Worker hostname and Pages preview hostnames require Cloudflare
-Access sign-in. The retired `workers.dev` hostname should not be used.
-
-### Restore the WashU email gate
-
-When development previews no longer need to be public, restore the policy to:
-
-- Policy name: `WashU Email Domain`
-- Decision: `allow`
-- Include: email domain `wustl.edu`
-- Precedence: `1`
-
-### Configure gating from scratch
-
-1. Add the Worker to a custom domain (Access policies attach to a
-   hostname, e.g. `sim.your-domain.org`).
-2. Dashboard → **Zero Trust → Access → Applications → Add an application →
-   Self-hosted**.
-3. Application domain: the site's hostname.
-4. Add a policy:
-   - Action: **Allow**
-   - Rule: **Emails** → paste the resident/faculty addresses
-     (or **Emails ending in** `@wustl.edu` to allow the whole domain).
-5. Pick a login method (One-time PIN works with no IdP setup — users get an
-   email code).
-6. Save. Visitors now hit an Access screen before the site loads.
-
-### Moving to SSO later
-
-Connect WashU's identity provider (Entra ID / SAML / OIDC) under **Zero Trust →
-Settings → Authentication**, then change the policy rule from *Emails* to a
-group/IdP claim. The site doesn't change.
+The curriculum, module submission endpoint, and linked case downloads are
+public. The app does not depend on Cloudflare Access headers, learner accounts,
+email allowlists, or session state. Because one resident uses the curriculum at
+a time, new submissions update the shared `current-resident` record for each
+prompt. Historical responses remain in D1 and are not exposed by a public
+export route.
 
 ## Contribution flow
 

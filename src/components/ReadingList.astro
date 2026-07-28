@@ -1,8 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
-import { existsSync, readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { formatCitationHtml, sortBibliography } from '../lib/zotero';
 
 interface Props {
   tags: string[];
@@ -10,20 +9,7 @@ interface Props {
 }
 const { tags, heading = 'Reading list' } = Astro.props;
 
-function hasZoteroGroupId(): boolean {
-  if (process.env.ZOTERO_GROUP_ID) return true;
-
-  const envPath = resolve(process.cwd(), '.env');
-  if (!existsSync(envPath)) return false;
-
-  return readFileSync(envPath, 'utf8')
-    .split(/\r?\n/)
-    .some((line) => /^\s*ZOTERO_GROUP_ID\s*=\s*\S+/.test(line));
-}
-
 async function getOptionalBibliography(): Promise<CollectionEntry<'bibliography'>[]> {
-  if (!hasZoteroGroupId()) return [];
-
   try {
     return await getCollection('bibliography');
   } catch (error) {
@@ -34,27 +20,20 @@ async function getOptionalBibliography(): Promise<CollectionEntry<'bibliography'
   }
 }
 
-function formatCitationHtml(bibHtml: string): string {
-  return bibHtml
-    .replace(/<div class="csl-left-margin"[^>]*>[\s\S]*?<\/div>/g, '')
-    .replace(/\sstyle="margin:\s*0\s*\.4em\s*0\s*1\.5em;?"/g, '');
-}
-
 const all = await getOptionalBibliography();
 const items =
   tags.length === 0
     ? []
-    : all.filter((i) => i.data.tags.some((t) => tags.includes(t)));
+    : sortBibliography(all.filter((i) => i.data.tags.some((t) => tags.includes(t))));
 ---
 
 {
   items.length > 0 && (
     <section style="margin-top:2.5rem;">
       <p class="eyebrow">{heading}</p>
-      <ol style="display:flex; flex-direction:column; gap:0.9rem; padding:0; margin:0; list-style:none;">
-        {items.map((i, index) => (
-          <li style="display:grid; grid-template-columns:2rem minmax(0, 1fr); gap:0.5rem; font-size:var(--step--1); line-height:1.5;">
-            <span>{index + 1}.</span>
+      <ol style="display:flex; flex-direction:column; gap:0.9rem; padding-left:2rem; margin:0;">
+        {items.map((i) => (
+          <li style="padding-left:0.25rem; font-size:var(--step--1); line-height:1.5;">
             <div>
               <div set:html={formatCitationHtml(i.data.bibHtml)} />
               {i.data.url && (

@@ -1,5 +1,5 @@
 import type { APIContext } from 'astro';
-import { getRuntimeEnv, jsonError, ResponseError } from '../../../lib/access';
+import { getRuntimeEnv, jsonError, ResponseError } from '../../../lib/runtime';
 
 export const prerender = false;
 

@@ -1,10 +1,11 @@
 import type { APIContext } from 'astro';
 import { moduleResponsePrompts } from '../../data/moduleResponsePrompts';
-import { getRuntimeEnv, jsonError, requireAccessUser, ResponseError } from '../../lib/access';
+import { getRuntimeEnv, jsonError, ResponseError } from '../../lib/runtime';
 
 export const prerender = false;
 
 const MAX_RESPONSE_LENGTH = 4000;
+const CURRENT_RESIDENT_ID = 'current-resident';
 
 interface ResponsePayload {
   moduleId?: unknown;
@@ -17,7 +18,6 @@ export async function POST({ request, locals }: APIContext): Promise<Response> {
     const env = getRuntimeEnv(locals);
     if (!env.DB) throw new ResponseError(500, 'Response database is not configured.');
 
-    const user = await requireAccessUser(request, env);
     const payload = (await request.json().catch(() => null)) as ResponsePayload | null;
 
     if (!payload || typeof payload !== 'object') {
@@ -55,7 +55,7 @@ export async function POST({ request, locals }: APIContext): Promise<Response> {
       ON CONFLICT(module_id, prompt_id, learner_email)
       DO UPDATE SET response_text = excluded.response_text, updated_at = excluded.updated_at`,
     )
-      .bind(crypto.randomUUID(), moduleId, promptId, user.email, responseText, now, now)
+      .bind(crypto.randomUUID(), moduleId, promptId, CURRENT_RESIDENT_ID, responseText, now, now)
       .run();
 
     return Response.json({ ok: true, updatedAt: now });
