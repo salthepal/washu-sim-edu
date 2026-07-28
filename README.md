@@ -129,8 +129,10 @@ Security headers are served from `public/_headers`.
 
 Modules can include structured free-text prompts in frontmatter under
 `responsePrompts`. Learners submit responses from the module page; the API saves
-one latest response for the active resident per module prompt in Cloudflare D1.
-No account or sign-in is required. Faculty review stays within the Cloudflare
+one latest response per module prompt for each calendar month in the
+`America/Chicago` time zone. Each month represents the resident rotating through
+the program, while prior months remain available for faculty review. No account
+or sign-in is required. Faculty review stays within the Cloudflare
 account rather than being exposed through a public web export.
 
 Current production resources:
@@ -138,6 +140,9 @@ Current production resources:
 - D1 database: `washu-sim-edu-responses`
 - D1 database ID: `e0d582c3-5b5b-4314-be31-e64033244091`
 - Worker binding: `DB`
+
+Faculty can sort or filter the `module_responses` table by `response_month`
+(`YYYY-MM`) to review one resident's rotation at a time.
 
 If rebuilding this setup from scratch:
 

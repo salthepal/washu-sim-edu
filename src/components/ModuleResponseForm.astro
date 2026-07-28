@@ -102,7 +102,10 @@ const { moduleId, prompts } = Astro.props;
           throw new Error(errorMessageFromPayload(result));
         }
 
-        status.textContent = 'Saved.';
+        status.textContent =
+          typeof result.responseMonthLabel === 'string'
+            ? `Saved for ${result.responseMonthLabel}.`
+            : 'Saved.';
         status.dataset.state = 'saved';
       } catch (error) {
         status.textContent = error instanceof Error ? error.message : 'Unable to save response.';
