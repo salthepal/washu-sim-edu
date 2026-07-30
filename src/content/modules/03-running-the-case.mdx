@@ -2,76 +2,299 @@
 title: Running the Case
 order: 3
 summary: >
-  How to translate a written case into a reliable learning experience: modality,
-  simulation technology, embedded participants, dry runs, and real-time troubleshooting.
+  How to translate a written case into a reliable learning experience by
+  matching modality and technology to the objective, preparing people and
+  equipment, testing the scenario, and adapting when the unexpected happens.
 objectives:
-  - Match the simulation modality to the objective rather than to available technology alone.
-  - Brief standardized patients, confederates, and embedded participants with clear boundaries.
-  - Use a dry run to find operational problems before learners enter the room.
-  - Manage common technical or learner-flow problems during the case.
+  - Match the simulation modality and technology to the objective rather than to novelty or availability alone.
+  - Distinguish technology level from the functional, experiential, and emotional fidelity a case needs.
+  - Explain manual input, physiologic modeling, and state-based approaches to operating a manikin.
+  - Brief standardized patients, confederates, embedded participants, and technology operators with clear roles and boundaries.
+  - Use a dry run to find operational, clinical, and technology problems before learners enter the room.
+  - Build a backup plan that preserves the learning objective when technology or case flow fails.
+  - Evaluate learner performance, implementation, and technology after the case.
 responsePrompts:
   - id: modality-choice
-    title: Match modality to objective
+    title: Match modality and technology to the objective
     prompt: >
-      Which modality will best support your objective, and what does that
-      modality let the learner practice or reveal?
+      Which modality will best support your objective? Name the learner action
+      that must be possible or visible, the function your technology must
+      perform, and what you can simplify without weakening the objective.
     required: true
   - id: operations-plan
-    title: Identify operational risks
+    title: Build the operating and backup plan
     prompt: >
-      Name two logistics, technology, or participant-briefing issues you would
-      test during a dry run.
+      Who will operate each part of the case, what must be tested during the dry
+      run, and how will the facilitator preserve the same learner decision if a
+      participant, prop, monitor, manikin, or other critical function fails?
+    required: true
+  - id: evaluation-plan
+    title: Plan the post-run evaluation
+    prompt: >
+      Identify one learner outcome, one implementation measure, and one
+      technology-performance measure. What evidence would lead you to keep,
+      revise, or remove an element of the case?
     required: true
 caseRefs: [pediatric-drowning, stemi-on-the-ward]
 zoteroTags: [simulation-operations, simulation-pedagogy]
 ---
 
-## Matching modality to objective
+## Start with the performance, not the product
 
-Choose the modality that lets learners practice the target behavior. A
-high-fidelity manikin may be useful when changing physiology matters. A task
-trainer may be enough for a procedure. A standardized patient or confederate may
-be the right choice when communication, uncertainty, or team dynamics are the
-center of the case.
+Simulation technology is useful when it lets learners practice a meaningful
+clinical action, see the consequence of a decision, or make their performance
+available for feedback. The product itself is not the learning activity. A
+manikin, task trainer, standardized participant, virtual environment, monitor,
+or game engine provides capabilities; the educator still has to design the
+experience.
 
-Fidelity is a tool, not the goal. The best modality is the one that makes the
-objective observable.
+Use this sequence before selecting a modality:
 
-## Briefing SPs, confederates, and embedded participants
+1. Name the educational gap.
+2. Write the learner behavior that would demonstrate the objective.
+3. Identify what the environment must sense, display, or allow.
+4. Choose the lowest-complexity approach that can do those things credibly.
+5. Decide how learners will receive feedback and how performance will be evaluated.
 
-Embedded participants need a clear role, emotional tone, boundaries, and cueing
-plan. They should know what information to offer freely, what to reveal only if
-asked, when to escalate, and what behaviors would derail the learning
-environment.
+For a tourniquet objective, the decisive function may be controllable bleeding
+and realistic limb compression. A full-body manikin's heart sounds, speech, and
+physiologic model may add cost and operator workload without helping the
+objective. For a resuscitation leadership objective, the important functions
+may instead be an evolving monitor, team roles, workload, shared cues, and a
+reliable way to observe communication.
 
-Briefing is especially important when a participant is meant to create pressure.
-The pressure should serve the objective without overwhelming the fiction
-contract or psychological safety.
+This is curricular **fit**: the objective, activity, technology, and assessment
+all point toward the same learner performance. Technology selected mainly for
+novelty can add cognitive load and compete with the curriculum.
 
-## Dry runs and case logistics
+## Match the modality to the objective
 
-A dry run checks whether the written case works in the actual room. Use it to
-test equipment, slides, monitors, microphones, task trainers, medications,
-props, timing, and handoffs between facilitators.
+No single modality is best for simulation. Choose what makes the target
+behavior possible and observable.
 
-Dry runs also reveal whether the case is too crowded. If the facilitator needs
-too many simultaneous cues, changes, or technology moves, simplify the case
-before learners arrive.
+| Educational need | Useful starting modality | Function to verify |
+| --- | --- | --- |
+| Practice a discrete procedure | Task trainer or mixed physical-virtual trainer | Anatomical landmarks, tissue response, tool compatibility, and performance feedback |
+| Manage an evolving unstable patient | Manikin plus monitor or screen-based patient | Coherent responses, observable decision points, and reliable state changes |
+| Practice history, empathy, conflict, or disclosure | Standardized participant, conversational virtual patient, or hybrid format | Natural interaction, consistent role portrayal, and safe handling of emotional content |
+| Rehearse team leadership and coordination | In-situ, manikin-based, virtual multiplayer, or hybrid simulation | Roles, communication channels, workload, shared cues, and team-level observation |
+| Practice rare events across distance or asynchronously | Standalone virtual simulation or branching case | Clear instructions, access, compatibility, saved progress, and feedback without a live instructor |
+| Orient learners to a location or workflow | In-situ rehearsal, virtual environment, walkthrough, or tutorial | Accurate spatial and process cues without irrelevant detail |
 
-## Managing technology and real-time problems
+Modalities can be combined when they form one learning sequence. Learners might
+triage a mass-casualty event asynchronously, then manage the same patients in a
+team-based simulation and debrief the transition between settings.
+
+## Describe the fidelity that matters
+
+Terms such as *high fidelity* and *low fidelity* are imprecise. Fidelity depends
+on the learner, the objective, and the function being represented. Separate the
+complexity of the technology from the credibility of the experience.
+
+| Term | Practical meaning | Design implication |
+| --- | --- | --- |
+| Technology level | The complexity and capability of the tool or platform | Describe the functions you need instead of using high or low as a product label |
+| Functional realism | How credibly a specific function behaves, such as chest recoil, bleeding control, airway anatomy, or monitor response | Test the exact function tied to the objective; a feature list does not establish realism |
+| Experiential fidelity | How convincingly the whole scenario represents the relevant practice for the learner | Narrative, roles, cues, timing, and consequences may matter more than hardware |
+| Physical or environmental fidelity | How closely the body, equipment, or setting resembles clinical practice | Include the realism needed for learner action and transfer |
+| Psychological or emotional fidelity | Whether the experience creates the relevant attention, uncertainty, responsibility, or social pressure | Build challenge deliberately without using surprise or threat as a substitute for good design |
+
+A monitor-only case with coherent decisions and consequences can feel more
+credible than an expensive manikin in an incoherent scenario. State what needs
+to be realistic and why.
+
+## Decide how the patient will respond
+
+The way a manikin or virtual patient changes during a case affects consistency,
+operator workload, and the risk of teaching an implausible physiologic
+relationship. Three approaches often overlap.
+
+| Operating approach | How it works | Strength | Risk |
+| --- | --- | --- | --- |
+| Manual input, or running on the fly | The operator changes vital signs, rhythms, sounds, and other parameters as the case unfolds | Flexible when learners take an unanticipated path | Responses depend on operator attention and knowledge; related variables may become inconsistent |
+| Physiologic modeling | A mathematical model changes linked variables after an intervention or altered parameter | Can produce coordinated responses and reduce manual workload | The model may behave unexpectedly or make a desired teaching state difficult to produce |
+| State-based modeling or scripting | The author defines patient states and transitions triggered by learner actions, time, or events | Supports reproducibility and lets several parameters change together | Quality depends on clinical logic, programming, testing, and handling alternate learner actions |
+
+The most automated approach is not automatically the safest or most useful. If
+using manual input, script expected physiologic relationships and assign an
+operator who can focus on the patient. If using a physiologic model, test the
+full case rather than assuming it will produce the intended course. If using
+states, define expected and off-path transitions and avoid runtime overrides
+that break the script's logic.
+
+### Prevent negative teaching
+
+Technology can teach the wrong lesson when a function looks plausible but
+behaves incorrectly. Examples include chest compressions with unrealistic
+resistance, a persistent blood pressure after prolonged apnea, or a treatment
+that produces an inappropriate monitor response.
+
+Before learners use the case:
+
+1. Test every function essential to an objective.
+2. Walk through the expected learner path and at least one alternate path.
+3. Check that linked findings change together in a clinically coherent way.
+4. Confirm what the operator may change without breaking the model or script.
+5. Decide which limitations learners need to hear during the prebrief.
+
+## Use virtual and game-based tools intentionally
+
+A virtual setting is only a digital place where activity can occur. A designed
+learning experience adds a role, goal, relevant decisions, consequences,
+feedback, and a connection to the curriculum.
+
+- **Virtual simulation** occurs primarily in a digital environment, such as a
+  screen-based encounter, branching case, or immersive world.
+- **Game-based learning** organizes learning through rules, goals, challenge,
+  feedback, and meaningful consequences.
+- **Gamification** adds selected game elements, such as progress indicators or
+  levels, to a non-game activity. Points and badges alone do not make a
+  simulation.
+- **Minigames or tutorials** can teach navigation, controls, or equipment use
+  before the clinical task.
+- **Hybrid simulation** combines modalities into a connected experience, such
+  as virtual triage followed by manikin-based resuscitation.
+
+The central question remains what learners will do. A visually accurate
+emergency department without a purposeful task is a virtual tour. Add a
+clinical role, meaningful decisions, consequences, and feedback, and it becomes
+a designed experience.
+
+Orientation is part of the design. Give learners a low-stakes way to learn
+controls, navigation, communication tools, and help systems before those
+mechanics affect performance. When the objective is clinical reasoning, do not
+accidentally assess familiarity with an interface.
+
+## Brief the people running the case
+
+Standardized patients, confederates, embedded participants, and technology
+operators need clear roles, emotional tone, boundaries, and cueing plans. They
+should know:
+
+- what information to offer freely and what to reveal only if asked;
+- when to escalate, hold, or step out of the interaction;
+- which learner actions trigger a response or patient-state change;
+- how to communicate behind the scenes with the facilitator; and
+- which behaviors would derail the objective or psychological safety.
+
+Briefing is especially important when a participant creates pressure. In the
+pediatric drowning case, a panicked parent can create a realistic competing
+demand, but the role should still allow learners to acknowledge the parent,
+delegate communication, and continue the child's resuscitation. The pressure
+should reveal team behavior without becoming harassment or overpowering the
+case.
+
+## Build the operating plan
+
+Translate the scenario progression into a shared operator map. This connects
+learner actions, participant cues, technology changes, and backups.
+
+| Case event | Expected learner action | Planned response | Operator or trigger | Backup cue |
+| --- | --- | --- | --- | --- |
+| Patient becomes apneic | Recognize respiratory failure and ventilate | Respiratory rate falls; oxygen saturation and heart rate trend appropriately | Scripted state or manikin operator | Facilitator announces absent respirations and trends the monitor manually |
+| Learner gives treatment | Reassess the patient | Relevant findings improve, worsen, or remain unchanged | Sensor, operator input, or virtual rule | Facilitator provides a timed verbal or printed update |
+| Team requests available data | Seek and interpret additional information | Result appears through the expected clinical channel | Confederate or virtual interface | Facilitator supplies the result directly |
+| Technology or prop fails | Continue toward the same clinical decision | Case proceeds with reduced realism | Lead facilitator | Pause briefly, narrate the missing finding, and resume |
+
+Assign one person to lead the scenario and make clear who controls the patient,
+monitor, audio, results, embedded participants, and time. If one operator holds
+several roles, simplify the number of simultaneous cues and transitions.
+
+## Dry run in the real environment
+
+A dry run checks whether the written case works in the room where it will be
+used. Test the actual equipment, network, accounts, slides, monitors,
+microphones, task trainers, medications, props, timing, and facilitator
+handoffs.
+
+The dry run should answer four questions:
+
+1. Can learners perceive every cue needed to meet the objective?
+2. Do patient findings and technology responses remain clinically coherent?
+3. Can the team operate the case without missing competing tasks?
+4. Does the backup preserve the same decision point and debrief hook?
+
+Walk through the expected path and at least one plausible alternate path. Dry
+runs often reveal that a case is too crowded. If the facilitator needs too many
+simultaneous cues, changes, or technology moves, simplify before learners
+arrive.
+
+## Adapt when the case goes off plan
 
 Cases rarely run exactly as written. Learners may get stuck, chase a trivial
-detail, avoid touching the patient, or move faster than expected. Technology may
-fail. A facilitator should know which elements are essential to preserve and
-which can be adapted in the moment.
+detail, avoid touching the patient, or move faster than expected. A participant
+may miss a cue. Technology may fail.
 
-When something breaks, protect the objective first. Pause, redirect, simplify,
-or narrate a missing finding if that keeps the case educationally intact.
+When something breaks, protect the objective first. Depending on the problem,
+the facilitator can:
+
+- allow time for learners to recognize and recover;
+- provide a planned cue through the patient, nurse, parent, monitor, or result;
+- simplify or narrate a finding that the technology cannot provide;
+- pause and restart if the fiction has become confusing; or
+- stop the scenario when continuing would undermine safety or learning.
+
+In the debrief, acknowledge technology and facilitation problems directly so
+learners are not blamed for cues they could not perceive.
+
+## Evaluate the case as a complete system
+
+Available technology data are not automatically useful evidence. Evaluate
+whether the designed experience worked at three levels:
+
+1. **Learner performance:** Did learners demonstrate the target behavior,
+   improve with repetition, or transfer the skill to a later setting?
+2. **Educational implementation:** Could learners understand and participate
+   in the activity? Did orientation, facilitation, feedback, and debriefing work?
+3. **Technology performance:** Did the tools behave reliably and credibly? How
+   much staff time, troubleshooting, downtime, and support did they require?
+
+Event logs may show decision paths, time in a state, resource use, or repeated
+attempts. Interpret those measures against the objective. A shorter completion
+time could reflect mastery, guessing, or familiarity with the interface. Pair
+system data with observation and learner reasoning when the distinction
+matters.
+
+After each run, decide what to keep, revise, or remove. Continued use should
+depend on learning value, reliability, access, and resource demand—not on the
+complexity or purchase price of the technology.
+
+## When selecting technology for the program
+
+For a larger purchase or program-level technology decision, look beyond the
+demonstration and acquisition price. Confirm educational fit, have intended
+users test the exact functions in realistic conditions, and account for
+staffing, training, accessories, consumables, software, maintenance, storage,
+support, accessibility, data handling, and eventual replacement.
+
+A capable product can still fail if the program cannot staff, maintain,
+integrate, or schedule it. Document ownership, service terms, required
+infrastructure, renewal dates, and a downtime plan before committing.
+
+## Working product
+
+By the end of this module, add an operating page to your case that includes:
+
+1. The objective and observable learner action.
+2. The selected modality and the exact functions it must perform.
+3. The fidelity that matters and what can be simplified.
+4. Participant and operator roles.
+5. Expected patient states, triggers, and alternate paths.
+6. The dry-run checklist.
+7. A backup that preserves the central decision point.
+8. One learner, implementation, and technology measure to review after the run.
+
+This turns a written scenario into a shared plan that another simulation team
+can run, troubleshoot, and improve.
 
 ## Sources Used
 
 - Course-authored content synthesized from the local simulation operations
   framework and exemplar cases in this repository.
-- Local exemplar cases: `pediatric-drowning` and `stemi-on-the-ward`.
-  Used for examples of modality selection, participant briefing, dry runs, and
-  real-time troubleshooting.
+- Local exemplar cases: `pediatric-drowning` and `stemi-on-the-ward`. Used for
+  examples of modality selection, participant briefing, dry runs, case
+  operation, and real-time troubleshooting.
+- Slone FL, Lampotang S. "Mannequins: Terminology, Selection, and Usage."
+  Chapter 3.2 in *Defining Excellence in Simulation Programs*.
+- Bauman EB, Ralston-Berg P. "Virtual Simulation." Chapter 3.7 in *Defining
+  Excellence in Simulation Programs*.

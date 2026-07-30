@@ -6,7 +6,6 @@ export const moduleResponsePrompts: Record<string, Record<string, ModuleResponse
   '01-learning-objectives-and-educational-design': {
     'goal-to-objective': { required: true },
     'success-criteria': { required: true },
-    'alignment-check': { required: true },
   },
   '02-case-writing-and-scenario-design': {
     'case-decision-point': { required: true },
@@ -16,16 +15,12 @@ export const moduleResponsePrompts: Record<string, Record<string, ModuleResponse
   '03-running-the-case': {
     'modality-choice': { required: true },
     'operations-plan': { required: true },
+    'evaluation-plan': { required: true },
   },
   '04-prebriefing-and-debriefing': {
     'prebrief-plan': { required: true },
     'debrief-map': { required: true },
     'advocacy-inquiry': { required: true },
-  },
-  '10-technology-in-simulation': {
-    'technology-fit': { required: true },
-    'operating-plan': { required: true },
-    'evaluation-plan': { required: true },
   },
   '12-simulation-research': {
     'research-question': { required: true },

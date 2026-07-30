@@ -46,15 +46,15 @@ The required sequence is designed around the resident's working case:
    objective, and assessment.
 2. **Case Writing and Scenario Design** — turn that objective into a coherent,
    runnable scenario.
-3. **Running the Case** — prepare the people, environment, cues, and contingency
-   plan needed for reliable facilitation.
+3. **Running the Case** — select an appropriate modality and technology, then
+   prepare the people, environment, operating plan, and contingencies needed
+   for reliable facilitation.
 4. **Prebriefing and Debriefing** — establish psychological safety and plan a
    discussion tied to observed performance.
 
-Technology in Simulation, Difficult Learners, and Simulation Research extend
-the core sequence. The technology module now covers manikin operating models,
-virtual and game-based simulation, technology selection, failure planning, and
-evaluation—not just equipment setup.
+Difficult Learners and Simulation Research extend the core sequence. Technology
+selection, manikin operating models, virtual and game-based simulation, failure
+planning, and evaluation are integrated into Running the Case.
 
 ## Local development
 
