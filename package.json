@@ -15,13 +15,13 @@
   },
   "dependencies": {
     "@astrojs/cloudflare": "^13.7.0",
-    "@astrojs/mdx": "^6.0.3",
+    "@astrojs/mdx": "^7.0.5",
     "@astrojs/sitemap": "^3.3.0",
-    "astro": "^6.4.8",
+    "astro": "^7.1.6",
     "jose": "^6.2.3"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.9",
+    "@astrojs/check": "^0.9.10",
     "typescript": "^6.0.3",
     "wrangler": "^4.102.0"
   },
