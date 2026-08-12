@@ -6,7 +6,7 @@ export const prerender = false;
 interface ModuleResponseRow {
   module_id: string;
   prompt_id: string;
-  learner_email: string;
+  learner_identifier: string;
   response_text: string;
   created_at: string;
   updated_at: string;
@@ -21,18 +21,18 @@ export async function GET({ request, locals }: APIContext): Promise<Response> {
     requireFaculty(user.email, env, request);
 
     const result = await env.DB.prepare(
-      `SELECT module_id, prompt_id, learner_email, response_text, created_at, updated_at
+      `SELECT module_id, prompt_id, learner_email AS learner_identifier, response_text, created_at, updated_at
        FROM module_responses
        ORDER BY module_id, prompt_id, learner_email`,
     ).all<ModuleResponseRow>();
 
     const rows: ModuleResponseRow[] = result.results ?? [];
     const csv = [
-      ['module_id', 'prompt_id', 'learner_email', 'response_text', 'created_at', 'updated_at'],
+      ['module_id', 'prompt_id', 'learner_identifier', 'response_text', 'created_at', 'updated_at'],
       ...rows.map((row) => [
         row.module_id,
         row.prompt_id,
-        row.learner_email,
+        row.learner_identifier,
         row.response_text,
         row.created_at,
         row.updated_at,

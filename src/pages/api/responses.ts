@@ -1,6 +1,6 @@
 import type { APIContext } from 'astro';
 import { moduleResponsePrompts } from '../../data/moduleResponsePrompts';
-import { getRuntimeEnv, jsonError, requireAccessUser, ResponseError } from '../../lib/access';
+import { getAnonymousLearner, getRuntimeEnv, jsonError, ResponseError } from '../../lib/access';
 
 export const prerender = false;
 
@@ -17,7 +17,7 @@ export async function POST({ request, locals }: APIContext): Promise<Response> {
     const env = getRuntimeEnv(locals);
     if (!env.DB) throw new ResponseError(500, 'Response database is not configured.');
 
-    const user = await requireAccessUser(request, env);
+    const learner = getAnonymousLearner(request);
     const payload = (await request.json().catch(() => null)) as ResponsePayload | null;
 
     if (!payload || typeof payload !== 'object') {
@@ -55,10 +55,11 @@ export async function POST({ request, locals }: APIContext): Promise<Response> {
       ON CONFLICT(module_id, prompt_id, learner_email)
       DO UPDATE SET response_text = excluded.response_text, updated_at = excluded.updated_at`,
     )
-      .bind(crypto.randomUUID(), moduleId, promptId, user.email, responseText, now, now)
+      .bind(crypto.randomUUID(), moduleId, promptId, learner.id, responseText, now, now)
       .run();
 
-    return Response.json({ ok: true, updatedAt: now });
+    const headers = learner.setCookie ? { 'Set-Cookie': learner.setCookie } : undefined;
+    return Response.json({ ok: true, updatedAt: now }, { headers });
   } catch (error) {
     return jsonError(error);
   }

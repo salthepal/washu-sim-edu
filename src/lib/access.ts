@@ -40,6 +40,14 @@ export interface AccessUser {
   email: string;
 }
 
+export interface AnonymousLearner {
+  id: string;
+  setCookie?: string;
+}
+
+const LEARNER_COOKIE = 'wuem_sim_learner';
+const LEARNER_ID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
 export function getRuntimeEnv(locals: App.Locals): ResponseEnv {
   void locals;
   return cloudflareEnv as ResponseEnv;
@@ -73,6 +81,26 @@ export async function requireAccessUser(request: Request, env: ResponseEnv): Pro
   }
 
   return { email: payload.email.toLowerCase() };
+}
+
+export function getAnonymousLearner(request: Request): AnonymousLearner {
+  const cookieHeader = request.headers.get('cookie') ?? '';
+  const existingId = cookieHeader
+    .split(';')
+    .map((cookie) => cookie.trim().split('='))
+    .find(([name]) => name === LEARNER_COOKIE)?.[1];
+
+  if (existingId && LEARNER_ID_PATTERN.test(existingId)) {
+    return { id: `anonymous:${existingId.toLowerCase()}` };
+  }
+
+  const learnerId = crypto.randomUUID();
+  const secure = new URL(request.url).protocol === 'https:' ? '; Secure' : '';
+
+  return {
+    id: `anonymous:${learnerId}`,
+    setCookie: `${LEARNER_COOKIE}=${learnerId}; Path=/; Max-Age=31536000; HttpOnly; SameSite=Lax${secure}`,
+  };
 }
 
 export function requireFaculty(email: string, env: ResponseEnv, request: Request): void {

@@ -11,7 +11,7 @@ The current learning experience includes:
   writing, case operations, and prebriefing and debriefing.
 - Additional modules on simulation technology, difficult learner encounters,
   and simulation research.
-- Structured reflection prompts whose latest responses are saved for residents
+- Structured reflection prompts whose latest responses are saved anonymously
   and available to faculty as a CSV export.
 - Annotated emergency medicine case exemplars with attributed, downloadable
   facilitator packets.
@@ -19,8 +19,7 @@ The current learning experience includes:
 
 Built with **Astro** content collections and deployed as a full-stack
 Cloudflare Worker at `https://edu.wuemsim.org`. The public `workers.dev`
-route is disabled; production traffic uses the custom domain behind Cloudflare
-Access.
+route is disabled; production traffic uses the public custom domain.
 
 ## Architecture at a glance
 
@@ -30,13 +29,13 @@ Access.
 - **Bibliography is pulled at build time** from a Zotero *group* library via a
   custom Content Layer loader (`src/loaders/zotero.ts`). Zotero renders the
   citations server-side in AMA style, so there's no citation engine in the bundle.
-- **Cloudflare Access identifies learners.** Access can sit in front of the
-  Worker, while API routes also validate the Access JWT before writing or
-  exporting module responses.
+- **Learners do not need an account.** The response API assigns each browser a
+  random, pseudonymous identifier in an HttpOnly cookie; it does not collect an
+  email address.
 - **Learner work is saved in D1.** Each learner has one current response per
   module prompt; submitting again updates that response.
-- **Case packets stay private in R2.** Downloads pass through the authenticated
-  Worker instead of being published as static assets.
+- **Case packets stay private in R2.** Downloads pass through the Worker instead
+  of being published as static assets.
 
 ## Curriculum
 
@@ -122,9 +121,8 @@ The Worker serves both prerendered content and API routes. Static assets are
 deployed from Astro's generated `dist/client` output, while server code runs via
 the Cloudflare adapter entrypoint.
 
-The legacy Cloudflare Pages project at `https://washu-sim-edu.pages.dev` and
-its preview hostnames remain covered by Cloudflare Access, but they are not the
-production target for module responses. Use `https://edu.wuemsim.org` for
+The legacy Cloudflare Pages project at `https://washu-sim-edu.pages.dev` is not
+the production target for module responses. Use `https://edu.wuemsim.org` for
 the D1-backed Worker API routes.
 
 Security headers are served from `public/_headers`.
@@ -132,9 +130,10 @@ Security headers are served from `public/_headers`.
 ## Module responses
 
 Modules can include structured free-text prompts in frontmatter under
-`responsePrompts`. Learners submit responses from the module page; the API saves
-one latest response per learner/module/prompt in Cloudflare D1. Faculty review
-is via CSV export at `/api/responses/export.csv`.
+`responsePrompts`. Learners submit responses from the module page without
+signing in. The API saves one latest response per anonymous browser, module, and
+prompt in Cloudflare D1. Faculty review is available through the optional
+Cloudflare Access-protected CSV export at `/api/responses/export.csv`.
 
 Current production resources:
 
@@ -155,7 +154,9 @@ If rebuilding this setup from scratch:
    ```bash
    npx wrangler d1 migrations apply washu-sim-edu-responses --remote
    ```
-4. Set the Cloudflare Access values in `wrangler.jsonc` or the Worker dashboard:
+4. To enable the optional faculty CSV export, protect that route with
+   Cloudflare Access and set these values in `wrangler.jsonc` or the Worker
+   dashboard:
    - `TEAM_DOMAIN`: your Access team domain, e.g. `https://team.cloudflareaccess.com`
    - `POLICY_AUD`: this Access application's audience tag
    - `FACULTY_EMAILS`: comma-separated faculty emails allowed to export CSVs
@@ -168,58 +169,32 @@ npm run build
 npx wrangler dev --local
 ```
 
-## Access control — Cloudflare Access
+## Access control
 
-Site access is controlled in Cloudflare Zero Trust. Module response API routes
-also validate the Cloudflare Access JWT so submissions are tied to the signed-in
-learner email.
+The curriculum and learner response endpoint are public. Learner submissions
+are associated with a random browser cookie instead of an identity or email
+address. Clearing site data or using another browser creates a new anonymous
+learner identifier.
 
-### Current access state
+The faculty CSV export remains coded to require Cloudflare Access and the
+`FACULTY_EMAILS` allowlist. It is unavailable unless a path-specific Access
+application is configured for `/api/responses/export.csv`.
 
-- Application: `WUEM Sim Edu`
-- Protected hostname: `edu.wuemsim.org`
-- Protected Pages hostnames: `washu-sim-edu.pages.dev`,
-  `*.washu-sim-edu.pages.dev`
-- Application ID: `bd50748a-8788-40ae-898b-561ee9f40ec4`
-- Policy ID: `96a940f4-8232-4829-b32e-67417193add3`
-- Policy name: `WashU Email Domain`
-- Decision: `allow`
-- Include: email domain `wustl.edu`
-- Include: email `sphadnisuf@gmail.com` for faculty export/admin access
-- Precedence: `1`
-
-The production Worker hostname and Pages preview hostnames require Cloudflare
-Access sign-in. The retired `workers.dev` hostname should not be used.
-
-### Restore the WashU email gate
-
-When development previews no longer need to be public, restore the policy to:
-
-- Policy name: `WashU Email Domain`
-- Decision: `allow`
-- Include: email domain `wustl.edu`
-- Precedence: `1`
-
-### Configure gating from scratch
+### Configure the optional faculty export
 
 1. Add the Worker to a custom domain (Access policies attach to a
    hostname, e.g. `sim.your-domain.org`).
 2. Dashboard → **Zero Trust → Access → Applications → Add an application →
    Self-hosted**.
-3. Application domain: the site's hostname.
+3. Application domain: `edu.wuemsim.org/api/responses/export.csv`.
 4. Add a policy:
    - Action: **Allow**
-   - Rule: **Emails** → paste the resident/faculty addresses
-     (or **Emails ending in** `@wustl.edu` to allow the whole domain).
+   - Rule: **Emails** → add the faculty addresses allowed to export responses.
 5. Pick a login method (One-time PIN works with no IdP setup — users get an
    email code).
-6. Save. Visitors now hit an Access screen before the site loads.
-
-### Moving to SSO later
-
-Connect WashU's identity provider (Entra ID / SAML / OIDC) under **Zero Trust →
-Settings → Authentication**, then change the policy rule from *Emails* to a
-group/IdP claim. The site doesn't change.
+6. Copy the application's audience tag to `POLICY_AUD`, keep `TEAM_DOMAIN` set
+   to the Access team domain, and save. Only the faculty export prompts for
+   Access login; the rest of EDU remains public.
 
 ## Contribution flow
 

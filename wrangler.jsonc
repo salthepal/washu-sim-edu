@@ -38,8 +38,7 @@
   "vars": {
     "TEAM_DOMAIN": "https://salph.cloudflareaccess.com",
     "POLICY_AUD": "0f7bb10b8959257c8e9c3bbca7603cf250e28a19406137df1d59a31d6fdb79e5",
-    "FACULTY_EMAILS": "sphadnisuf@gmail.com",
-    "DEV_LEARNER_EMAIL": "dev.learner@example.edu"
+    "FACULTY_EMAILS": "sphadnisuf@gmail.com"
   },
   "assets": {
     "binding": "ASSETS",
