@@ -14,16 +14,16 @@
     "cf-typegen": "wrangler types"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^13.7.0",
-    "@astrojs/mdx": "^6.0.3",
-    "@astrojs/sitemap": "^3.3.0",
-    "astro": "^6.4.8",
-    "jose": "^6.2.3"
+    "@astrojs/cloudflare": "^14.2.1",
+    "@astrojs/mdx": "^7.0.5",
+    "@astrojs/sitemap": "^3.7.3",
+    "astro": "^7.2.1",
+    "jose": "^6.2.8"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.9",
+    "@astrojs/check": "^0.9.10",
     "typescript": "^6.0.3",
-    "wrangler": "^4.102.0"
+    "wrangler": "^4.122.0"
   },
   "overrides": {
     "esbuild": "0.28.1",
