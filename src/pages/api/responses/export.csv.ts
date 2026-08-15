@@ -1,5 +1,6 @@
 import type { APIContext } from 'astro';
 import { getRuntimeEnv, jsonError, requireAccessUser, requireFaculty, ResponseError } from '../../../lib/access';
+import { csvEscape } from '../../../lib/responseSecurity';
 
 export const prerender = false;
 
@@ -50,8 +51,4 @@ export async function GET({ request, locals }: APIContext): Promise<Response> {
   } catch (error) {
     return jsonError(error);
   }
-}
-
-function csvEscape(value: string): string {
-  return `"${value.replaceAll('"', '""')}"`;
 }
