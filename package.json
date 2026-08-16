@@ -9,6 +9,7 @@
     "build": "astro build",
     "preview": "npm run build && wrangler dev",
     "check": "astro check",
+    "test": "node --test tests/*.test.ts",
     "astro": "astro",
     "deploy": "npm run build && wrangler deploy",
     "cf-typegen": "wrangler types"

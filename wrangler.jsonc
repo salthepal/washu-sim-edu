@@ -35,6 +35,18 @@
       "bucket_name": "washu-sim-edu-case-files"
     }
   ],
+  "ratelimits": [
+    {
+      "name": "RESPONSE_IP_RATE_LIMITER",
+      "namespace_id": "38174401",
+      "simple": { "limit": 60, "period": 60 }
+    },
+    {
+      "name": "RESPONSE_LEARNER_RATE_LIMITER",
+      "namespace_id": "38174402",
+      "simple": { "limit": 12, "period": 60 }
+    }
+  ],
   "vars": {
     "TEAM_DOMAIN": "https://salph.cloudflareaccess.com",
     "POLICY_AUD": "0f7bb10b8959257c8e9c3bbca7603cf250e28a19406137df1d59a31d6fdb79e5",

@@ -1,5 +1,6 @@
 import { env as cloudflareEnv } from 'cloudflare:workers';
 import { createRemoteJWKSet, jwtVerify } from 'jose';
+import type { RateLimiter } from './responseSecurity';
 
 interface D1Result<T = unknown> {
   results?: T[];
@@ -30,6 +31,8 @@ interface R2Bucket {
 export interface ResponseEnv {
   DB?: D1Database;
   CASE_FILES?: R2Bucket;
+  RESPONSE_IP_RATE_LIMITER?: RateLimiter;
+  RESPONSE_LEARNER_RATE_LIMITER?: RateLimiter;
   TEAM_DOMAIN?: string;
   POLICY_AUD?: string;
   FACULTY_EMAILS?: string;

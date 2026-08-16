@@ -1,6 +1,7 @@
 import type { APIContext } from 'astro';
 import { moduleResponsePrompts } from '../../data/moduleResponsePrompts';
 import { getAnonymousLearner, getRuntimeEnv, jsonError, ResponseError } from '../../lib/access';
+import { responseWriteAllowed } from '../../lib/responseSecurity';
 
 export const prerender = false;
 
@@ -16,6 +17,9 @@ export async function POST({ request, locals }: APIContext): Promise<Response> {
   try {
     const env = getRuntimeEnv(locals);
     if (!env.DB) throw new ResponseError(500, 'Response database is not configured.');
+    if (!env.RESPONSE_IP_RATE_LIMITER || !env.RESPONSE_LEARNER_RATE_LIMITER) {
+      throw new ResponseError(500, 'Response rate limiting is not configured.');
+    }
 
     const learner = getAnonymousLearner(request);
     const payload = (await request.json().catch(() => null)) as ResponsePayload | null;
@@ -44,6 +48,16 @@ export async function POST({ request, locals }: APIContext): Promise<Response> {
 
     if (prompt.required && responseText.length === 0) {
       throw new ResponseError(400, 'Response text is required.');
+    }
+
+    const writeAllowed = await responseWriteAllowed(
+      request,
+      learner.id,
+      env.RESPONSE_IP_RATE_LIMITER,
+      env.RESPONSE_LEARNER_RATE_LIMITER,
+    );
+    if (!writeAllowed) {
+      throw new ResponseError(429, 'Too many response updates. Please wait a minute and try again.');
     }
 
     const now = new Date().toISOString();
