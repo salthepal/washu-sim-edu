@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type and template check
+        run: npm run check
+
+      - name: Tests
+        run: npm test
+
+      # Zotero env vars are intentionally absent: the loader no-ops without
+      # ZOTERO_GROUP_ID, so this verifies the site builds without secrets.
+      - name: Build
+        run: npm run build
