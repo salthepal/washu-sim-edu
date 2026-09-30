@@ -15,16 +15,16 @@
     "cf-typegen": "wrangler types"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^14.2.1",
+    "@astrojs/cloudflare": "^14.3.0",
     "@astrojs/mdx": "^7.0.5",
     "@astrojs/sitemap": "^3.7.3",
-    "astro": "^7.2.1",
+    "astro": "^7.3.5",
     "jose": "^6.2.11"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
     "typescript": "^6.0.3",
-    "wrangler": "^4.122.0"
+    "wrangler": "^4.125.0"
   },
   "overrides": {
     "esbuild": "0.28.1",
