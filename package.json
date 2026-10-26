@@ -15,7 +15,7 @@
     "cf-typegen": "wrangler types"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^14.2.1",
+    "@astrojs/cloudflare": "^14.4.2",
     "@astrojs/mdx": "^8.1.1",
     "@astrojs/sitemap": "^3.7.4",
     "astro": "^7.2.1",
